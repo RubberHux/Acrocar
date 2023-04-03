@@ -34,6 +34,7 @@ public class GrapplingGun : MonoBehaviour
 
     void StartGrapple()
     {
+        carController.grappling = true;
         RaycastHit hit;
         if (Physics.Raycast(gunTip.position, gunTip.forward, out hit, maxDistance, whatIsGrappleable))
         {
@@ -41,6 +42,8 @@ public class GrapplingGun : MonoBehaviour
             joint = player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
             joint.connectedAnchor = grapplePoint;
+
+            joint.anchor = new Vector3(0, 0, 1);
 
             float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
 
@@ -65,6 +68,7 @@ public class GrapplingGun : MonoBehaviour
 
     void StopGrapple()
     {
+        carController.grappling = false;
         lr.positionCount = 0;
         Debug.Log("ASDF");
         Destroy(joint);
