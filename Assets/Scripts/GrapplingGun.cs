@@ -11,7 +11,7 @@ public class GrapplingGun : MonoBehaviour
     private Vector3 grapplePoint;
     public LayerMask whatIsGrappleable;
     public Transform gunTip, player;
-    private float maxDistance = 150f;
+    public float maxGrappleDistance;
     private SpringJoint joint;
     public CarController carController;
 
@@ -36,7 +36,7 @@ public class GrapplingGun : MonoBehaviour
     {
         carController.grappling = true;
         RaycastHit hit;
-        if (Physics.Raycast(gunTip.position, gunTip.forward, out hit, maxDistance, whatIsGrappleable))
+        if (Physics.Raycast(gunTip.position, gunTip.forward, out hit, maxGrappleDistance, whatIsGrappleable))
         {
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
