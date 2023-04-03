@@ -16,6 +16,7 @@ public class CarController : MonoBehaviour
 {
     public List<AxleInfo> axleInfos; // list of axle infos, including wheel colliders
     public int maxTorque; // maximum torque
+    public bool grappling;
 
     public int maxRotationTorque; // maximum rotation torque
     private float torque; // current torque
@@ -29,6 +30,7 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (grappling) return;
         float movDir = Input.GetAxis("Vertical");
         // if direction is changed: brake and then accelerate
         torque = maxTorque * (2 * movDir);
