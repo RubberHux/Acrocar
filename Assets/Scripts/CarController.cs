@@ -16,6 +16,7 @@ public class CarController : MonoBehaviour
 {
     public List<AxleInfo> axleInfos; // list of axle infos, including wheel colliders
     public int maxTorque; // maximum torque
+
     public int maxRotationTorque; // maximum rotation torque
     private float torque; // current torque
     private Rigidbody rigidBody; // rigid body of the car
