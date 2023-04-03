@@ -16,7 +16,15 @@ public class CarController : MonoBehaviour
 {
     public List<AxleInfo> axleInfos; // list of axle infos, including wheel colliders
     public int maxTorque; // maximum torque
+
+    public int maxRotationTorque; // maximum rotation torque
     private float torque; // current torque
+    private Rigidbody rigidBody; // rigid body of the car
+
+    void Start()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -55,20 +63,15 @@ public class CarController : MonoBehaviour
         }
 
         // rotate car via horizontal movement inputs (along x-axis)
-        transform.Rotate(Input.GetAxis("Horizontal"), 0, 0);
-
-        // make sure car cannot be moved or rotated outside 2D perspective
-        Vector3 newPos = new Vector3(0, transform.position.y, transform.position.z);
-        Quaternion newRot = new Quaternion(transform.rotation.x, 0, 0, transform.rotation.w);
+        Quaternion deltaRotation = Quaternion.Euler(Vector3.right * Input.GetAxis("Horizontal"));
+        //rigidBody.MoveRotation(rigidBody.rotation * deltaRotation);
+        rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal"));
 
         // reset car position and rotation when R is pressed
         if (Input.GetKeyDown(KeyCode.R))
         {
-            newPos = new Vector3(0, 1, 0);
-            newRot = new Quaternion(0, 0, 0, 0);
+            rigidBody.MovePosition(new Vector3(0, 1, 0));
+            rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
         }
-
-        // update position and rotation based on above
-        transform.SetPositionAndRotation(newPos, newRot);
     }
 }
