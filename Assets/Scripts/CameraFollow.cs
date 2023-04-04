@@ -8,11 +8,16 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float translateSpeed;
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private float minZoom, maxZoom, zoomSpeed;
 
     private void FixedUpdate()
     {
         HandleTranslation();
         HandleRotation();
+    }
+    private void Update()
+    {
+        HandleZoom();
     }
 
     private void HandleTranslation()
@@ -26,5 +31,11 @@ public class CameraFollow : MonoBehaviour
         var direction = target.position - transform.position;
         var rotation = Quaternion.LookRotation(direction, Vector3.up);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+    }
+    private void HandleZoom()
+    {
+        float x = offset.x - Input.mouseScrollDelta.y * zoomSpeed;
+        Debug.Log(x);
+        offset.x = (x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));
     }
 }
