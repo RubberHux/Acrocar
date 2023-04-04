@@ -16,9 +16,15 @@ public class GrapplingGun : MonoBehaviour
     public float maxGrappleDistance;
     private SpringJoint joint;
     public CarController carController;
-    private float aimPreTimer, aimPostTimer;
+    private float aimPreTimer = -1, aimPostTimer = -1, grappleBoostTimer = 0;
     private bool aiming = false;
-    public float aimLeniencyPreTime, aimLeniencyPostTime;
+    public float aimLeniencyPreTime, aimLeniencyPostTime, grappleBoostTime;
+    enum GrappleType
+    {
+        Swing,
+        Boost,
+    }
+    GrappleType grappleType;
 
     void Awake()
     {
@@ -39,6 +45,7 @@ public class GrapplingGun : MonoBehaviour
         else if (Input.GetMouseButtonUp(0)) StopGrapple();
         if (aimPreTimer >= 0) aimPreTimer -= Time.deltaTime;
         if (aimPostTimer >= 0) aimPostTimer -= Time.deltaTime;
+        if (grappleBoostTimer >= 0) grappleBoostTimer -= Time.deltaTime;
     }
 
     private void LateUpdate()
@@ -52,26 +59,35 @@ public class GrapplingGun : MonoBehaviour
 
         if (distanceFromPoint > maxGrappleDistance) return;
 
-        carController.grappling = true;
-        
+        if (grappleType == GrappleType.Boost)
+        {
+            Debug.Log(grappleBoostTimer);
+            if (grappleBoostTimer <= 0)
+            {
+                Debug.Log("Boosting");
+                carController.GrappleBoost(grapplePoint);
+                grappleBoostTimer = grappleBoostTime;
+            }
+        }
+        else
+        {
+            carController.grappling = true;
+            joint = player.gameObject.AddComponent<SpringJoint>();
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = grapplePoint;
+
+            joint.anchor = new Vector3(0, 0, 1);
+
+            joint.maxDistance = distanceFromPoint * 0.8f;
+            joint.minDistance = distanceFromPoint * 0.25f;
+
+            joint.spring = 1000f;
+            joint.damper = 2000f;
+            joint.massScale = 1000f;
+        }
+
         lr.startColor = lr.endColor = Color.black;
-        joint = player.gameObject.AddComponent<SpringJoint>();
-        joint.autoConfigureConnectedAnchor = false;
-        joint.connectedAnchor = grapplePoint;
-
-        joint.anchor = new Vector3(0, 0, 1);
-
-        
-
-        joint.maxDistance = distanceFromPoint * 0.8f;
-        joint.minDistance = distanceFromPoint * 0.25f;
-
-        joint.spring = 1000f;
-        joint.damper = 2000f;
-        joint.massScale = 1000f;
-
         lr.positionCount = 2;
-
         aiming = false;
     }
 
@@ -80,7 +96,16 @@ public class GrapplingGun : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(gunTip.position, gunTip.forward, out hit, maxGrappleDistance, notCarLayers) && (whatIsGrappleable == (whatIsGrappleable | (1 << hit.transform.gameObject.layer))))
         {
-            grapplePoint = hit.point;
+
+            if (hit.transform.CompareTag("GrappleBoost"))
+            {
+                grappleType = GrappleType.Boost;
+                grapplePoint = hit.transform.position;
+            }
+            else {
+                grappleType = GrappleType.Swing;
+                grapplePoint = hit.point;
+            }
             float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
             if (distanceFromPoint < maxGrappleDistance * 0.8f) lr.startColor = lr.endColor = Color.yellow;
             else if (distanceFromPoint < maxGrappleDistance * 0.9f) lr.startColor = lr.endColor = new Color(1, 0.5f, 0);
@@ -98,7 +123,7 @@ public class GrapplingGun : MonoBehaviour
 
     void DrawRope()
     {
-        if (!joint && !aiming) return;
+        if (lr.positionCount == 0) return;
 
         lr.SetPosition(0, gunTip.position);
         lr.SetPosition(1, grapplePoint);

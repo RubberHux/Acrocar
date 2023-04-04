@@ -26,6 +26,7 @@ public class CarController : MonoBehaviour
 
     public int maxRotationTorque; // maximum rotation torque
     public int swingForce; // the force with which to swing when grappled
+    public int grappleBoostForce;
 
     private float torque; // current torque
     private Rigidbody rigidBody; // rigid body of the car
@@ -130,5 +131,10 @@ public class CarController : MonoBehaviour
     public void Kill()
     {
         Respawn();
+    }
+
+    public void GrappleBoost(Vector3 target)
+    {
+        rigidBody.AddForce(Vector3.Normalize(target - this.transform.position) * grappleBoostForce);
     }
 }

@@ -37,7 +37,6 @@ public class CameraFollow : MonoBehaviour
     private void HandleZoom()
     {
         float x = offset.x + Input.mouseScrollDelta.y * zoomSpeed;
-        Debug.Log(x);
         offset.x = x;//(x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));
     }
 }
