@@ -18,7 +18,7 @@ public class GrapplingGun : MonoBehaviour
     public CarController carController;
     private float aimPreTimer, aimPostTimer;
     private bool aiming = false;
-    public float aimLeniencyTime;
+    public float aimLeniencyPreTime, aimLeniencyPostTime;
 
     void Awake()
     {
@@ -28,8 +28,13 @@ public class GrapplingGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (carController.respawned)
+        {
+            if (joint) StopGrapple();
+            return;
+        }
         if (!joint) Aim();
-        if (Input.GetMouseButtonDown(0)) aimPreTimer = aimLeniencyTime;
+        if (Input.GetMouseButtonDown(0)) aimPreTimer = aimLeniencyPreTime;
         if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && Input.GetMouseButton(0)) StartGrapple();
         else if (Input.GetMouseButtonUp(0)) StopGrapple();
         if (aimPreTimer >= 0) aimPreTimer -= Time.deltaTime;
@@ -82,7 +87,7 @@ public class GrapplingGun : MonoBehaviour
             else lr.startColor = lr.endColor = Color.red;
             aiming = true;
             lr.positionCount = 2;
-            aimPostTimer = aimLeniencyTime;
+            aimPostTimer = aimLeniencyPostTime;
         }
         else
         {
@@ -99,12 +104,11 @@ public class GrapplingGun : MonoBehaviour
         lr.SetPosition(1, grapplePoint);
     }
 
-    void StopGrapple()
+    public void StopGrapple()
     {
         aimPreTimer = aimPostTimer = -1;
         carController.grappling = false;
         lr.positionCount = 0;
-        Debug.Log("ASDF");
         Destroy(joint);
     }
 }
