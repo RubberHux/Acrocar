@@ -25,6 +25,8 @@ public class CarController : MonoBehaviour
     public GrapplingGun grapplingGun;
 
     public int maxRotationTorque; // maximum rotation torque
+    public int swingForce; // the force with which to swing when grappled
+
     private float torque; // current torque
     private Rigidbody rigidBody; // rigid body of the car
 
@@ -36,7 +38,14 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (grappling) return;
+        if (grappling)
+        {
+            Vector3 dirVector = rigidBody.transform.up * -1;
+            rigidBody.AddForce(dirVector * Input.GetAxisRaw("Horizontal") * swingForce);
+
+            return;
+        }
+
         // reset car position and rotation when R is pressed
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -88,8 +97,6 @@ public class CarController : MonoBehaviour
         }
 
         // rotate car via horizontal movement inputs (along x-axis)
-        Quaternion deltaRotation = Quaternion.Euler(Vector3.right * Input.GetAxis("Horizontal"));
-        //rigidBody.MoveRotation(rigidBody.rotation * deltaRotation);
         rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal"));
 
         
