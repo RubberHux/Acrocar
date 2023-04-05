@@ -26,12 +26,15 @@ public class CarController : MonoBehaviour
     public PlayerInputActions playerControls;
     private InputAction move, fireHook, breaking, reset;
 
+
     public int maxRotationTorque; // maximum rotation torque
     public int swingForce; // the force with which to swing when grappled
     public int grappleBoostForce;
+    public float maxGrappleDist;
 
     private float torque; // current torque
     private Rigidbody rigidBody; // rigid body of the car
+    private float stationaryTolerance;
 
     private void Awake()
     {
@@ -59,6 +62,7 @@ public class CarController : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        stationaryTolerance = 0.0005f;
     }
 
     // Update is called once per frame
@@ -67,8 +71,14 @@ public class CarController : MonoBehaviour
         Vector2 moveDirection = move.ReadValue<Vector2>();
         if (grappling)
         {
+            // swing car back and forth (horizontal input, same as rotating)
             Vector3 dirVector = rigidBody.transform.up * -1;
             rigidBody.AddForce(dirVector * moveDirection.x * swingForce);
+
+            // retract or extend grappling hook (vertical input, same as driving)
+            SpringJoint joint = GetComponent<SpringJoint>();
+            joint.maxDistance -= Input.GetAxisRaw("Vertical") * 0.2f;
+            if (joint.maxDistance > maxGrappleDist) joint.maxDistance = maxGrappleDist;
 
             return;
         }
@@ -121,7 +131,24 @@ public class CarController : MonoBehaviour
         // rotate car via horizontal movement inputs (along x-axis)
         rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal"));
 
-        
+        // if player car gets stuck on its back, you can flip it back up
+        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance 
+            && rigidBody.transform.up.y <= 10e-5 && !grappling)
+        {
+            // reset torque of wheels so you don't drive off immediately after bouncing back up
+            foreach (AxleInfo aInfo in axleInfos)
+            {
+                if (aInfo.motor)
+                {
+                    aInfo.leftWheel.motorTorque = 0;
+                    aInfo.rightWheel.motorTorque = 0;
+                }
+            }
+
+            // apply explosion force and rotation to car to get it back up
+            rigidBody.AddExplosionForce(100000, rigidBody.transform.position, 5, 5);
+            rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
+        }
     }
 
     private void Reset(InputAction.CallbackContext context)
