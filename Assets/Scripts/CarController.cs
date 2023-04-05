@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +17,6 @@ public class CarController : MonoBehaviour
     public List<AxleInfo> axleInfos; // list of axle infos, including wheel colliders
     public int maxTorque; // maximum torque
     public bool grappling;
-    public float respawnTime = 1;
-    public float respawnTimer = 0;
-    public bool respawned = false;
 
     public int maxRotationTorque; // maximum rotation torque
     private float torque; // current torque
@@ -35,23 +31,6 @@ public class CarController : MonoBehaviour
     void Update()
     {
         if (grappling) return;
-        // reset car position and rotation when R is pressed
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Respawn();
-            return;
-        }
-        if (respawned)
-        {
-            Debug.Log(respawnTimer);
-            respawnTimer -= Time.deltaTime;
-            if (respawnTimer <= 0)
-            {
-                respawned = false;
-                respawnTimer = 0;
-                rigidBody.isKinematic = false;
-            }
-        }
         float movDir = Input.GetAxis("Vertical");
         // if direction is changed: brake and then accelerate
         torque = maxTorque * (2 * movDir);
@@ -90,24 +69,11 @@ public class CarController : MonoBehaviour
         //rigidBody.MoveRotation(rigidBody.rotation * deltaRotation);
         rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal"));
 
-        
-    }
-
-    private void Respawn()
-    {
-        rigidBody.MovePosition(new Vector3(0, 1, 0));
-        rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
-        rigidBody.velocity = Vector3.zero;
-        rigidBody.angularVelocity = Vector3.zero;
-        foreach (AxleInfo aInfo in axleInfos)
+        // reset car position and rotation when R is pressed
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            aInfo.leftWheel.brakeTorque = float.MaxValue;
-            aInfo.rightWheel.brakeTorque = float.MaxValue;
-
-            aInfo.leftWheel.motorTorque = 0;
-            aInfo.rightWheel.motorTorque = 0;
+            rigidBody.MovePosition(new Vector3(0, 1, 0));
+            rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
         }
-        respawnTimer = respawnTime;
-        respawned = true;
     }
 }
