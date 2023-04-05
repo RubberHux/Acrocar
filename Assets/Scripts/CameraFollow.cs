@@ -15,6 +15,10 @@ public class CameraFollow : MonoBehaviour
         HandleTranslation();
         HandleRotation();
     }
+    private void Update()
+    {
+        HandleZoom();
+    }
 
     private void Update()
     {
@@ -36,7 +40,7 @@ public class CameraFollow : MonoBehaviour
     }
     private void HandleZoom()
     {
-        float x = offset.x + Input.mouseScrollDelta.y * zoomSpeed;
-        offset.x = x;//(x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));
+        float x = offset.x - Input.mouseScrollDelta.y * zoomSpeed;
+        offset.x = (x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));
     }
 }
