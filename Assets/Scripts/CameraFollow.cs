@@ -20,11 +20,6 @@ public class CameraFollow : MonoBehaviour
         HandleZoom();
     }
 
-    private void Update()
-    {
-        HandleZoom();
-    }
-
 
     private void HandleTranslation()
     {
