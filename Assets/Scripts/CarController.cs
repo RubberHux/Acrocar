@@ -21,9 +21,12 @@ public class CarController : MonoBehaviour
     public float respawnTime = 1;
     public float respawnTimer = 0;
     public bool respawned = false;
+    public CheckPoint lastCheckPoint;
+    public GrapplingGun grapplingGun;
 
     public int maxRotationTorque; // maximum rotation torque
     public int swingForce; // the force with which to swing when grappled
+    public int grappleBoostForce;
 
     private float torque; // current torque
     private Rigidbody rigidBody; // rigid body of the car
@@ -52,7 +55,6 @@ public class CarController : MonoBehaviour
         }
         if (respawned)
         {
-            //Debug.Log(respawnTimer);
             respawnTimer -= Time.deltaTime;
             if (respawnTimer <= 0)
             {
@@ -60,6 +62,7 @@ public class CarController : MonoBehaviour
                 respawnTimer = 0;
                 rigidBody.isKinematic = false;
             }
+            else return;
         }
         float movDir = Input.GetAxis("Vertical");
         // if direction is changed: brake and then accelerate
@@ -102,7 +105,13 @@ public class CarController : MonoBehaviour
 
     private void Respawn()
     {
-        rigidBody.MovePosition(new Vector3(0, 1, 0));
+        if (lastCheckPoint == null) rigidBody.MovePosition(new Vector3(0, 1, 0));
+        else
+        {
+            Vector3 checkpointPosition = lastCheckPoint.gameObject.transform.position;
+            rigidBody.MovePosition(new Vector3(checkpointPosition.x, checkpointPosition.y + 1, checkpointPosition.z));
+        }
+
         rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;
@@ -114,7 +123,18 @@ public class CarController : MonoBehaviour
             aInfo.leftWheel.motorTorque = 0;
             aInfo.rightWheel.motorTorque = 0;
         }
-        respawnTimer = respawnTime;
+        respawnTimer = 0.1f;
         respawned = true;
+        grappling = false;
+    }
+
+    public void Kill()
+    {
+        Respawn();
+    }
+
+    public void GrappleBoost(Vector3 target)
+    {
+        rigidBody.AddForce(Vector3.Normalize(target - this.transform.position) * grappleBoostForce);
     }
 }

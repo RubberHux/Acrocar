@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float translateSpeed;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private float minZoom, maxZoom, zoomSpeed;
+    [SerializeField] private float maxZoom, minZoom, zoomSpeed;
 
     private void FixedUpdate()
     {
@@ -19,6 +19,12 @@ public class CameraFollow : MonoBehaviour
     {
         HandleZoom();
     }
+
+    private void Update()
+    {
+        HandleZoom();
+    }
+
 
     private void HandleTranslation()
     {
@@ -35,7 +41,6 @@ public class CameraFollow : MonoBehaviour
     private void HandleZoom()
     {
         float x = offset.x - Input.mouseScrollDelta.y * zoomSpeed;
-        Debug.Log(x);
         offset.x = (x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));
     }
 }
