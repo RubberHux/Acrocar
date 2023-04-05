@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
 // Class from Unity documentation, with slight modification (due to no need for steering):
@@ -22,7 +23,8 @@ public class CarController : MonoBehaviour
     public float respawnTimer = 0;
     public bool respawned = false;
     public CheckPoint lastCheckPoint;
-    public GrapplingGun grapplingGun;
+    public PlayerInputActions playerControls;
+    private InputAction move, fireHook, breaking, reset;
 
     public int maxRotationTorque; // maximum rotation torque
     public int swingForce; // the force with which to swing when grappled
@@ -30,6 +32,29 @@ public class CarController : MonoBehaviour
 
     private float torque; // current torque
     private Rigidbody rigidBody; // rigid body of the car
+
+    private void Awake()
+    {
+        playerControls = new PlayerInputActions();
+    }
+
+    private void OnEnable()
+    {
+        move = playerControls.Player.Move;
+        move.Enable();
+        breaking = playerControls.Player.Break;
+        breaking.Enable();
+        fireHook = playerControls.Player.FireHook;
+        fireHook.Enable();
+        reset = playerControls.Player.Reset;
+        reset.Enable();
+        reset.performed += Reset;
+    }
+
+    private void OnDisable()
+    {
+        move.Disable();
+    }
 
     void Start()
     {
@@ -39,20 +64,16 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector2 moveDirection = move.ReadValue<Vector2>();
         if (grappling)
         {
             Vector3 dirVector = rigidBody.transform.up * -1;
-            rigidBody.AddForce(dirVector * Input.GetAxisRaw("Horizontal") * swingForce);
+            rigidBody.AddForce(dirVector * moveDirection.x * swingForce);
 
             return;
         }
 
         // reset car position and rotation when R is pressed
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Respawn();
-            return;
-        }
         if (respawned)
         {
             respawnTimer -= Time.deltaTime;
@@ -64,7 +85,7 @@ public class CarController : MonoBehaviour
             }
             else return;
         }
-        float movDir = Input.GetAxis("Vertical");
+        float movDir = moveDirection.y;
         // if direction is changed: brake and then accelerate
         torque = maxTorque * (2 * movDir);
 
@@ -86,7 +107,7 @@ public class CarController : MonoBehaviour
                 else
                 {
                     // reset input axes so we don't go too fast after breaking
-                    if (Input.GetKeyUp(KeyCode.Space)) Input.ResetInputAxes();
+                    if (breaking.IsPressed()) Input.ResetInputAxes();
 
                     aInfo.leftWheel.brakeTorque = 0;
                     aInfo.rightWheel.brakeTorque = 0;
@@ -101,6 +122,11 @@ public class CarController : MonoBehaviour
         rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal"));
 
         
+    }
+
+    private void Reset(InputAction.CallbackContext context)
+    {
+        Respawn();
     }
 
     private void Respawn()
