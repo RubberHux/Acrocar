@@ -32,10 +32,12 @@ public class CarController : MonoBehaviour
 
     private float torque; // current torque
     private Rigidbody rigidBody; // rigid body of the car
+    private float stationaryTolerance;
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        stationaryTolerance = 0.0005f;
     }
 
     // Update is called once per frame
@@ -108,7 +110,24 @@ public class CarController : MonoBehaviour
         // rotate car via horizontal movement inputs (along x-axis)
         rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal"));
 
-        
+        // if player car gets stuck on its back, you can flip it back up
+        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance 
+            && rigidBody.transform.up.y <= 10e-5 && !grappling)
+        {
+            // reset torque of wheels so you don't drive off immediately after bouncing back up
+            foreach (AxleInfo aInfo in axleInfos)
+            {
+                if (aInfo.motor)
+                {
+                    aInfo.leftWheel.motorTorque = 0;
+                    aInfo.rightWheel.motorTorque = 0;
+                }
+            }
+
+            // apply explosion force and rotation to car to get it back up
+            rigidBody.AddExplosionForce(100000, rigidBody.transform.position, 5, 5);
+            rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
+        }
     }
 
     private void Respawn()
