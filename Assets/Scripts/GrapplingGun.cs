@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GrapplingGun : MonoBehaviour
@@ -19,6 +20,7 @@ public class GrapplingGun : MonoBehaviour
     private float aimPreTimer = -1, aimPostTimer = -1, grappleBoostTimer = 0;
     private bool aiming = false;
     public float aimLeniencyPreTime, aimLeniencyPostTime, grappleBoostTime;
+    private InputAction fireHook;
     enum GrappleType
     {
         Swing,
@@ -34,15 +36,16 @@ public class GrapplingGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (fireHook == null) fireHook = carController.playerControls.Player.FireHook;
         if (carController.respawned)
         {
             if (joint) StopGrapple();
             return;
         }
         if (!joint) Aim();
-        if (Input.GetMouseButtonDown(0)) aimPreTimer = aimLeniencyPreTime;
-        if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && Input.GetMouseButton(0)) StartGrapple();
-        else if (Input.GetMouseButtonUp(0)) StopGrapple();
+        if (fireHook.WasPressedThisFrame()) aimPreTimer = aimLeniencyPreTime;
+        if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && fireHook.IsPressed()) StartGrapple();
+        else if (fireHook.WasReleasedThisFrame()) StopGrapple();
         if (aimPreTimer >= 0) aimPreTimer -= Time.deltaTime;
         if (aimPostTimer >= 0) aimPostTimer -= Time.deltaTime;
         if (grappleBoostTimer >= 0) grappleBoostTimer -= Time.deltaTime;
@@ -64,7 +67,6 @@ public class GrapplingGun : MonoBehaviour
             Debug.Log(grappleBoostTimer);
             if (grappleBoostTimer <= 0)
             {
-                Debug.Log("Boosting");
                 carController.GrappleBoost(grapplePoint);
                 grappleBoostTimer = grappleBoostTime;
             }
