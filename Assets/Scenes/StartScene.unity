@@ -207,14 +207,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1420521420}
+      - m_Target: {fileID: 1420521422}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1183,7 +1183,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8c8701b896a8184e8974775b53a7fd7, type: 2}
+  - {fileID: 2100000, guid: 0b7794d16664fe8449dd793d40059dbc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1872,7 +1872,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1420521420}
+      - m_Target: {fileID: 1420521422}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 3
@@ -2057,7 +2057,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1420521421}
-  - component: {fileID: 1420521420}
+  - component: {fileID: 1420521422}
   m_Layer: 0
   m_Name: SceneLoader
   m_TagString: Untagged
@@ -2065,18 +2065,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1420521420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1420521419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a75a5165f1c2c4d9a9a3e085ad842bbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1420521421
 Transform:
   m_ObjectHideFlags: 0
@@ -2092,6 +2080,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1420521422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420521419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f44c2a1a21f8334ea9ce0021e1f2e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1465277402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2466,12 +2466,16 @@ MonoBehaviour:
   whatIsGrappleable:
     serializedVersion: 2
     m_Bits: 8
+  notCarLayers:
+    serializedVersion: 2
+    m_Bits: 0
   gunTip: {fileID: 1765815273}
   player: {fileID: 938699059}
+  maxGrappleDistance: 0
   carController: {fileID: 0}
-  spring: 1000
-  damper: 1500
-  massScale: 1000
+  aimLeniencyPreTime: 0
+  aimLeniencyPostTime: 0
+  grappleBoostTime: 0
 --- !u!65 &1731821159
 BoxCollider:
   m_ObjectHideFlags: 0

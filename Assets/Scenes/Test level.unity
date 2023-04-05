@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 9efaa1661328d874f9915dd8be5dab5a, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 59b7fb53dd64572409cebd4493d0c539, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -137,7 +137,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6261459
 Transform:
@@ -205,6 +205,10 @@ PrefabInstance:
     - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_Name
       value: PP_Birch_Tree_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_RootOrder
@@ -285,6 +289,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -341,6 +349,10 @@ PrefabInstance:
     - target: {fileID: 1755429121576396, guid: 4a0ab548b1b39cf4b8b48726d5f4fbfe, type: 3}
       propertyPath: m_Name
       value: SM_PolygonPrototype_Buildings_DoorFrame_01P
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755429121576396, guid: 4a0ab548b1b39cf4b8b48726d5f4fbfe, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4574243262341506, guid: 4a0ab548b1b39cf4b8b48726d5f4fbfe, type: 3}
       propertyPath: m_RootOrder
@@ -429,6 +441,10 @@ PrefabInstance:
     - target: {fileID: 1678841851965742, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
       propertyPath: m_Name
       value: rpgpp_lt_box_wood_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1678841851965742, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4202655646031778, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
       propertyPath: m_RootOrder
@@ -555,6 +571,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!4 &153889532 stripped
@@ -572,6 +592,10 @@ PrefabInstance:
     - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_Name
       value: Environment
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4063223197671162, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_RootOrder
@@ -642,6 +666,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -698,6 +726,10 @@ PrefabInstance:
     - target: {fileID: 1839111652244008, guid: e30b3aeaaf8ec804198090a10eca14d8, type: 3}
       propertyPath: m_Name
       value: SM_Generic_TreeDead_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1839111652244008, guid: e30b3aeaaf8ec804198090a10eca14d8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4882488892507408, guid: e30b3aeaaf8ec804198090a10eca14d8, type: 3}
       propertyPath: m_RootOrder
@@ -824,6 +856,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_10
       objectReference: {fileID: 0}
+    - target: {fileID: 2146431531174499849, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}
 --- !u!1001 &197899506
@@ -924,6 +960,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Birch_Tree_06
       objectReference: {fileID: 0}
+    - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -992,6 +1032,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -1333,6 +1377,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1389,6 +1437,10 @@ PrefabInstance:
     - target: {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
       propertyPath: m_Name
       value: Endbuilding
+      objectReference: {fileID: 0}
+    - target: {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4962039562683002, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
       propertyPath: m_RootOrder
@@ -1607,6 +1659,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -1708,6 +1764,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Birch_Tree_05
       objectReference: {fileID: 0}
+    - target: {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
 --- !u!4 &386065509 stripped
@@ -1725,6 +1785,10 @@ PrefabInstance:
     - target: {fileID: 1267589063166154, guid: e865a10713e46984aba70d89a679e42f, type: 3}
       propertyPath: m_Name
       value: SM_Generic_TreeStump_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267589063166154, guid: e865a10713e46984aba70d89a679e42f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4604077172822636, guid: e865a10713e46984aba70d89a679e42f, type: 3}
       propertyPath: m_RootOrder
@@ -1995,6 +2059,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_PolygonPrototype_Buildings_Column_2x3_01P (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1196428747069424, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4062619256373206, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -2052,6 +2120,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: grassground01
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2108,6 +2180,10 @@ PrefabInstance:
     - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Small_Rocks_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4321709845090748, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_RootOrder
@@ -2226,6 +2302,10 @@ PrefabInstance:
     - target: {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
       propertyPath: m_Name
       value: PP_Birch_Tree_05
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
@@ -2414,6 +2494,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Small_Rocks_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4321709845090748, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -2482,6 +2566,10 @@ PrefabInstance:
     - target: {fileID: 168972, guid: 401d27194e0344948b125cf0483f7637, type: 3}
       propertyPath: m_Name
       value: 'Freeway Lift Highway '
+      objectReference: {fileID: 0}
+    - target: {fileID: 168972, guid: 401d27194e0344948b125cf0483f7637, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 459074, guid: 401d27194e0344948b125cf0483f7637, type: 3}
       propertyPath: m_RootOrder
@@ -2634,6 +2722,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2752,6 +2844,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_10
       objectReference: {fileID: 0}
+    - target: {fileID: 2146431531174499849, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}
 --- !u!4 &604110423 stripped
@@ -2769,6 +2865,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -2900,6 +3000,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_TreeStump_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1267589063166154, guid: e865a10713e46984aba70d89a679e42f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4604077172822636, guid: e865a10713e46984aba70d89a679e42f, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -2968,6 +3072,10 @@ PrefabInstance:
     - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Small_Rocks_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4321709845090748, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_RootOrder
@@ -3092,6 +3200,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Moss_Grown_11 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
 --- !u!4 &655249653 stripped
@@ -3109,6 +3221,10 @@ PrefabInstance:
     - target: {fileID: 1267589063166154, guid: e865a10713e46984aba70d89a679e42f, type: 3}
       propertyPath: m_Name
       value: SM_Generic_TreeStump_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267589063166154, guid: e865a10713e46984aba70d89a679e42f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4604077172822636, guid: e865a10713e46984aba70d89a679e42f, type: 3}
       propertyPath: m_RootOrder
@@ -3417,6 +3533,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_TreeDead_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1839111652244008, guid: e30b3aeaaf8ec804198090a10eca14d8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4882488892507408, guid: e30b3aeaaf8ec804198090a10eca14d8, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -3560,6 +3680,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_PolygonPrototype_Buildings_Column_2x3_01P
       objectReference: {fileID: 0}
+    - target: {fileID: 1196428747069424, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4062619256373206, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -3665,6 +3789,10 @@ PrefabInstance:
     - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
       propertyPath: m_Name
       value: PP_Rock_Moss_Grown_11 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
@@ -3804,6 +3932,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sunflower01
       objectReference: {fileID: 0}
+    - target: {fileID: 4400482160171448048, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
 --- !u!1001 &739562838
@@ -3816,6 +3948,10 @@ PrefabInstance:
     - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_Flat_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4063223197671162, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_RootOrder
@@ -3874,6 +4010,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -3930,6 +4070,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -4049,6 +4193,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sunflower02
       objectReference: {fileID: 0}
+    - target: {fileID: 4400482160171448048, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
 --- !u!1001 &777985704
@@ -4106,6 +4254,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree01
       objectReference: {fileID: 0}
+    - target: {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
 --- !u!1001 &830919483
@@ -4118,6 +4270,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: grassground08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -4172,6 +4328,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4776816592803173008, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6784728970806330305, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -4228,9 +4388,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.002
       objectReference: {fileID: 0}
+    - target: {fileID: 6789955963242282382, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6791208188262212221, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
       propertyPath: m_Name
       value: Road03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6791208188262212221, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172943381756788709, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
@@ -4248,7 +4420,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &836324598
 Transform:
@@ -4347,6 +4519,10 @@ PrefabInstance:
     - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
       propertyPath: m_Name
       value: PP_Rock_Moss_Grown_11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
@@ -4480,6 +4656,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!4 &879536520 stripped
@@ -4497,6 +4677,10 @@ PrefabInstance:
     - target: {fileID: 120542, guid: da7d67abfde295449857038a411bd14a, type: 3}
       propertyPath: m_Name
       value: 'SingleLane Straight 2 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 120542, guid: da7d67abfde295449857038a411bd14a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 468194, guid: da7d67abfde295449857038a411bd14a, type: 3}
       propertyPath: m_RootOrder
@@ -4623,6 +4807,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Moss_Grown_11
       objectReference: {fileID: 0}
+    - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
 --- !u!1001 &927232143
@@ -4635,6 +4823,10 @@ PrefabInstance:
     - target: {fileID: 1196428747069424, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_Name
       value: SM_PolygonPrototype_Buildings_Column_2x3_01P (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196428747069424, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4062619256373206, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_RootOrder
@@ -4745,6 +4937,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -4801,6 +4997,10 @@ PrefabInstance:
     - target: {fileID: 1109385109949186, guid: 37e681eb08549004c9d9c2be529cbf54, type: 3}
       propertyPath: m_Name
       value: TrafficSign
+      objectReference: {fileID: 0}
+    - target: {fileID: 1109385109949186, guid: 37e681eb08549004c9d9c2be529cbf54, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4812002822647660, guid: 37e681eb08549004c9d9c2be529cbf54, type: 3}
       propertyPath: m_RootOrder
@@ -4914,6 +5114,10 @@ PrefabInstance:
     - target: {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
       propertyPath: m_Name
       value: PP_Birch_Tree_05
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
@@ -5181,6 +5385,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_Flat_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4063223197671162, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -5238,6 +5446,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: grassground04
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -5294,6 +5506,10 @@ PrefabInstance:
     - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Small_Rocks_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4321709845090748, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_RootOrder
@@ -5364,6 +5580,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoundTable02
       objectReference: {fileID: 0}
+    - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -5432,6 +5652,10 @@ PrefabInstance:
     - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_Name
       value: Environment
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4063223197671162, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_RootOrder
@@ -5599,6 +5823,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grabling Place03
       objectReference: {fileID: 0}
+    - target: {fileID: 7648672282022557552, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649140584890000900, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7650614955780179742, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.43
@@ -5714,6 +5946,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -5774,7 +6010,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1139166335
 Transform:
@@ -5917,6 +6153,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: grassground09
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -6030,6 +6270,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!4 &1199809186 stripped
@@ -6047,6 +6291,10 @@ PrefabInstance:
     - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_Name
       value: PP_Birch_Tree_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_RootOrder
@@ -6117,6 +6365,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -6173,6 +6425,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: grassground02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -6287,6 +6543,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Moss_Grown_11
       objectReference: {fileID: 0}
+    - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
 --- !u!4 &1267479524 stripped
@@ -6361,6 +6621,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!1001 &1289175548
@@ -6373,6 +6637,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -6515,6 +6783,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SingleLane Straight 2
       objectReference: {fileID: 0}
+    - target: {fileID: 120542, guid: da7d67abfde295449857038a411bd14a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 468194, guid: da7d67abfde295449857038a411bd14a, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -6640,6 +6912,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!4 &1333844910 stripped
@@ -6714,6 +6990,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!1001 &1410573663
@@ -6726,6 +7006,10 @@ PrefabInstance:
     - target: {fileID: 1678841851965742, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
       propertyPath: m_Name
       value: rpgpp_lt_box_wood_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1678841851965742, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4202655646031778, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
       propertyPath: m_RootOrder
@@ -6796,6 +7080,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Freeway Lift Highway '
       objectReference: {fileID: 0}
+    - target: {fileID: 168972, guid: 401d27194e0344948b125cf0483f7637, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 459074, guid: 401d27194e0344948b125cf0483f7637, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -6864,6 +7152,10 @@ PrefabInstance:
     - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_Name
       value: PP_Birch_Tree_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_RootOrder
@@ -7021,6 +7313,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: leg
       objectReference: {fileID: 0}
+    - target: {fileID: 1755429121576396, guid: 4a0ab548b1b39cf4b8b48726d5f4fbfe, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4574243262341506, guid: 4a0ab548b1b39cf4b8b48726d5f4fbfe, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -7145,6 +7441,10 @@ PrefabInstance:
     - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
@@ -7296,6 +7596,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Birch_Tree_05
       objectReference: {fileID: 0}
+    - target: {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
 --- !u!1001 &1510848210
@@ -7364,6 +7668,10 @@ PrefabInstance:
     - target: {fileID: 4400482160171448048, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
       propertyPath: m_Name
       value: Sunflower03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400482160171448048, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
@@ -7434,6 +7742,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!4 &1552971474 stripped
@@ -7456,6 +7768,10 @@ PrefabInstance:
     - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_Name
       value: Tree02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2636820298107493410, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3448647613925869208, guid: a2bd798ea40c7e341aa61ad124d95342, type: 3}
       propertyPath: m_RootOrder
@@ -7584,6 +7900,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4776816592803173008, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4776816592803553452, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.18952428
@@ -7648,9 +7968,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.0006
       objectReference: {fileID: 0}
+    - target: {fileID: 6789955963242282382, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6791208188262212221, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
       propertyPath: m_Name
       value: Road04
+      objectReference: {fileID: 0}
+    - target: {fileID: 6791208188262212221, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172943381756788709, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
@@ -7721,6 +8053,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!1001 &1670191079
@@ -7733,6 +8069,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -7874,6 +8214,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grabling Place02
       objectReference: {fileID: 0}
+    - target: {fileID: 7648672282022557552, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649140584890000900, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7652510459893686384, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -7946,6 +8294,10 @@ PrefabInstance:
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_Name
       value: RoundTable01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_RootOrder
@@ -8021,6 +8373,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -8081,7 +8437,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1721862923
 Transform:
@@ -8118,6 +8474,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -8207,6 +8567,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoundTable03
       objectReference: {fileID: 0}
+    - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -8280,6 +8644,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -8386,6 +8754,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree03
       objectReference: {fileID: 0}
+    - target: {fileID: 9154215057541871321, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2554008d6447a2540b44e55f0c0b576e, type: 3}
 --- !u!1001 &1776690148
@@ -8398,6 +8770,10 @@ PrefabInstance:
     - target: {fileID: 1811686274572396, guid: af1ac26269830d347859c2c45ef72494, type: 3}
       propertyPath: m_Name
       value: StartPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811686274572396, guid: af1ac26269830d347859c2c45ef72494, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4903173184963024, guid: af1ac26269830d347859c2c45ef72494, type: 3}
       propertyPath: m_RootOrder
@@ -8512,6 +8888,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Moss_Grown_11 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
 --- !u!1001 &1782006290
@@ -8524,6 +8904,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: grassground05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -8638,6 +9022,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!1001 &1800355427
@@ -8707,6 +9095,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_10
       objectReference: {fileID: 0}
+    - target: {fileID: 2146431531174499849, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}
 --- !u!1001 &1816471008
@@ -8719,6 +9111,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -8853,6 +9249,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_10
       objectReference: {fileID: 0}
+    - target: {fileID: 2146431531174499849, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}
 --- !u!1001 &1896658732
@@ -8865,6 +9265,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -8979,6 +9383,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sunflower05
       objectReference: {fileID: 0}
+    - target: {fileID: 4400482160171448048, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
 --- !u!1001 &1913240901
@@ -8991,6 +9399,10 @@ PrefabInstance:
     - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_Name
       value: Rocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4321709845090748, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_RootOrder
@@ -9182,6 +9594,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Moss_Grown_11 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
 --- !u!1001 &1936779862
@@ -9194,6 +9610,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: grassground06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -9308,6 +9728,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Moss_Grown_11
       objectReference: {fileID: 0}
+    - target: {fileID: 4500668923149335752, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
 --- !u!1001 &1951784895
@@ -9320,6 +9744,10 @@ PrefabInstance:
     - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Small_Rocks_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1398337415367500, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4321709845090748, guid: 39dfb394e864da84db3b1c7e8f517888, type: 3}
       propertyPath: m_RootOrder
@@ -9389,6 +9817,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: grassground03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -9503,6 +9935,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!4 &1970295279 stripped
@@ -9520,6 +9956,10 @@ PrefabInstance:
     - target: {fileID: 1678841851965742, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
       propertyPath: m_Name
       value: rpgpp_lt_box_wood_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1678841851965742, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4202655646031778, guid: 144403e0e442d2a448335e0c845d665b, type: 3}
       propertyPath: m_RootOrder
@@ -9646,6 +10086,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sunflower04
       objectReference: {fileID: 0}
+    - target: {fileID: 4400482160171448048, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18bb023d75a113f4cb8d1452371f5c0e, type: 3}
 --- !u!1001 &1986968403
@@ -9715,6 +10159,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Rock_Pile_Forest_Moss_05 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1090505329258949676, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a91bc2b0a89c4748a0c5b940bd461a7, type: 3}
 --- !u!1001 &1997614994
@@ -9727,6 +10175,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -9784,6 +10236,10 @@ PrefabInstance:
     - target: {fileID: 168972, guid: 401d27194e0344948b125cf0483f7637, type: 3}
       propertyPath: m_Name
       value: Freeway Lift Highway
+      objectReference: {fileID: 0}
+    - target: {fileID: 168972, guid: 401d27194e0344948b125cf0483f7637, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 459074, guid: 401d27194e0344948b125cf0483f7637, type: 3}
       propertyPath: m_RootOrder
@@ -9859,6 +10315,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: grassground07
       objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -9915,6 +10375,10 @@ PrefabInstance:
     - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_Name
       value: grassground010
+      objectReference: {fileID: 0}
+    - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4063223197671162, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_RootOrder
@@ -10046,6 +10510,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enviironment
       objectReference: {fileID: 0}
+    - target: {fileID: 1016621507197270, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4063223197671162, guid: e484c7ad7b1274b4c847940d3eb54d14, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -10115,6 +10583,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Generic_TreeDead_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1839111652244008, guid: e30b3aeaaf8ec804198090a10eca14d8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4882488892507408, guid: e30b3aeaaf8ec804198090a10eca14d8, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -10183,6 +10655,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -10319,6 +10795,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4776816592803173008, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6784728970806330305, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -10375,9 +10855,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.002
       objectReference: {fileID: 0}
+    - target: {fileID: 6789955963242282382, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6791208188262212221, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
       propertyPath: m_Name
       value: Road05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6791208188262212221, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172943381756788709, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
@@ -10391,6 +10883,10 @@ PrefabInstance:
     - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_Name
       value: SM_Generic_Ground_02 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603414929742828, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4258812404827364, guid: 2bd56128040193346a96ac4ec4bfa455, type: 3}
       propertyPath: m_RootOrder
@@ -10532,6 +11028,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4776816592803173008, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4776816592803553452, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -10604,13 +11104,25 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6789955963242282382, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6791208188262212221, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
       propertyPath: m_Name
       value: Road01
       objectReference: {fileID: 0}
+    - target: {fileID: 6791208188262212221, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6995645006256680270, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172943381756788709, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 929efc9f535da44efbdcf947f384eb15, type: 3}
@@ -10621,6 +11133,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1652681324699140198, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3858970702254940912, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.061154965
@@ -10636,6 +11152,10 @@ PrefabInstance:
     - target: {fileID: 3858970702254940912, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.965
+      objectReference: {fileID: 0}
+    - target: {fileID: 3858970702255203006, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4155577060524686402, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
       propertyPath: m_RootOrder
@@ -10681,6 +11201,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4159466394024051213, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4159910130573938933, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.0006
@@ -10688,6 +11212,10 @@ PrefabInstance:
     - target: {fileID: 4160366736668139006, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
       propertyPath: m_Name
       value: Road02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160366736668139006, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f11659124ea0409bbef56728f8daa04, type: 3}
@@ -10701,6 +11229,14 @@ PrefabInstance:
     - target: {fileID: 7648672282022557552, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
       propertyPath: m_Name
       value: Grabling Place01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648672282022557552, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649140584890000900, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7652510459893686384, guid: bded1d1d37cc043579bee0bacd666a6d, type: 3}
       propertyPath: m_RootOrder
