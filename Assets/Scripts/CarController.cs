@@ -24,9 +24,11 @@ public class CarController : MonoBehaviour
     public CheckPoint lastCheckPoint;
     public GrapplingGun grapplingGun;
 
+
     public int maxRotationTorque; // maximum rotation torque
     public int swingForce; // the force with which to swing when grappled
     public int grappleBoostForce;
+    public float maxGrappleDist;
 
     private float torque; // current torque
     private Rigidbody rigidBody; // rigid body of the car
@@ -41,8 +43,14 @@ public class CarController : MonoBehaviour
     {
         if (grappling)
         {
+            // swing car back and forth (horizontal input, same as rotating)
             Vector3 dirVector = rigidBody.transform.up * -1;
             rigidBody.AddForce(dirVector * Input.GetAxisRaw("Horizontal") * swingForce);
+
+            // retract or extend grappling hook (vertical input, same as driving)
+            SpringJoint joint = GetComponent<SpringJoint>();
+            joint.maxDistance -= Input.GetAxisRaw("Vertical") * 0.2f;
+            if (joint.maxDistance > maxGrappleDist) joint.maxDistance = maxGrappleDist;
 
             return;
         }
