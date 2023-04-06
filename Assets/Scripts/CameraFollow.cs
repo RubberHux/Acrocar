@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.InputSystem;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -9,6 +11,14 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float translateSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float maxZoom, minZoom, zoomSpeed;
+    [SerializeField] private CarController carController;
+    private InputAction zoom;
+
+    private void Start()
+    {
+        zoom = carController.playerControls.Player2D.Zoom;
+        zoom.Enable();
+    }
 
     private void FixedUpdate()
     {
@@ -35,7 +45,7 @@ public class CameraFollow : MonoBehaviour
     }
     private void HandleZoom()
     {
-        float x = offset.x - Input.mouseScrollDelta.y * zoomSpeed;
+        float x = offset.x - zoom.ReadValue<Vector2>().y * zoomSpeed;
         offset.x = (x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));
     }
 }

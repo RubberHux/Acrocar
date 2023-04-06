@@ -54,6 +54,13 @@ public abstract class CarController : MonoBehaviour
         Respawn();
     }
 
+    internal void DoJump(InputAction.CallbackContext context)
+    {
+        Jump();
+    }
+
+    internal abstract void Jump();
+
     internal abstract void Respawn();
 
     public void Kill()

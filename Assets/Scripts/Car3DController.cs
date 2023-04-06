@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class Car3DController : CarController
 {
-    private const string HORIZONTAL = "Horizontal";
-    private const string VERTICAL = "Vertical";
-    private float horizontalInput;
-    private float verticalInput;
-    private bool isBreaking, jump;
     private float currentBreakForce;
     private float currentSteerAngle;
 
@@ -18,7 +15,7 @@ public class Car3DController : CarController
     [SerializeField] private float maxSteeringAngle;
 
     [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
-    private InputAction move, fireHook, breaking, reset;
+    private InputAction move, rotate, swing, jump, fireHook, breaking, reset, rotateMod;
 
     [SerializeField] private WheelCollider frontLeftWheelCollider;
     [SerializeField] private WheelCollider frontRightWheelCollider;
@@ -34,26 +31,36 @@ public class Car3DController : CarController
 
     private void OnEnable()
     {
-        move = playerControls.Player.Move;
+        move = playerControls.Player3D.Move;
         move.Enable();
-        breaking = playerControls.Player.Break;
+        rotate = playerControls.Player3D.Rotate;
+        rotate.Enable();
+        rotateMod = playerControls.Player3D.RotateMod;
+        rotateMod.Enable();
+        swing = playerControls.Player3D.Swing;
+        swing.Enable();
+        breaking = playerControls.Player3D.Break;
         breaking.Enable();
-        fireHook = playerControls.Player.FireHook;
+        fireHook = playerControls.LevelInteraction.FireHook;
         fireHook.Enable();
-        reset = playerControls.Player.Reset;
+        reset = playerControls.LevelInteraction.Reset;
         reset.Enable();
         reset.performed += Reset;
+        jump = playerControls.Player3D.Jump;
+        jump.Enable();
+        jump.performed += DoJump;
+
     }
 
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        startpoint = transform.position;
     }
 
     private void FixedUpdate()
     {
         CheckGrounded();
-        GetInput();
         HandleMotor();
         if (groundedWheels != 0)
         {
@@ -61,11 +68,6 @@ public class Car3DController : CarController
             UpdateWheels();
         }
         AirRotate();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) Jump();
     }
 
     private void CheckGrounded()
@@ -77,20 +79,13 @@ public class Car3DController : CarController
         if (backRightWheelCollider.isGrounded) groundedWheels++;
     }
 
-
-    private void GetInput()
-    {
-        horizontalInput = Input.GetAxis(HORIZONTAL);
-        verticalInput = Input.GetAxis(VERTICAL);
-        isBreaking = Input.GetKey(KeyCode.Space);
-    }
-
     private void HandleMotor()
     {
-        frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput * motorForce;
+        float driveDir = move.ReadValue<Vector2>().y;
+        frontLeftWheelCollider.motorTorque = driveDir * motorForce;
+        frontRightWheelCollider.motorTorque = driveDir * motorForce;
 
-        currentBreakForce = isBreaking ? breakForce : (verticalInput == 0 ? breakForce / 10 : 0);
+        currentBreakForce = breaking.IsPressed() ? breakForce : (driveDir == 0 ? breakForce / 10 : 0);
         ApplyBreaking();
     }
 
@@ -104,7 +99,8 @@ public class Car3DController : CarController
 
     private void HandleSteering ()
     {
-        currentSteerAngle = maxSteeringAngle * horizontalInput;
+        float steerDir = move.ReadValue<Vector2>().x;
+        currentSteerAngle = maxSteeringAngle * steerDir;
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
     }
@@ -120,9 +116,14 @@ public class Car3DController : CarController
     {
         if (groundedWheels != 0) return;
 
-        rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * verticalInput);
-        if (!Input.GetKey(KeyCode.LeftShift)) rigidBody.AddTorque(rigidBody.transform.up * sideSpinForce * horizontalInput);
-        else rigidBody.AddTorque(rigidBody.transform.forward * shiftSpinForce * horizontalInput);
+        Vector2 Rotate = rotate.ReadValue<Vector2>();
+
+        //Front swinging
+        rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * Rotate.y);
+
+        //Side swinging
+        if (rotateMod.IsPressed()) rigidBody.AddTorque(rigidBody.transform.forward * shiftSpinForce * Rotate.x);
+        else rigidBody.AddTorque(rigidBody.transform.up * sideSpinForce * Rotate.x);
     }
 
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
@@ -134,14 +135,19 @@ public class Car3DController : CarController
         wheelTransform.position = pos;
     }
 
-    private void Jump()
+    internal override void Jump()
     {
         if (groundedWheels == 4) rigidBody.AddForce(Vector3.up * 700000);
     }
 
     internal override void Respawn()
     {
-        rigidBody.MovePosition(new Vector3(0, 1, 0));
+        if (lastCheckPoint == null) rigidBody.MovePosition(startpoint);
+        else
+        {
+            rigidBody.MovePosition(lastCheckPoint.gameObject.transform.position);
+        }
+
         rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;

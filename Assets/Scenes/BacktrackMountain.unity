@@ -1587,7 +1587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carController: {fileID: 1785150882}
-  renderer: {fileID: 0}
+  renderMaker: {fileID: 0}
 --- !u!65 &525403046
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2147,7 +2147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carController: {fileID: 1785150882}
-  renderer: {fileID: 0}
+  renderMaker: {fileID: 0}
 --- !u!65 &869306884
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3411,6 +3411,7 @@ MonoBehaviour:
   maxZoom: 100
   minZoom: 30
   zoomSpeed: 5
+  carController: {fileID: 1785150882}
 --- !u!4 &1621537091
 Transform:
   m_ObjectHideFlags: 0

@@ -6,12 +6,12 @@ using UnityEngine;
 public class CheckPoint : MonoBehaviour
 {
     public CarController carController;
-    public Renderer renderer;
+    public Renderer renderMaker;
 
     void Start()
     {
-        renderer = GetComponent<Renderer>();
-        renderer.material.color = Color.cyan;
+        renderMaker = GetComponent<Renderer>();
+        renderMaker.material.color = Color.cyan;
     }
 
     void OnTriggerEnter(Collider other)
@@ -20,12 +20,12 @@ public class CheckPoint : MonoBehaviour
         {
             if (carController.lastCheckPoint != null) carController.lastCheckPoint.UnColour();
             carController.lastCheckPoint = this;
-            renderer.material.color = Color.blue;
+            renderMaker.material.color = Color.blue;
         }
     }
 
     public void UnColour()
     {
-        renderer.material.color = Color.cyan;
+        renderMaker.material.color = Color.cyan;
     }
 }
