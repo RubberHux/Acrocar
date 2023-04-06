@@ -2947,6 +2947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCanvas: {fileID: 1261486178}
+  carController: {fileID: 1785150882}
 --- !u!114 &1261486174
 MonoBehaviour:
   m_ObjectHideFlags: 0
