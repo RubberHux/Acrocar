@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764f75e847f3f9e48a9abd744249abe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carController: {fileID: 1785150880}
+  carController: {fileID: 1785150882}
 --- !u!65 &92228606
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764f75e847f3f9e48a9abd744249abe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carController: {fileID: 1785150880}
+  carController: {fileID: 1785150882}
 --- !u!65 &142656208
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -918,7 +918,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1785150874}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.36, z: 0}
+  m_LocalPosition: {x: 0, y: 1.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1057,7 +1057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764f75e847f3f9e48a9abd744249abe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carController: {fileID: 1785150880}
+  carController: {fileID: 1785150882}
 --- !u!65 &500352356
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1168,7 +1168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85ce46c49f118049abae259ee140073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carController: {fileID: 1785150880}
+  carController: {fileID: 1785150882}
   renderer: {fileID: 0}
 --- !u!65 &525403046
 BoxCollider:
@@ -1728,7 +1728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85ce46c49f118049abae259ee140073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carController: {fileID: 1785150880}
+  carController: {fileID: 1785150882}
   renderer: {fileID: 0}
 --- !u!65 &869306884
 BoxCollider:
@@ -1840,7 +1840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764f75e847f3f9e48a9abd744249abe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carController: {fileID: 1785150880}
+  carController: {fileID: 1785150882}
 --- !u!65 &892190780
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2913,7 +2913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764f75e847f3f9e48a9abd744249abe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carController: {fileID: 1785150880}
+  carController: {fileID: 1785150882}
 --- !u!1 &1785150874
 GameObject:
   m_ObjectHideFlags: 0
@@ -2928,8 +2928,8 @@ GameObject:
   - component: {fileID: 1785150875}
   - component: {fileID: 1785150878}
   - component: {fileID: 1785150879}
-  - component: {fileID: 1785150880}
   - component: {fileID: 1785150881}
+  - component: {fileID: 1785150882}
   m_Layer: 6
   m_Name: PlayerCar
   m_TagString: Player
@@ -3115,35 +3115,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 98
   m_CollisionDetection: 0
---- !u!114 &1785150880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1785150874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e0a344018857304794d461de70416ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  axleInfos:
-  - leftWheel: {fileID: 1800800517}
-    rightWheel: {fileID: 71980362}
-    motor: 1
-  - leftWheel: {fileID: 2088955651}
-    rightWheel: {fileID: 634900772}
-    motor: 1
-  maxTorque: 800
-  grappling: 0
-  respawnTime: 100
-  respawnTimer: 0
-  respawned: 0
-  lastCheckPoint: {fileID: 0}
-  maxRotationTorque: 500
-  swingForce: 100
-  grappleBoostForce: 1800000
-  maxGrappleDist: 15
 --- !u!114 &1785150881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3165,10 +3136,38 @@ MonoBehaviour:
   gunTip: {fileID: 368105577}
   player: {fileID: 461539439}
   maxGrappleDistance: 25
-  carController: {fileID: 1785150880}
+  carController: {fileID: 1785150882}
   aimLeniencyPreTime: 0.2
   aimLeniencyPostTime: 0.1
   grappleBoostTime: 1.5
+--- !u!114 &1785150882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785150874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd03621214c92846a810c76f975d2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grappling: 0
+  respawnTime: 1
+  respawnTimer: 0
+  respawned: 0
+  maxRotationTorque: 300000
+  swingForce: 6000
+  grappleBoostForce: 1800000
+  maxGrappleDist: 15
+  axleInfos:
+  - leftWheel: {fileID: 1800800517}
+    rightWheel: {fileID: 71980362}
+    motor: 1
+  - leftWheel: {fileID: 2088955651}
+    rightWheel: {fileID: 634900772}
+    motor: 1
+  maxTorque: 800
 --- !u!1 &1800800515
 GameObject:
   m_ObjectHideFlags: 0
