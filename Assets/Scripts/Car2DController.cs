@@ -139,11 +139,6 @@ public class Car2DController : CarController
         }
     }
 
-    private void Reset(InputAction.CallbackContext context)
-    {
-        Respawn();
-    }
-
     internal override void Respawn()
     {
         if (lastCheckPoint == null) rigidBody.MovePosition(startpoint);

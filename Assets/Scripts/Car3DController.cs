@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Car3DController : MonoBehaviour
+public class Car3DController : CarController
 {
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
-    private Rigidbody rigidBody;
     private float horizontalInput;
     private float verticalInput;
     private bool isBreaking, jump;
@@ -18,6 +18,7 @@ public class Car3DController : MonoBehaviour
     [SerializeField] private float maxSteeringAngle;
 
     [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
+    private InputAction move, fireHook, breaking, reset;
 
     [SerializeField] private WheelCollider frontLeftWheelCollider;
     [SerializeField] private WheelCollider frontRightWheelCollider;
@@ -30,6 +31,19 @@ public class Car3DController : MonoBehaviour
     [SerializeField] private Transform backRightWheelTransform;
 
     public int groundedWheels = 0;
+
+    private void OnEnable()
+    {
+        move = playerControls.Player.Move;
+        move.Enable();
+        breaking = playerControls.Player.Break;
+        breaking.Enable();
+        fireHook = playerControls.Player.FireHook;
+        fireHook.Enable();
+        reset = playerControls.Player.Reset;
+        reset.Enable();
+        reset.performed += Reset;
+    }
 
     private void Start()
     {
@@ -52,7 +66,6 @@ public class Car3DController : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
-        if (Input.GetKeyDown(KeyCode.R)) Respawn();
     }
 
     private void CheckGrounded()
@@ -126,7 +139,7 @@ public class Car3DController : MonoBehaviour
         if (groundedWheels == 4) rigidBody.AddForce(Vector3.up * 700000);
     }
 
-    private void Respawn()
+    internal override void Respawn()
     {
         rigidBody.MovePosition(new Vector3(0, 1, 0));
         rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);

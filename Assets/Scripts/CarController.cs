@@ -49,7 +49,7 @@ public abstract class CarController : MonoBehaviour
         }
     }
 
-    private void Reset(InputAction.CallbackContext context)
+    internal void Reset(InputAction.CallbackContext context)
     {
         Respawn();
     }
