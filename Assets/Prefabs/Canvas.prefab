@@ -394,7 +394,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: 
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -716,10 +716,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4831279653636459974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd1a6f0266a3c42939d4d34ede9a20e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f44c2a1a21f8334ea9ce0021e1f2e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiCanvas: {fileID: 4831279653636459978}
 --- !u!114 &4831279653636459976
 MonoBehaviour:
   m_ObjectHideFlags: 0
