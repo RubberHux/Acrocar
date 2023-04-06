@@ -1401,7 +1401,7 @@ MonoBehaviour:
   respawnTimer: 0
   respawned: 0
   lastCheckPoint: {fileID: 0}
-  maxRotationTorque: 500
+  maxRotationTorque: 5000
   swingForce: 100
   grappleBoostForce: 1800000
   maxGrappleDist: 15
