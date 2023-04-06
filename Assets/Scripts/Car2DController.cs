@@ -31,13 +31,13 @@ public class Car2DController : CarController
 
     private void OnEnable()
     {
-        move = playerControls.Player.Move;
+        move = playerControls.Player2D.Move;
         move.Enable();
-        breaking = playerControls.Player.Break;
+        breaking = playerControls.Player2D.Break;
         breaking.Enable();
-        fireHook = playerControls.Player.FireHook;
+        fireHook = playerControls.LevelInteraction.FireHook;
         fireHook.Enable();
-        reset = playerControls.Player.Reset;
+        reset = playerControls.LevelInteraction.Reset;
         reset.Enable();
         reset.performed += Reset;
     }
@@ -66,7 +66,7 @@ public class Car2DController : CarController
 
             // retract or extend grappling hook (vertical input, same as driving)
             SpringJoint joint = GetComponent<SpringJoint>();
-            joint.maxDistance -= Input.GetAxisRaw("Vertical") * 0.2f * Time.deltaTime * 60;
+            joint.maxDistance -= moveDirection.y * 0.2f * Time.deltaTime * 60;
             if (joint.maxDistance > maxGrappleDist) joint.maxDistance = maxGrappleDist;
 
             return;
@@ -88,7 +88,7 @@ public class Car2DController : CarController
         // if direction is changed: brake and then accelerate
         torque = maxTorque * (2 * movDir);
 
-        bool brake = Input.GetKey(KeyCode.Space); // should car brake?
+         // should car brake?
 
         // drive forward or backwards based on input
         foreach (AxleInfo aInfo in axleInfos)
@@ -96,7 +96,7 @@ public class Car2DController : CarController
             if (aInfo.motor)
             {
                 // if car should brake, set the brake torque
-                if (brake)
+                if (breaking.IsPressed())
                 {
                     aInfo.leftWheel.brakeTorque = maxTorque * 10;
                     aInfo.rightWheel.brakeTorque = maxTorque * 10;
@@ -137,6 +137,11 @@ public class Car2DController : CarController
             rigidBody.AddExplosionForce(100000 * Time.deltaTime * 180, rigidBody.transform.position, 5, 5);
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
+    }
+
+    internal override void Jump()
+    {
+        //rigidBody.AddForce(Vector3.up * 700000);
     }
 
     internal override void Respawn()
