@@ -3221,6 +3221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCanvas: {fileID: 611618942}
+  carController: {fileID: 1324978134}
 --- !u!114 &611618938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5405,6 +5406,7 @@ MonoBehaviour:
   maxZoom: 100
   minZoom: 30
   zoomSpeed: 5
+  carController: {fileID: 0}
 --- !u!4 &956838856
 Transform:
   m_ObjectHideFlags: 0
