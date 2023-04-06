@@ -73,7 +73,7 @@ public class CarController : MonoBehaviour
         {
             // swing car back and forth (horizontal input, same as rotating)
             Vector3 dirVector = rigidBody.transform.up * -1;
-            rigidBody.AddForce(dirVector * moveDirection.x * swingForce);
+            rigidBody.AddForce(dirVector * moveDirection.x * swingForce * Time.deltaTime);
 
             // retract or extend grappling hook (vertical input, same as driving)
             SpringJoint joint = GetComponent<SpringJoint>();
@@ -111,7 +111,6 @@ public class CarController : MonoBehaviour
                 {
                     aInfo.leftWheel.brakeTorque = maxTorque * 10;
                     aInfo.rightWheel.brakeTorque = maxTorque * 10;
-
                 }
                 // if not braking, set brake torque to 0 and motor torque to current torque
                 else
@@ -129,7 +128,7 @@ public class CarController : MonoBehaviour
         }
 
         // rotate car via horizontal movement inputs (along x-axis)
-        rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal"));
+        rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal") * Time.deltaTime);
 
         // if player car gets stuck on its back, you can flip it back up
         if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance 
