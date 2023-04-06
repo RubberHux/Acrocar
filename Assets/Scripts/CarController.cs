@@ -35,7 +35,6 @@ public abstract class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Make sure that the car doesn't drive off when 
         if (respawned)
         {
             respawnTimer -= Time.deltaTime;
