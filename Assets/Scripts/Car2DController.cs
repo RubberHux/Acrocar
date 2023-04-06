@@ -66,7 +66,7 @@ public class Car2DController : CarController
 
             // retract or extend grappling hook (vertical input, same as driving)
             SpringJoint joint = GetComponent<SpringJoint>();
-            joint.maxDistance -= Input.GetAxisRaw("Vertical") * 0.2f * Time.deltaTime;
+            joint.maxDistance -= Input.GetAxisRaw("Vertical") * 0.2f * Time.deltaTime * 60;
             if (joint.maxDistance > maxGrappleDist) joint.maxDistance = maxGrappleDist;
 
             return;
@@ -134,7 +134,7 @@ public class Car2DController : CarController
             }
 
             // apply explosion force and rotation to car to get it back up
-            rigidBody.AddExplosionForce(100000 * Time.deltaTime, rigidBody.transform.position, 5, 5);
+            rigidBody.AddExplosionForce(100000 * Time.deltaTime * 180, rigidBody.transform.position, 5, 5);
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
     }
