@@ -73,11 +73,11 @@ public class CarController : MonoBehaviour
         {
             // swing car back and forth (horizontal input, same as rotating)
             Vector3 dirVector = rigidBody.transform.up * -1;
-            rigidBody.AddForce(dirVector * moveDirection.x * swingForce);
+            rigidBody.AddForce(dirVector * moveDirection.x * swingForce * Time.deltaTime * 60);
 
             // retract or extend grappling hook (vertical input, same as driving)
             SpringJoint joint = GetComponent<SpringJoint>();
-            joint.maxDistance -= Input.GetAxisRaw("Vertical") * 0.2f;
+            joint.maxDistance -= Input.GetAxisRaw("Vertical") * 0.1f * Time.deltaTime * 60;
             if (joint.maxDistance > maxGrappleDist) joint.maxDistance = maxGrappleDist;
 
             return;
@@ -129,7 +129,7 @@ public class CarController : MonoBehaviour
         }
 
         // rotate car via horizontal movement inputs (along x-axis)
-        rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal"));
+        rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal") * 300 * Time.deltaTime);
 
         // if player car gets stuck on its back, you can flip it back up
         if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance 
@@ -146,7 +146,7 @@ public class CarController : MonoBehaviour
             }
 
             // apply explosion force and rotation to car to get it back up
-            rigidBody.AddExplosionForce(100000, rigidBody.transform.position, 5, 5);
+            rigidBody.AddExplosionForce(100000 * Time.deltaTime * 180, rigidBody.transform.position, 5, 5);
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
     }
