@@ -129,7 +129,7 @@ public class CarController : MonoBehaviour
         }
 
         // rotate car via horizontal movement inputs (along x-axis)
-        rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal") * 300 * Time.deltaTime);
+        rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal") * 60 * Time.deltaTime);
 
         // if player car gets stuck on its back, you can flip it back up
         if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance 
