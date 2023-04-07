@@ -48,6 +48,7 @@ public class GrapplingGun : MonoBehaviour
         if (fireHook.WasPressedThisFrame()) aimPreTimer = aimLeniencyPreTime;
         if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && fireHook.IsPressed()) StartGrapple();
         else if (fireHook.WasReleasedThisFrame()) StopGrapple();
+
         if (aimPreTimer >= 0) aimPreTimer -= Time.deltaTime;
         if (aimPostTimer >= 0) aimPostTimer -= Time.deltaTime;
         if (grappleBoostTimer >= 0) grappleBoostTimer -= Time.deltaTime;
@@ -80,7 +81,7 @@ public class GrapplingGun : MonoBehaviour
             joint.autoConfigureConnectedAnchor = false;
             joint.connectedAnchor = grapplePoint;
 
-            joint.anchor = new Vector3(0, 0, 1);
+            joint.anchor = gunTip.localPosition;
 
             joint.maxDistance = distanceFromPoint * maxJointDist;
             joint.minDistance = distanceFromPoint * minJointDist;
@@ -135,6 +136,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void StopGrapple()
     {
+        carController.grappling = false;
         aimPreTimer = aimPostTimer = -1;
         carController.grappling = false;
         lr.positionCount = 0;

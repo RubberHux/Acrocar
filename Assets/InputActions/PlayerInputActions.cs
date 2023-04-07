@@ -299,7 +299,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""Keyboard"",
                     ""id"": ""067941a8-2897-4059-999a-5fdcc27177f2"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -315,7 +315,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/scroll/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -326,13 +326,13 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/scroll/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""Gamepad"",
                     ""id"": ""a68f91a4-3621-44f2-a9f5-3b8be5175d63"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -348,7 +348,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -359,7 +359,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -423,6 +423,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrappleLengthControl"",
+                    ""type"": ""Value"",
+                    ""id"": ""3602879e-5b23-453d-873a-f32df42fd72a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -1107,6 +1116,72 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""RotateMod"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""5f2c2ff2-7254-4701-aa50-db9a67278382"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""b8c6ac80-6593-4c9c-99a7-f673e9f34058"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""867c3453-218b-4d69-af0a-24d1236ef00f"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""b41e665d-3211-466c-80e9-a340fee734ce"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""82782a4c-6c42-4de6-aa46-be363eb20f68"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""8cfff0f7-ac0e-4c23-a85d-609f33fd23d7"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -1837,6 +1912,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player3D_Break = m_Player3D.FindAction("Break", throwIfNotFound: true);
         m_Player3D_Jump = m_Player3D.FindAction("Jump", throwIfNotFound: true);
         m_Player3D_RotateMod = m_Player3D.FindAction("RotateMod", throwIfNotFound: true);
+        m_Player3D_GrappleLengthControl = m_Player3D.FindAction("GrappleLengthControl", throwIfNotFound: true);
         // LevelInteraction
         m_LevelInteraction = asset.FindActionMap("LevelInteraction", throwIfNotFound: true);
         m_LevelInteraction_Pause = m_LevelInteraction.FindAction("Pause", throwIfNotFound: true);
@@ -1968,6 +2044,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player3D_Break;
     private readonly InputAction m_Player3D_Jump;
     private readonly InputAction m_Player3D_RotateMod;
+    private readonly InputAction m_Player3D_GrappleLengthControl;
     public struct Player3DActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1978,6 +2055,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Break => m_Wrapper.m_Player3D_Break;
         public InputAction @Jump => m_Wrapper.m_Player3D_Jump;
         public InputAction @RotateMod => m_Wrapper.m_Player3D_RotateMod;
+        public InputAction @GrappleLengthControl => m_Wrapper.m_Player3D_GrappleLengthControl;
         public InputActionMap Get() { return m_Wrapper.m_Player3D; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2005,6 +2083,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @RotateMod.started -= m_Wrapper.m_Player3DActionsCallbackInterface.OnRotateMod;
                 @RotateMod.performed -= m_Wrapper.m_Player3DActionsCallbackInterface.OnRotateMod;
                 @RotateMod.canceled -= m_Wrapper.m_Player3DActionsCallbackInterface.OnRotateMod;
+                @GrappleLengthControl.started -= m_Wrapper.m_Player3DActionsCallbackInterface.OnGrappleLengthControl;
+                @GrappleLengthControl.performed -= m_Wrapper.m_Player3DActionsCallbackInterface.OnGrappleLengthControl;
+                @GrappleLengthControl.canceled -= m_Wrapper.m_Player3DActionsCallbackInterface.OnGrappleLengthControl;
             }
             m_Wrapper.m_Player3DActionsCallbackInterface = instance;
             if (instance != null)
@@ -2027,6 +2108,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @RotateMod.started += instance.OnRotateMod;
                 @RotateMod.performed += instance.OnRotateMod;
                 @RotateMod.canceled += instance.OnRotateMod;
+                @GrappleLengthControl.started += instance.OnGrappleLengthControl;
+                @GrappleLengthControl.performed += instance.OnGrappleLengthControl;
+                @GrappleLengthControl.canceled += instance.OnGrappleLengthControl;
             }
         }
     }
@@ -2244,6 +2328,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnBreak(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRotateMod(InputAction.CallbackContext context);
+        void OnGrappleLengthControl(InputAction.CallbackContext context);
     }
     public interface ILevelInteractionActions
     {

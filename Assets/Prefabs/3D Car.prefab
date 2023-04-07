@@ -993,14 +993,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8213be0818df954b91aead2853ada3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grappling: 0
   respawnTime: 1
   respawnTimer: 0
-  respawned: 0
   maxRotationTorque: 0
   swingForce: 0
   grappleBoostForce: 1800000
-  motorForce: 4000
+  motorForce: 8000
   breakForce: 3000
   maxSteeringAngle: 20
   frontSpinForce: 20000
@@ -1014,7 +1012,7 @@ MonoBehaviour:
   frontRightWheelTransform: {fileID: 3530329027486806887}
   backLeftWheelTransform: {fileID: 4779385844343569019}
   backRightWheelTransform: {fileID: 4445874436172322136}
-  groundedWheels: 0
+  mainCamera: {fileID: 0}
 --- !u!120 &1975006650651592672
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1139,7 +1137,7 @@ MonoBehaviour:
   aimLeniencyPostTime: 0.1
   grappleBoostTime: 1
   maxJointDist: 0
-  minJointDist: 0
+  minJointDist: 0.8
 --- !u!1 &7834106809336206583
 GameObject:
   m_ObjectHideFlags: 0

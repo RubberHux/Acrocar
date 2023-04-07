@@ -61,7 +61,6 @@ public class Car2DController : CarController
             Vector3 dirVector = rigidBody.transform.up * -1;
             rigidBody.AddForce(dirVector * moveDirection.x * swingForce * Time.deltaTime);
 
-            // retract or extend grappling hook (vertical input, same as driving)
             grapplingGun.ChangeLength(moveDirection.y);
             return;
         }

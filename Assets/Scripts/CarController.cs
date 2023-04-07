@@ -11,10 +11,10 @@ using UnityEngine.InputSystem;
 
 public abstract class CarController : MonoBehaviour
 {
-    public bool grappling;
+    [NonSerialized] public bool grappling;
     public float respawnTime = 1;
     public float respawnTimer = 0;
-    public bool respawned = false;
+    [NonSerialized] public bool respawned = false;
     [NonSerialized] public CheckPoint lastCheckPoint = null;
 
     public int maxRotationTorque; // maximum rotation torque
@@ -32,20 +32,6 @@ public abstract class CarController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (respawned)
-        {
-            respawnTimer -= Time.deltaTime;
-            if (respawnTimer <= 0)
-            {
-                respawned = false;
-                respawnTimer = 0;
-                rigidBody.isKinematic = false;
-            }
-            else return;
-        }
-    }
 
     internal void Reset(InputAction.CallbackContext context)
     {
