@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class DeathMaterialScript : MonoBehaviour
 {
-    public CarController carController;
-
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            carController.Kill();
+            other.GetComponent<CarController>().Kill();
         }
     }
 }

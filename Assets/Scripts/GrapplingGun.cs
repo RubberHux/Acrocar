@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class GrapplingGun : MonoBehaviour
@@ -15,11 +16,12 @@ public class GrapplingGun : MonoBehaviour
     public Transform gunTip, player;
     public float maxGrappleDistance;
     private SpringJoint joint;
-    public CarController carController;
+    private CarController carController;
     private float aimPreTimer = -1, aimPostTimer = -1, grappleBoostTimer = 0;
     private bool aiming = false;
     public float aimLeniencyPreTime, aimLeniencyPostTime, grappleBoostTime;
     private InputAction fireHook;
+    public float maxJointDist, minJointDist;
     enum GrappleType
     {
         Swing,
@@ -30,6 +32,7 @@ public class GrapplingGun : MonoBehaviour
     void Awake()
     {
         lr = GetComponent<LineRenderer>();
+        carController = GetComponent<CarController>();
     }
 
     // Update is called once per frame
@@ -79,8 +82,8 @@ public class GrapplingGun : MonoBehaviour
 
             joint.anchor = new Vector3(0, 0, 1);
 
-            joint.maxDistance = distanceFromPoint * 0.8f;
-            joint.minDistance = distanceFromPoint * 0.25f;
+            joint.maxDistance = distanceFromPoint * maxJointDist;
+            joint.minDistance = distanceFromPoint * minJointDist;
 
             joint.spring = 1000f;
             joint.damper = 2000f;
@@ -136,5 +139,11 @@ public class GrapplingGun : MonoBehaviour
         carController.grappling = false;
         lr.positionCount = 0;
         Destroy(joint);
+    }
+
+    public void ChangeLength(float direction)
+    {
+        joint.maxDistance -= direction * 0.2f * Time.deltaTime * 60;
+        if (joint.maxDistance > maxGrappleDistance) joint.maxDistance = direction;
     }
 }

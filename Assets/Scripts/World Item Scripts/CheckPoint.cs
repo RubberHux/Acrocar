@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    public CarController carController;
-    public Renderer renderMaker;
+    private Renderer renderMaker;
 
     void Start()
     {
@@ -18,6 +17,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            CarController carController = other.GetComponent<CarController>();
             if (carController.lastCheckPoint != null) carController.lastCheckPoint.UnColour();
             carController.lastCheckPoint = this;
             renderMaker.material.color = Color.blue;

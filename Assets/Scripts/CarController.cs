@@ -21,8 +21,8 @@ public abstract class CarController : MonoBehaviour
     public int maxRotationTorque; // maximum rotation torque
     public int swingForce; // the force with which to swing when grappled
     public int grappleBoostForce;
-    public float maxGrappleDist;
     internal Vector3 startpoint;
+    internal GrapplingGun grapplingGun;
 
     internal Rigidbody rigidBody; // rigid body of the car
 
@@ -30,6 +30,7 @@ public abstract class CarController : MonoBehaviour
     private void Awake()
     {
         playerControls = new PlayerInputActions();
+        grapplingGun = GetComponent<GrapplingGun>();
     }
 
     // Update is called once per frame
