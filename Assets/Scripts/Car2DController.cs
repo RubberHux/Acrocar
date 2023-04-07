@@ -20,14 +20,10 @@ public class Car2DController : CarController
     public List<AxleInfo> axleInfos; // list of axle infos, including wheel colliders
     public int maxTorque; // maximum torque
     private InputAction move, fireHook, breaking, reset;
+    
 
     private float torque; // current torque
     private float stationaryTolerance;
-
-    private void Awake()
-    {
-        playerControls = new PlayerInputActions();
-    }
 
     private void OnEnable()
     {
@@ -65,10 +61,7 @@ public class Car2DController : CarController
             rigidBody.AddForce(dirVector * moveDirection.x * swingForce * Time.deltaTime);
 
             // retract or extend grappling hook (vertical input, same as driving)
-            SpringJoint joint = GetComponent<SpringJoint>();
-            joint.maxDistance -= moveDirection.y * 0.2f * Time.deltaTime * 60;
-            if (joint.maxDistance > maxGrappleDist) joint.maxDistance = maxGrappleDist;
-
+            grapplingGun.ChangeLength(moveDirection.y);
             return;
         }
 
