@@ -5,7 +5,4 @@ using UnityEngine;
 public static class InputHandler
 {
     public static PlayerInputActions playerInput = new PlayerInputActions();
-
-    // Start is called before the first frame update
-
 }

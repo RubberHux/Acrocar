@@ -16,7 +16,7 @@ public class Car3DController : CarController
     [SerializeField] private float maxSteeringAngle;
 
     [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
-    private InputAction move, rotate, swing, jump, fireHook, breaking, reset, rotateMod;
+    private InputAction move, rotate, swing, jump, fireHook, breaking, reset, rotateMod, grapplingLengthControl;
 
     [SerializeField] private WheelCollider frontLeftWheelCollider;
     [SerializeField] private WheelCollider frontRightWheelCollider;
@@ -41,6 +41,8 @@ public class Car3DController : CarController
         rotateMod.Enable();
         swing = InputHandler.playerInput.Player3D.Swing;
         swing.Enable();
+        grapplingLengthControl = InputHandler.playerInput.Player3D.GrappleLengthControl;
+        grapplingLengthControl.Enable();
         breaking = InputHandler.playerInput.Player3D.Break;
         breaking.Enable();
         fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
@@ -61,6 +63,7 @@ public class Car3DController : CarController
 
     private void Start()
     {
+        stationaryTolerance = 0.0005f;
         rigidBody = GetComponent<Rigidbody>();
         startpoint = transform.position;
     }
@@ -92,6 +95,13 @@ public class Car3DController : CarController
             }
             else return;
         }
+        if (grappling) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
+        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
+            && rigidBody.transform.up.y <= 10e-5 && !grappling)
+        {
+            rigidBody.AddExplosionForce(200000 * Time.deltaTime * 180, rigidBody.transform.position, 5, 5);
+            rigidBody.AddTorque(rigidBody.transform.right * maxRotationTorque * 100);
+        }
     }
 
     private void CheckGrounded()
@@ -108,8 +118,8 @@ public class Car3DController : CarController
         float driveDir = move.ReadValue<Vector2>().y;
         frontLeftWheelCollider.motorTorque = driveDir * motorForce;
         frontRightWheelCollider.motorTorque = driveDir * motorForce;
-
-        currentBreakForce = breaking.IsPressed() ? breakForce : (driveDir == 0 ? breakForce / 10 : 0);
+        float rpm = frontLeftWheelCollider.rpm + frontRightWheelCollider.rpm / 2;
+        currentBreakForce = (breaking.IsPressed() || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10 : 0);
         ApplyBreaking();
     }
 
@@ -146,13 +156,12 @@ public class Car3DController : CarController
         rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * Rotate.y);
 
         //Side swinging
-        if (rotateMod.IsPressed()) rigidBody.AddTorque(rigidBody.transform.forward * shiftSpinForce * Rotate.x);
+        if (rotateMod.IsPressed()) rigidBody.AddTorque(-rigidBody.transform.forward * shiftSpinForce * Rotate.x);
         else rigidBody.AddTorque(rigidBody.transform.up * sideSpinForce * Rotate.x);
     }
     private void Swing()
     {
         Vector2 swingDirection = swing.ReadValue<Vector2>();
-        Debug.Log(swingDirection);
         rigidBody.AddForce(mainCamera.transform.forward * swingDirection.y * swingForce * Time.deltaTime);
         rigidBody.AddForce(mainCamera.transform.right * swingDirection.x * swingForce * Time.deltaTime);
     }

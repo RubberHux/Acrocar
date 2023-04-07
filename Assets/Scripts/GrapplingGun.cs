@@ -145,7 +145,8 @@ public class GrapplingGun : MonoBehaviour
 
     public void ChangeLength(float direction)
     {
-        joint.maxDistance -= direction * 0.2f * Time.deltaTime * 60;
-        if (joint.maxDistance > maxGrappleDistance) joint.maxDistance = direction;
+        float newDistance = joint.maxDistance - direction * 0.2f * Time.deltaTime * 60;
+        if (newDistance > maxGrappleDistance) joint.maxDistance = newDistance;
+        else joint.maxDistance = newDistance;
     }
 }

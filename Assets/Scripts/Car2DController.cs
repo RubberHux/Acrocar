@@ -23,7 +23,7 @@ public class Car2DController : CarController
     
 
     private float torque; // current torque
-    private float stationaryTolerance;
+
 
     private void OnEnable()
     {
@@ -40,7 +40,6 @@ public class Car2DController : CarController
 
     private void OnDisable()
     {
-        move.Disable();
         reset.performed -= Reset;
     }
 
@@ -110,7 +109,7 @@ public class Car2DController : CarController
         }
 
         // rotate car via horizontal movement inputs (along x-axis)
-        rigidBody.AddTorque(Vector3.right * maxRotationTorque * Input.GetAxisRaw("Horizontal") * Time.deltaTime);
+        rigidBody.AddTorque(Vector3.right * maxRotationTorque * moveDirection.x * Time.deltaTime);
 
         // if player car gets stuck on its back, you can flip it back up
         if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
