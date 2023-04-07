@@ -277,7 +277,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Keyboard",
                     "id": "067941a8-2897-4059-999a-5fdcc27177f2",
                     "path": "2DVector",
                     "interactions": "",
@@ -293,7 +293,7 @@
                     "path": "<Mouse>/scroll/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -304,13 +304,13 @@
                     "path": "<Mouse>/scroll/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Gamepad",
                     "id": "a68f91a4-3621-44f2-a9f5-3b8be5175d63",
                     "path": "2DVector",
                     "interactions": "",
@@ -326,7 +326,7 @@
                     "path": "<Gamepad>/rightStick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -337,7 +337,7 @@
                     "path": "<Gamepad>/rightStick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -401,6 +401,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GrappleLengthControl",
+                    "type": "Value",
+                    "id": "3602879e-5b23-453d-873a-f32df42fd72a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1085,6 +1094,72 @@
                     "action": "RotateMod",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Keyboard",
+                    "id": "5f2c2ff2-7254-4701-aa50-db9a67278382",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrappleLengthControl",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "b8c6ac80-6593-4c9c-99a7-f673e9f34058",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "GrappleLengthControl",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "867c3453-218b-4d69-af0a-24d1236ef00f",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "GrappleLengthControl",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Gamepad",
+                    "id": "b41e665d-3211-466c-80e9-a340fee734ce",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrappleLengthControl",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "82782a4c-6c42-4de6-aa46-be363eb20f68",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "GrappleLengthControl",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "8cfff0f7-ac0e-4c23-a85d-609f33fd23d7",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "GrappleLengthControl",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

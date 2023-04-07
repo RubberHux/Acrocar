@@ -27,13 +27,13 @@ public class Car2DController : CarController
 
     private void OnEnable()
     {
-        move = playerControls.Player2D.Move;
+        move = InputHandler.playerInput.Player2D.Move;
         move.Enable();
-        breaking = playerControls.Player2D.Break;
+        breaking = InputHandler.playerInput.Player2D.Break;
         breaking.Enable();
-        fireHook = playerControls.LevelInteraction.FireHook;
+        fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
         fireHook.Enable();
-        reset = playerControls.LevelInteraction.Reset;
+        reset = InputHandler.playerInput.LevelInteraction.Reset;
         reset.Enable();
         reset.performed += Reset;
     }
@@ -41,6 +41,7 @@ public class Car2DController : CarController
     private void OnDisable()
     {
         move.Disable();
+        reset.performed -= Reset;
     }
 
     void Start()
@@ -60,7 +61,6 @@ public class Car2DController : CarController
             Vector3 dirVector = rigidBody.transform.up * -1;
             rigidBody.AddForce(dirVector * moveDirection.x * swingForce * Time.deltaTime);
 
-            // retract or extend grappling hook (vertical input, same as driving)
             grapplingGun.ChangeLength(moveDirection.y);
             return;
         }

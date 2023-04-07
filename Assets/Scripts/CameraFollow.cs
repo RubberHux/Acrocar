@@ -11,12 +11,11 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float translateSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float maxZoom, minZoom, zoomSpeed;
-    [SerializeField] private CarController carController;
     private InputAction zoom;
 
     private void Start()
     {
-        zoom = carController.playerControls.Player2D.Zoom;
+        zoom = InputHandler.playerInput.Player2D.Zoom;
         zoom.Enable();
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -26,30 +27,36 @@ public class Car3DController : CarController
     [SerializeField] private Transform frontRightWheelTransform;
     [SerializeField] private Transform backLeftWheelTransform;
     [SerializeField] private Transform backRightWheelTransform;
+    [SerializeField] private Camera mainCamera;
 
-    public int groundedWheels = 0;
+    [NonSerialized] public int groundedWheels = 0;
 
     private void OnEnable()
     {
-        move = playerControls.Player3D.Move;
+        move = InputHandler.playerInput.Player3D.Move;
         move.Enable();
-        rotate = playerControls.Player3D.Rotate;
+        rotate = InputHandler.playerInput.Player3D.Rotate;
         rotate.Enable();
-        rotateMod = playerControls.Player3D.RotateMod;
+        rotateMod = InputHandler.playerInput.Player3D.RotateMod;
         rotateMod.Enable();
-        swing = playerControls.Player3D.Swing;
+        swing = InputHandler.playerInput.Player3D.Swing;
         swing.Enable();
-        breaking = playerControls.Player3D.Break;
+        breaking = InputHandler.playerInput.Player3D.Break;
         breaking.Enable();
-        fireHook = playerControls.LevelInteraction.FireHook;
+        fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
         fireHook.Enable();
-        reset = playerControls.LevelInteraction.Reset;
+        reset = InputHandler.playerInput.LevelInteraction.Reset;
         reset.Enable();
         reset.performed += Reset;
-        jump = playerControls.Player3D.Jump;
+        jump = InputHandler.playerInput.Player3D.Jump;
         jump.Enable();
         jump.performed += DoJump;
+    }
 
+    private void OnDisable()
+    {
+        jump.performed -= DoJump;
+        reset.performed -= Reset;
     }
 
     private void Start()
@@ -68,6 +75,23 @@ public class Car3DController : CarController
             UpdateWheels();
         }
         AirRotate();
+        if (grappling) Swing();
+    }
+
+    private void Update()
+    {
+        if (grappling) grapplingGun.ChangeLength(InputHandler.playerInput.Player3D.GrappleLengthControl.ReadValue<Vector2>().y);
+        if (respawned)
+        {
+            respawnTimer -= Time.deltaTime;
+            if (respawnTimer <= 0)
+            {
+                respawned = false;
+                respawnTimer = 0;
+                rigidBody.isKinematic = false;
+            }
+            else return;
+        }
     }
 
     private void CheckGrounded()
@@ -114,7 +138,7 @@ public class Car3DController : CarController
 
     private void AirRotate()
     {
-        if (groundedWheels != 0) return;
+        if (groundedWheels != 0 || grappling) return;
 
         Vector2 Rotate = rotate.ReadValue<Vector2>();
 
@@ -124,6 +148,13 @@ public class Car3DController : CarController
         //Side swinging
         if (rotateMod.IsPressed()) rigidBody.AddTorque(rigidBody.transform.forward * shiftSpinForce * Rotate.x);
         else rigidBody.AddTorque(rigidBody.transform.up * sideSpinForce * Rotate.x);
+    }
+    private void Swing()
+    {
+        Vector2 swingDirection = swing.ReadValue<Vector2>();
+        Debug.Log(swingDirection);
+        rigidBody.AddForce(mainCamera.transform.forward * swingDirection.y * swingForce * Time.deltaTime);
+        rigidBody.AddForce(mainCamera.transform.right * swingDirection.x * swingForce * Time.deltaTime);
     }
 
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
@@ -151,5 +182,9 @@ public class Car3DController : CarController
         rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;
+        grapplingGun.StopGrapple();
+        respawned = true;
+        respawnTimer = respawnTime;
+        grappling = false;
     }
 }
