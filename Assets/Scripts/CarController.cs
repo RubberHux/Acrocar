@@ -22,7 +22,7 @@ public abstract class CarController : MonoBehaviour
     public int grappleBoostForce;
     internal Vector3 startpoint;
     internal GrapplingGun grapplingGun;
-
+    internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
 
 

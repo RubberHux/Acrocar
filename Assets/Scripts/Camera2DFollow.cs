@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 
-public class CameraFollow : MonoBehaviour
+public class Camera2DFollow : MonoBehaviour
 {
     [SerializeField] private Vector3 offset;
+    Quaternion rotationOffset = Quaternion.identity;
     [SerializeField] private Transform target;
-    [SerializeField] private float translateSpeed;
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] private float translateSpeed, rotationSpeed;
     [SerializeField] private float maxZoom, minZoom, zoomSpeed;
     private InputAction zoom;
 
@@ -29,7 +29,6 @@ public class CameraFollow : MonoBehaviour
         HandleZoom();
     }
 
-
     private void HandleTranslation()
     {
         var targetPosition = target.TransformPoint(offset);
@@ -42,6 +41,7 @@ public class CameraFollow : MonoBehaviour
         var rotation = Quaternion.LookRotation(direction, Vector3.up);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
+
     private void HandleZoom()
     {
         float x = offset.x - zoom.ReadValue<Vector2>().y * zoomSpeed;
