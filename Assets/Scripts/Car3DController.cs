@@ -31,22 +31,22 @@ public class Car3DController : CarController
 
     private void OnEnable()
     {
-        move = playerControls.Player3D.Move;
+        move = InputHandler.playerInput.Player3D.Move;
         move.Enable();
-        rotate = playerControls.Player3D.Rotate;
+        rotate = InputHandler.playerInput.Player3D.Rotate;
         rotate.Enable();
-        rotateMod = playerControls.Player3D.RotateMod;
+        rotateMod = InputHandler.playerInput.Player3D.RotateMod;
         rotateMod.Enable();
-        swing = playerControls.Player3D.Swing;
+        swing = InputHandler.playerInput.Player3D.Swing;
         swing.Enable();
-        breaking = playerControls.Player3D.Break;
+        breaking = InputHandler.playerInput.Player3D.Break;
         breaking.Enable();
-        fireHook = playerControls.LevelInteraction.FireHook;
+        fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
         fireHook.Enable();
-        reset = playerControls.LevelInteraction.Reset;
+        reset = InputHandler.playerInput.LevelInteraction.Reset;
         reset.Enable();
         reset.performed += Reset;
-        jump = playerControls.Player3D.Jump;
+        jump = InputHandler.playerInput.Player3D.Jump;
         jump.Enable();
         jump.performed += DoJump;
 

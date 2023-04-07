@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         uiCanvas.enabled = false;
-        pause = carController.playerControls.LevelInteraction.Pause;
+        pause = InputHandler.playerInput.LevelInteraction.Pause;
         pause.Enable();
     }
     

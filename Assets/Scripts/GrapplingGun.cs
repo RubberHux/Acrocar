@@ -38,7 +38,7 @@ public class GrapplingGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fireHook == null) fireHook = carController.playerControls.LevelInteraction.FireHook;
+        if (fireHook == null) fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
         if (carController.respawned)
         {
             if (joint) StopGrapple();
