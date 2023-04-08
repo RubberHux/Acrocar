@@ -69,11 +69,13 @@ public class CineMachine3DController : MonoBehaviour
         if (camState == CamState.follow) { 
             camState = CamState.hood;
             hoodCam.enabled = true;
+            carController.firstPerson = true;
         }
         else if (camState == CamState.hood) {
             camState = CamState.follow;
             if (carController.groundedWheels == 4) airCam.enabled = true;
             else groundCam.enabled = true;
+            carController.firstPerson = false;
         }
     }
 }
