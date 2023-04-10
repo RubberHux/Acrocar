@@ -1,13 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu, winMenu;
+    [SerializeField] private TextMeshProUGUI[] uiTimeText;
     [SerializeField] private SettingsHandler settingsHandler;
+    private double time;
     private InputAction pause;
     public enum gameState
     {
@@ -65,5 +69,19 @@ public class UIController : MonoBehaviour
         state = gameState.Win;
         Time.timeScale = 0.0f;
         winMenu.SetActive(true);
+    }
+
+    private void Update()
+    {
+        if (state == gameState.Playing)
+        {
+            time += Time.deltaTime;
+            string timeString = String.Format("{0:0.00}", time) + "s";
+            for (int i = 0; i < uiTimeText.Length; i++)
+            {
+                uiTimeText[i].text = timeString;
+            }
+        }
+        
     }
 }
