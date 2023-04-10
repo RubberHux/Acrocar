@@ -53,6 +53,11 @@ public class Car2DController : CarController
         startpoint = transform.position;
     }
 
+    private void FixedUpdate()
+    {
+        customGravity();
+    }
+
     // Update is called once per frame
     void Update()
     {

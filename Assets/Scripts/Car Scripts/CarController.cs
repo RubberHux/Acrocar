@@ -24,6 +24,7 @@ public abstract class CarController : MonoBehaviour
     internal GrapplingGun grapplingGun;
     internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
+    internal Vector3? gravity = null;
 
 
     private void Awake()
@@ -50,6 +51,21 @@ public abstract class CarController : MonoBehaviour
     public void Kill()
     {
         Respawn();
+    }
+
+    public void SetCustomGravity(Vector3? gravityDirection)
+    {
+        gravity = gravityDirection;
+        if (gravity == null) rigidBody.useGravity = true;
+        else rigidBody.useGravity = false;
+    }
+
+    internal void customGravity()
+    {
+        if (gravity != null)
+        {
+            rigidBody.AddForce((Vector3)gravity * rigidBody.mass);
+        }
     }
 
     public void GrappleBoost(Vector3 target)
