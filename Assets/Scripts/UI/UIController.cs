@@ -6,33 +6,64 @@ using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
 {
-    public Canvas uiCanvas;
+    [SerializeField] private GameObject pauseMenu, winMenu;
+    [SerializeField] private SettingsHandler settingsHandler;
     private InputAction pause;
-
-    private bool _paused = false;
-    
-    private void Start()
+    public enum gameState
     {
-        uiCanvas.enabled = false;
+        Playing,
+        Paused,
+        Settings,
+        Win,
+    }
+    private gameState state;
+
+    public void SetState(gameState newState)
+    {
+        state = newState;
     }
 
     private void OnEnable()
     {
         pause = InputHandler.playerInput.LevelInteraction.Pause;
         pause.Enable();
-        pause.performed += UpdatePause;
+        pause.performed += PerformPause;
     }
 
     private void OnDisable()
     {
-        pause.performed -= UpdatePause;
+        pause.performed -= PerformPause;
     }
 
-
-    private void UpdatePause(InputAction.CallbackContext context)
+    private void PerformPause(InputAction.CallbackContext context)
     {
-        _paused = !_paused;
-        uiCanvas.enabled = _paused;
-        Time.timeScale = _paused ? 0.0f : 1.0f;
+        UpdatePause();
+    }
+
+    public void UpdatePause()
+    {
+        if (state == gameState.Playing)
+        {
+            state = gameState.Paused;
+            Time.timeScale = 0.0f;
+            pauseMenu.SetActive(true);
+        }
+        else if (state == gameState.Paused)
+        {
+            state = gameState.Playing;
+            Time.timeScale = 1.0f;
+            pauseMenu.SetActive(false);
+        }
+        else if (state == gameState.Settings)
+        {
+            settingsHandler.Back();
+        }
+    }
+
+    public void SetWin()
+    {
+        state = gameState.Win;
+        Time.timeScale = 0.0f;
+        winMenu.SetActive(true);
     }
 }
