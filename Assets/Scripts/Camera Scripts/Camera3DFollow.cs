@@ -17,7 +17,7 @@ public class Camera3DFollow : MonoBehaviour
     {
         look = InputHandler.playerInput.Player3D.Look;
         look.Enable();
-        
+        carController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<Car3DController>();
     }
 
     private void FixedUpdate()

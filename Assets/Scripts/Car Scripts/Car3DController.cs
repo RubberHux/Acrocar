@@ -30,6 +30,7 @@ public class Car3DController : CarController
     [SerializeField] private Camera mainCamera;
 
     [NonSerialized] public int groundedWheels = 0;
+    [NonSerialized] public bool firstPerson = false;
 
     private void OnEnable()
     {
@@ -162,7 +163,7 @@ public class Car3DController : CarController
     private void Swing()
     {
         Vector2 swingDirection = swing.ReadValue<Vector2>();
-        rigidBody.AddForce(mainCamera.transform.forward * swingDirection.y * swingForce * Time.deltaTime);
+        rigidBody.AddForce((firstPerson ? -mainCamera.transform.up : mainCamera.transform.forward) * swingDirection.y * swingForce * Time.deltaTime);
         rigidBody.AddForce(mainCamera.transform.right * swingDirection.x * swingForce * Time.deltaTime);
     }
 
