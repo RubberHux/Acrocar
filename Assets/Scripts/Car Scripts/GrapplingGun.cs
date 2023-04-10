@@ -73,7 +73,6 @@ public class GrapplingGun : MonoBehaviour
 
         if (grappleType == GrappleType.Boost)
         {
-            Debug.Log(grappleBoostTimer);
             if (grappleBoostTimer <= 0)
             {
                 carController.GrappleBoost(grapplePoint);
