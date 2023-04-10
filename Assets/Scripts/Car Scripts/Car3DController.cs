@@ -80,6 +80,7 @@ public class Car3DController : CarController
         }
         AirRotate();
         if (grappling) Swing();
+        customGravity();
     }
 
     private void Update()
@@ -178,7 +179,7 @@ public class Car3DController : CarController
 
     internal override void Jump()
     {
-        if (groundedWheels == 4) rigidBody.AddForce(Vector3.up * 700000);
+        if (groundedWheels == 4) rigidBody.AddForce(rigidBody.transform.up * 700000);
     }
 
     internal override void Respawn()
