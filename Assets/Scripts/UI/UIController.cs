@@ -15,17 +15,25 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         uiCanvas.enabled = false;
+    }
+
+    private void OnEnable()
+    {
         pause = InputHandler.playerInput.LevelInteraction.Pause;
         pause.Enable();
+        pause.performed += UpdatePause;
     }
-    
-    private void Update()
+
+    private void OnDisable()
     {
-        if (pause.WasPressedThisFrame())
-        {
-            _paused = !_paused;
-            uiCanvas.enabled = _paused;
-            Time.timeScale = _paused ? 0.0f : 1.0f;
-        }
+        pause.performed -= UpdatePause;
+    }
+
+
+    private void UpdatePause(InputAction.CallbackContext context)
+    {
+        _paused = !_paused;
+        uiCanvas.enabled = _paused;
+        Time.timeScale = _paused ? 0.0f : 1.0f;
     }
 }
