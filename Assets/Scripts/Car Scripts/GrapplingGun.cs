@@ -20,8 +20,11 @@ public class GrapplingGun : MonoBehaviour
     private float aimPreTimer = -1, aimPostTimer = -1, grappleBoostTimer = 0;
     private bool aiming = false;
     public float aimLeniencyPreTime, aimLeniencyPostTime, grappleBoostTime;
-    private InputAction fireHook;
+    private InputAction fireHook, aim;
     public float maxJointDist, minJointDist;
+    public bool easyAim;
+    private Camera cam;
+
     enum GrappleType
     {
         Swing,
@@ -33,12 +36,16 @@ public class GrapplingGun : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
         carController = GetComponent<CarController>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
+        fireHook.Enable();
+        aim = InputHandler.playerInput.Player2D.Aim;
+        aim.Enable();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (fireHook == null) fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
         if (carController.respawned)
         {
             if (joint) StopGrapple();
@@ -99,9 +106,20 @@ public class GrapplingGun : MonoBehaviour
     void Aim()
     {
         RaycastHit hit;
-        if (Physics.Raycast(gunTip.position, gunTip.forward, out hit, maxGrappleDistance, notCarLayers) && (whatIsGrappleable == (whatIsGrappleable | (1 << hit.transform.gameObject.layer))))
+        
+        Vector3 rayDirection = gunTip.forward;
+        if (easyAim)
         {
-
+            Debug.Log(InputHandler.currentScheme);
+            if (InputHandler.currentScheme <= 2) rayDirection = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.transform.position.x)) - gunTip.position;
+            else
+            {
+                Vector2 aimDir = aim.ReadValue<Vector2>();
+                rayDirection = new Vector3(transform.position.x, aimDir.y, aimDir.x);
+            }
+        }
+        if (Physics.Raycast(gunTip.position, rayDirection, out hit, maxGrappleDistance, notCarLayers) && (whatIsGrappleable == (whatIsGrappleable | (1 << hit.transform.gameObject.layer))))
+        {
             if (hit.transform.CompareTag("GrappleBoost"))
             {
                 grappleType = GrappleType.Boost;
