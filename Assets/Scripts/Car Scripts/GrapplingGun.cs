@@ -22,7 +22,6 @@ public class GrapplingGun : MonoBehaviour
     public float aimLeniencyPreTime, aimLeniencyPostTime, grappleBoostTime;
     private InputAction fireHook, aim;
     public float maxJointDist, minJointDist;
-    public bool easyAim;
     private Camera cam;
 
     enum GrappleType
@@ -51,7 +50,7 @@ public class GrapplingGun : MonoBehaviour
             if (joint) StopGrapple();
             return;
         }
-        if (!joint) Aim();
+        if (!joint && Time.timeScale != 0) Aim();
         if (fireHook.WasPressedThisFrame()) aimPreTimer = aimLeniencyPreTime;
         if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && fireHook.IsPressed()) StartGrapple();
         else if (fireHook.WasReleasedThisFrame()) StopGrapple();
@@ -108,7 +107,7 @@ public class GrapplingGun : MonoBehaviour
         RaycastHit hit;
         
         Vector3 rayDirection = gunTip.forward;
-        if (easyAim)
+        if (SettingsHandler.easyAim)
         {
             Debug.Log(InputHandler.currentScheme);
             if (InputHandler.currentScheme <= 2) rayDirection = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.transform.position.x)) - gunTip.position;

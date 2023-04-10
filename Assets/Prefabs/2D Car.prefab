@@ -240,12 +240,13 @@ MonoBehaviour:
     m_Bits: 63
   gunTip: {fileID: 7367766997369750142}
   player: {fileID: 1574893124479108525}
-  maxGrappleDistance: 25
+  maxGrappleDistance: 35
   aimLeniencyPreTime: 0.2
   aimLeniencyPostTime: 0.1
   grappleBoostTime: 1.5
   maxJointDist: 0.8
   minJointDist: 0
+  easyAim: 0
 --- !u!114 &7367766997025023925
 MonoBehaviour:
   m_ObjectHideFlags: 0
