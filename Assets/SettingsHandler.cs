@@ -10,6 +10,7 @@ public class SettingsHandler : MonoBehaviour
     private static bool easyAimNew;
     [SerializeField] private GameObject settings, pause, backDoubleCheck;
     [SerializeField] private Toggle easyAimToggle;
+    [SerializeField] private Button SaveButton;
 
     private void Awake()
     {
@@ -45,11 +46,13 @@ public class SettingsHandler : MonoBehaviour
     {
         bool allSame = true;
         if (easyAim != easyAimNew) allSame = false;
+        SaveButton.interactable = !allSame;
         return allSame;
     }
 
     public void Exit()
     {
+        SaveButton.interactable = false;
         settings.SetActive(false);
         pause.SetActive(true);
         backDoubleCheck.SetActive(false);
@@ -58,5 +61,6 @@ public class SettingsHandler : MonoBehaviour
     public void SetEasyAim(bool easyAimValue)
     {
         easyAimNew = easyAimValue;
+        CheckSame();
     }
 }

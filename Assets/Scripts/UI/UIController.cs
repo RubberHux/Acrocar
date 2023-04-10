@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class UIController : MonoBehaviour
 {
     public Canvas uiCanvas;
-    public CarController carController;
     private InputAction pause;
 
     private bool _paused = false;

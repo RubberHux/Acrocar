@@ -109,7 +109,6 @@ public class GrapplingGun : MonoBehaviour
         Vector3 rayDirection = gunTip.forward;
         if (SettingsHandler.easyAim)
         {
-            Debug.Log(InputHandler.currentScheme);
             if (InputHandler.currentScheme <= 2) rayDirection = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.transform.position.x)) - gunTip.position;
             else
             {
