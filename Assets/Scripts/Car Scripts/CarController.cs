@@ -27,6 +27,7 @@ public class AxleInfo
 public abstract class CarController : MonoBehaviour
 {
     public List<AxleInfo> axleInfos;
+    [NonSerialized] public int groundedWheels = 0;
     [NonSerialized] public bool grappling;
     public float respawnTime = 1;
     public float gravCheckDistance;
@@ -38,6 +39,7 @@ public abstract class CarController : MonoBehaviour
     public int maxRotationTorque; // maximum rotation torque
     public int swingForce; // the force with which to swing when grappled
     public int grappleBoostForce;
+    public int jumpForce;
     internal Vector3 startpoint;
     internal GrapplingGun grapplingGun;
     internal float stationaryTolerance;
@@ -64,8 +66,6 @@ public abstract class CarController : MonoBehaviour
         Jump();
     }
 
-    internal abstract void Jump();
-
     internal abstract void Respawn();
 
     public void Kill()
@@ -78,7 +78,7 @@ public abstract class CarController : MonoBehaviour
         gravity = gravityDirection;
     }
 
-    internal void customGravity()
+    internal void CustomGravity()
     {
         bool noGravChanges = true;
         CheckGravRoad();
@@ -97,6 +97,11 @@ public abstract class CarController : MonoBehaviour
 
     }
 
+    internal void Jump()
+    {
+        if (groundedWheels == 4) rigidBody.AddForce(rigidBody.transform.up * 700000);
+    }
+
     internal void CheckGravRoad()
     {
         gravRoadPercent = 0;
@@ -110,6 +115,16 @@ public abstract class CarController : MonoBehaviour
         }
         gravRoadPercent /= gravRoadPercent + notGravRoadAmount;
         Debug.Log(gravRoadPercent);
+    }
+
+    internal void CheckGrounded()
+    {
+        groundedWheels = 0;
+        foreach (AxleInfo axle in axleInfos)
+        {
+            if (axle.leftWheel.isGrounded) groundedWheels++;
+            if (axle.rightWheel.isGrounded) groundedWheels++;
+        }
     }
 
     public void GrappleBoost(Vector3 target)

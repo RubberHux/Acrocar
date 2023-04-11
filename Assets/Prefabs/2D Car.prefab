@@ -283,6 +283,7 @@ MonoBehaviour:
   maxRotationTorque: 300000
   swingForce: 6000
   grappleBoostForce: 1800000
+  jumpForce: 700000
   gravRoadLayer:
     serializedVersion: 2
     m_Bits: 128
