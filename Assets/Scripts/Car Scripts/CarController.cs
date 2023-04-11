@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 
 [System.Serializable]
 // Class from Unity documentation, with slight modification (due to no need for steering):
@@ -27,6 +29,7 @@ public abstract class CarController : MonoBehaviour
     public List<AxleInfo> axleInfos;
     [NonSerialized] public bool grappling;
     public float respawnTime = 1;
+    public float gravCheckDistance;
     public float respawnTimer = 0;
     [NonSerialized] public bool respawned = false;
     [NonSerialized] public CheckPoint lastCheckPoint = null;
@@ -42,6 +45,7 @@ public abstract class CarController : MonoBehaviour
     public Vector3? gravity = null;
     public LayerMask gravRoadLayer;
     public LayerMask notCarLayers;
+    public float gravRoadPercent;
 
     private void Awake()
     {
@@ -72,23 +76,40 @@ public abstract class CarController : MonoBehaviour
     public void SetCustomGravity(Vector3? gravityDirection)
     {
         gravity = gravityDirection;
-        if (gravity == null) rigidBody.useGravity = true;
-        else rigidBody.useGravity = false;
     }
 
     internal void customGravity()
     {
+        bool noGravChanges = true;
+        CheckGravRoad();
+        if (gravRoadPercent > 0.7)
+        {
+            rigidBody.AddForce(Physics.gravity.magnitude * rigidBody.mass * -transform.up);
+            noGravChanges = false;
+        }
         if (gravity != null)
         {
+            noGravChanges = false;
             rigidBody.AddForce((Vector3)gravity * rigidBody.mass);
         }
+        if (noGravChanges) rigidBody.useGravity = true;
+        else rigidBody.useGravity = false;
+
     }
 
     internal void CheckGravRoad()
     {
-        foreach (Transform roadChecker in roadCheckers) { 
-            
+        gravRoadPercent = 0;
+        int notGravRoadAmount = 0;
+        RaycastHit hit;
+        foreach (Transform roadChecker in roadCheckers) {
+            if (Physics.Raycast(roadChecker.position, -roadChecker.transform.up, out hit, gravCheckDistance, notCarLayers) && (gravRoadLayer == (gravRoadLayer | (1 << hit.transform.gameObject.layer)))) {
+                gravRoadPercent++;
+            }
+            else notGravRoadAmount++;
         }
+        gravRoadPercent /= gravRoadPercent + notGravRoadAmount;
+        Debug.Log(gravRoadPercent);
     }
 
     public void GrappleBoost(Vector3 target)
