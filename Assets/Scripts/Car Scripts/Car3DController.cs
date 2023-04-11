@@ -64,7 +64,6 @@ public class Car3DController : CarController
 
     private void FixedUpdate()
     {
-        CheckGravRoad();
         CheckGrounded();
         HandleMotor();
         if (groundedWheels != 0)

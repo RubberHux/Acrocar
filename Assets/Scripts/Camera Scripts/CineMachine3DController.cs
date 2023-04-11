@@ -54,7 +54,7 @@ public class CineMachine3DController : MonoBehaviour
             }
             if (carController.groundedWheels == 4)
             {
-                if (carController.gravity == null) groundCam.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetWithWorldUp;
+                if (carController.gravRoadPercent < 0.7f) groundCam.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetWithWorldUp;
                 else groundCam.m_BindingMode = CinemachineTransposer.BindingMode.LockToTarget;
                 groundTimer += Time.deltaTime;
                 groundCam.enabled = true;
