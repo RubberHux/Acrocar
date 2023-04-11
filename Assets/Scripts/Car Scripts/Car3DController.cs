@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.Rendering;
 
 public class Car3DController : CarController
 {
@@ -19,17 +20,6 @@ public class Car3DController : CarController
     [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
     private InputAction move, rotate, swing, jump, fireHook, breaking, reset, rotateMod, grapplingLengthControl;
 
-    [SerializeField] private WheelCollider frontLeftWheelCollider;
-    [SerializeField] private WheelCollider frontRightWheelCollider;
-    [SerializeField] private WheelCollider backLeftWheelCollider;
-    [SerializeField] private WheelCollider backRightWheelCollider;
-    [SerializeField] private WheelCollider[] wheelColliders;
-
-    [SerializeField] private Transform frontLeftWheelTransform;
-    [SerializeField] private Transform frontRightWheelTransform;
-    [SerializeField] private Transform backLeftWheelTransform;
-    [SerializeField] private Transform backRightWheelTransform;
-    [SerializeField] private Transform[] wheelTransforms;
     [SerializeField] private Camera mainCamera;
 
     [NonSerialized] public int groundedWheels = 0;
@@ -67,8 +57,6 @@ public class Car3DController : CarController
 
     private void Start()
     {
-        wheelColliders = new WheelCollider[] { frontLeftWheelCollider, frontRightWheelCollider, backLeftWheelCollider, backRightWheelCollider };
-        wheelTransforms = new Transform[] { frontLeftWheelTransform, frontRightWheelTransform, backLeftWheelTransform, backRightWheelTransform };
         stationaryTolerance = 0.0005f;
         rigidBody = GetComponent<Rigidbody>();
         startpoint = transform.position;
@@ -115,40 +103,68 @@ public class Car3DController : CarController
     private void CheckGrounded()
     {
         groundedWheels = 0;
-        foreach (WheelCollider wheel in wheelColliders) if (wheel.isGrounded) groundedWheels++;
+        foreach (AxleInfo axle in axleInfos)
+        {
+            if (axle.leftWheel.isGrounded) groundedWheels++;
+            if (axle.rightWheel.isGrounded) groundedWheels++;
+        }
     }
 
     private void HandleMotor()
     {
         float driveDir = move.ReadValue<Vector2>().y;
-        frontLeftWheelCollider.motorTorque = driveDir * motorForce;
-        frontRightWheelCollider.motorTorque = driveDir * motorForce;
-        float rpm = frontLeftWheelCollider.rpm + frontRightWheelCollider.rpm / 2;
+        float rpm = 0;
+        int motorAmount = 0;
+        foreach (AxleInfo axle in axleInfos)
+        {
+            if (axle.motor)
+            {
+                axle.leftWheel.motorTorque = driveDir * motorForce;
+                axle.rightWheel.motorTorque = driveDir * motorForce;
+                rpm += axle.leftWheel.rpm + axle.rightWheel.rpm;
+                motorAmount++;
+            }
+        }
+        rpm /= motorAmount;
         currentBreakForce = (breaking.IsPressed() || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10000 : 0);
         ApplyBreaking();
     }
 
     private void ApplyBreaking()
     {
-        frontLeftWheelCollider.brakeTorque = currentBreakForce;
-        frontRightWheelCollider.brakeTorque = currentBreakForce;
-        backLeftWheelCollider.brakeTorque = currentBreakForce;
-        backRightWheelCollider.brakeTorque = currentBreakForce;
+        foreach (AxleInfo axle in axleInfos)
+        {
+            axle.leftWheel.brakeTorque = currentBreakForce;
+            axle.rightWheel.brakeTorque = currentBreakForce;
+        }
     }
 
     private void HandleSteering ()
     {
         float steerDir = move.ReadValue<Vector2>().x;
         currentSteerAngle = maxSteeringAngle * steerDir;
-        frontLeftWheelCollider.steerAngle = currentSteerAngle;
-        frontRightWheelCollider.steerAngle = currentSteerAngle;
+        foreach (AxleInfo axle in axleInfos)
+        {
+            if (axle.turnType == AxleInfo.TurnType.Normal)
+            {
+                axle.leftWheel.steerAngle = currentSteerAngle;
+                axle.rightWheel.steerAngle = currentSteerAngle;
+            }
+            else if (axle.turnType == AxleInfo.TurnType.Inverted)
+            {
+                axle.leftWheel.steerAngle = - currentSteerAngle;
+                axle.rightWheel.steerAngle = - currentSteerAngle;
+            }
+        }
     }
     private void UpdateWheels()
     {
-        UpdateSingleWheel(frontLeftWheelCollider, frontLeftWheelTransform);
-        UpdateSingleWheel(frontRightWheelCollider, frontRightWheelTransform);
-        UpdateSingleWheel(backLeftWheelCollider, backLeftWheelTransform);
-        UpdateSingleWheel(backRightWheelCollider, backRightWheelTransform);
+        foreach (AxleInfo axle in axleInfos)
+        {
+
+            UpdateSingleWheel(axle.leftWheel, axle.leftTransform);
+            UpdateSingleWheel(axle.rightWheel, axle.rightTransform);
+        }
     }
 
     private void AirRotate()

@@ -573,7 +573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6847691492607844315
 Transform:
   m_ObjectHideFlags: 0
@@ -1160,25 +1160,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8213be0818df954b91aead2853ada3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  axleInfos:
+  - leftWheel: {fileID: 345318732265787243}
+    rightWheel: {fileID: 345318733342974318}
+    leftTransform: {fileID: 683762731083175255}
+    rightTransform: {fileID: 3530329027486806887}
+    motor: 1
+    turnType: 1
+  - leftWheel: {fileID: 345318731645210438}
+    rightWheel: {fileID: 345318733267869248}
+    leftTransform: {fileID: 4779385844343569019}
+    rightTransform: {fileID: 4445874436172322136}
+    motor: 0
+    turnType: 0
   respawnTime: 1
   respawnTimer: 0
+  roadCheckers: []
   maxRotationTorque: 0
   swingForce: 0
   grappleBoostForce: 1800000
+  gravRoadLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  notCarLayers:
+    serializedVersion: 2
+    m_Bits: 0
   motorForce: 8000
   breakForce: 3000
   maxSteeringAngle: 20
   frontSpinForce: 20000
   sideSpinForce: 20000
   shiftSpinForce: 20000
-  frontLeftWheelCollider: {fileID: 345318732265787243}
-  frontRightWheelCollider: {fileID: 345318733342974318}
-  backLeftWheelCollider: {fileID: 345318731645210438}
-  backRightWheelCollider: {fileID: 345318733267869248}
-  frontLeftWheelTransform: {fileID: 683762731083175255}
-  frontRightWheelTransform: {fileID: 3530329027486806887}
-  backLeftWheelTransform: {fileID: 4779385844343569019}
-  backRightWheelTransform: {fileID: 4445874436172322136}
   mainCamera: {fileID: 0}
 --- !u!120 &1975006650651592672
 LineRenderer:

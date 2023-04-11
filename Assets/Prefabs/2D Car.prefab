@@ -246,7 +246,6 @@ MonoBehaviour:
   grappleBoostTime: 1.5
   maxJointDist: 0.8
   minJointDist: 0
-  easyAim: 0
 --- !u!114 &7367766997025023925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,18 +258,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd03621214c92846a810c76f975d2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnTime: 1
-  respawnTimer: 0
-  maxRotationTorque: 300000
-  swingForce: 6000
-  grappleBoostForce: 1800000
   axleInfos:
   - leftWheel: {fileID: 7367766997011321618}
     rightWheel: {fileID: 7367766997664829277}
+    leftTransform: {fileID: 7367766996677025747}
+    rightTransform: {fileID: 7367766997653145535}
     motor: 1
+    turnType: 0
   - leftWheel: {fileID: 7367766996720563476}
     rightWheel: {fileID: 7367766998177352499}
+    leftTransform: {fileID: 7367766996336974222}
+    rightTransform: {fileID: 7367766996149055745}
     motor: 1
+    turnType: 0
+  respawnTime: 1
+  respawnTimer: 0
+  roadCheckers: []
+  maxRotationTorque: 300000
+  swingForce: 6000
+  grappleBoostForce: 1800000
+  gravRoadLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  notCarLayers:
+    serializedVersion: 2
+    m_Bits: 0
   maxTorque: 800
 --- !u!1 &3728564266512877692
 GameObject:
