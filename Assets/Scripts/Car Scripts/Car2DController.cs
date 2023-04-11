@@ -8,18 +8,11 @@ using UnityEngine.InputSystem;
 // Class from Unity documentation, with slight modification (due to no need for steering):
 // https://docs.unity3d.com/Manual/WheelColliderTutorial.html
 
-public class AxleInfo
-{
-    public WheelCollider leftWheel;
-    public WheelCollider rightWheel;
-    public bool motor; // is this wheel attached to motor?
-}
-
 public class Car2DController : CarController
 {
-    public List<AxleInfo> axleInfos; // list of axle infos, including wheel colliders
+    // list of axle infos, including wheel colliders
     public int maxTorque; // maximum torque
-    private InputAction move, swing, rotate, fireHook, breaking, reset;
+    private InputAction move, swing, rotate, fireHook, breaking, reset, jump;
     [NonSerialized] public bool firstPerson;
 
     private float torque; // current torque
@@ -39,11 +32,15 @@ public class Car2DController : CarController
         reset = InputHandler.playerInput.LevelInteraction.Reset;
         reset.Enable();
         reset.performed += Reset;
+        jump = InputHandler.playerInput.Player2D.Jump;
+        jump.Enable();
+        jump.performed += DoJump;
     }
 
     private void OnDisable()
     {
         reset.performed -= Reset;
+        jump.performed -= DoJump;
     }
 
     void Start()
@@ -87,9 +84,8 @@ public class Car2DController : CarController
             }
             else return;
         }
-        float movDir = moveDirection.y;
         // if direction is changed: brake and then accelerate
-        torque = maxTorque * (2 * movDir);
+        torque = maxTorque * (2 * moveDirection.y);
 
          // should car brake?
 
@@ -145,7 +141,11 @@ public class Car2DController : CarController
 
     internal override void Jump()
     {
-        //rigidBody.AddForce(Vector3.up * 700000);
+        foreach (AxleInfo axle in axleInfos) {
+            axle.leftWheel.motorTorque = 0;
+            axle.rightWheel.motorTorque = 0;
+        }
+        rigidBody.AddForce(rigidBody.transform.up * 700000);
     }
 
     internal override void Respawn()

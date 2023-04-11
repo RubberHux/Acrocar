@@ -8,9 +8,23 @@ using UnityEngine.InputSystem;
 // Class from Unity documentation, with slight modification (due to no need for steering):
 // https://docs.unity3d.com/Manual/WheelColliderTutorial.html
 
-
+public class AxleInfo
+{
+    public WheelCollider leftWheel;
+    public WheelCollider rightWheel;
+    public Transform leftTransform, rightTransform;
+    public bool motor; // is this wheel attached to motor?
+    public TurnType turnType;
+    public enum TurnType
+    {
+        None,
+        Normal,
+        Inverted,
+    }
+}
 public abstract class CarController : MonoBehaviour
 {
+    public List<AxleInfo> axleInfos;
     [NonSerialized] public bool grappling;
     public float respawnTime = 1;
     public float respawnTimer = 0;
@@ -25,7 +39,7 @@ public abstract class CarController : MonoBehaviour
     internal GrapplingGun grapplingGun;
     internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
-    internal Vector3? gravity = null;
+    public Vector3? gravity = null;
     public LayerMask gravRoadLayer;
     public LayerMask notCarLayers;
 
@@ -72,7 +86,9 @@ public abstract class CarController : MonoBehaviour
 
     internal void CheckGravRoad()
     {
-
+        foreach (Transform roadChecker in roadCheckers) { 
+            
+        }
     }
 
     public void GrappleBoost(Vector3 target)
