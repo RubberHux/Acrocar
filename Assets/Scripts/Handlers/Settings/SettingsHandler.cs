@@ -26,7 +26,7 @@ public class SettingsHandler : MonoBehaviour
     public void StartFromPause()
     {
         startedByPause = true;
-        uiController.SetState(UIController.gameState.Settings);
+        uiController.SetState(UIController.GameState.Settings);
     }
 
     public void Save()
@@ -66,8 +66,9 @@ public class SettingsHandler : MonoBehaviour
         if (startedByPause)
         {
             pause.SetActive(true);
-            uiController.SetState(UIController.gameState.Paused);
+            uiController.SetState(UIController.GameState.Paused);
         }
+        else uiController.SetState(UIController.GameState.MainMenu);
         backDoubleCheck.SetActive(false);
         startedByPause = false;
     }

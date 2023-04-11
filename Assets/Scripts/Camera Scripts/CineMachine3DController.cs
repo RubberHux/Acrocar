@@ -56,13 +56,23 @@ public class CineMachine3DController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (groundCam.enabled && groundCam.m_XAxis.Value != 0) groundCam.m_XAxis.Value = Mathf.Lerp(groundCam.m_XAxis.Value, 0, 0.1f);
-        if (groundCam.enabled && groundCam.m_YAxis.Value != 0.5f) groundCam.m_YAxis.Value = Mathf.Lerp(groundCam.m_YAxis.Value, 0.5f, 0.1f);
+        //if (groundCam.enabled && groundCam.m_XAxis.Value != 0) groundCam.m_XAxis.Value = Mathf.Lerp(groundCam.m_XAxis.Value, 0, 0.1f);
+        //if (groundCam.enabled && groundCam.m_YAxis.Value != 0.5f) groundCam.m_YAxis.Value = Mathf.Lerp(groundCam.m_YAxis.Value, 0.5f, 0.1f);
+        if (carController.gameObject.GetComponent<Rigidbody>().velocity.magnitude < 0.1)
+        {
+            groundCam.m_YAxisRecentering.m_enabled = false;
+            groundCam.m_RecenterToTargetHeading.m_enabled = false;
+        }
+        else
+        {
+            groundCam.m_YAxisRecentering.m_enabled = true;
+            groundCam.m_RecenterToTargetHeading.m_enabled = true;
+        }
+
     }
 
     private void SwitchCam(InputAction.CallbackContext context)
     {
-        Debug.Log("Yo da yo!");
         hoodCam.enabled = false;
         groundCam.enabled = false;
         airCam.enabled = false;
