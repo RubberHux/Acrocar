@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 
 public class Car3DController : CarController
 {
@@ -22,11 +23,13 @@ public class Car3DController : CarController
     [SerializeField] private WheelCollider frontRightWheelCollider;
     [SerializeField] private WheelCollider backLeftWheelCollider;
     [SerializeField] private WheelCollider backRightWheelCollider;
+    [SerializeField] private WheelCollider[] wheelColliders;
 
     [SerializeField] private Transform frontLeftWheelTransform;
     [SerializeField] private Transform frontRightWheelTransform;
     [SerializeField] private Transform backLeftWheelTransform;
     [SerializeField] private Transform backRightWheelTransform;
+    [SerializeField] private Transform[] wheelTransforms;
     [SerializeField] private Camera mainCamera;
 
     [NonSerialized] public int groundedWheels = 0;
@@ -64,6 +67,8 @@ public class Car3DController : CarController
 
     private void Start()
     {
+        wheelColliders = new WheelCollider[] { frontLeftWheelCollider, frontRightWheelCollider, backLeftWheelCollider, backRightWheelCollider };
+        wheelTransforms = new Transform[] { frontLeftWheelTransform, frontRightWheelTransform, backLeftWheelTransform, backRightWheelTransform };
         stationaryTolerance = 0.0005f;
         rigidBody = GetComponent<Rigidbody>();
         startpoint = transform.position;
@@ -71,6 +76,7 @@ public class Car3DController : CarController
 
     private void FixedUpdate()
     {
+        CheckGravRoad();
         CheckGrounded();
         HandleMotor();
         if (groundedWheels != 0)
@@ -101,7 +107,7 @@ public class Car3DController : CarController
         if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
             && rigidBody.transform.up.y <= 10e-5 && !grappling)
         {
-            rigidBody.AddExplosionForce(200000 * Time.deltaTime * 180, rigidBody.transform.position, 5, 5);
+            rigidBody.AddForce(Vector3.up * 200000 * Time.deltaTime * 180);
             rigidBody.AddTorque(rigidBody.transform.right * maxRotationTorque * 100);
         }
     }
@@ -109,10 +115,7 @@ public class Car3DController : CarController
     private void CheckGrounded()
     {
         groundedWheels = 0;
-        if (frontLeftWheelCollider.isGrounded) groundedWheels++;
-        if (frontRightWheelCollider.isGrounded) groundedWheels++;
-        if (backLeftWheelCollider.isGrounded) groundedWheels++;
-        if (backRightWheelCollider.isGrounded) groundedWheels++;
+        foreach (WheelCollider wheel in wheelColliders) if (wheel.isGrounded) groundedWheels++;
     }
 
     private void HandleMotor()
@@ -121,7 +124,7 @@ public class Car3DController : CarController
         frontLeftWheelCollider.motorTorque = driveDir * motorForce;
         frontRightWheelCollider.motorTorque = driveDir * motorForce;
         float rpm = frontLeftWheelCollider.rpm + frontRightWheelCollider.rpm / 2;
-        currentBreakForce = (breaking.IsPressed() || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10 : 0);
+        currentBreakForce = (breaking.IsPressed() || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10000 : 0);
         ApplyBreaking();
     }
 

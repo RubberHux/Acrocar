@@ -16,6 +16,7 @@ public abstract class CarController : MonoBehaviour
     public float respawnTimer = 0;
     [NonSerialized] public bool respawned = false;
     [NonSerialized] public CheckPoint lastCheckPoint = null;
+    [SerializeField] internal Transform[] roadCheckers;
 
     public int maxRotationTorque; // maximum rotation torque
     public int swingForce; // the force with which to swing when grappled
@@ -25,7 +26,8 @@ public abstract class CarController : MonoBehaviour
     internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
     internal Vector3? gravity = null;
-
+    public LayerMask gravRoadLayer;
+    public LayerMask notCarLayers;
 
     private void Awake()
     {
@@ -66,6 +68,11 @@ public abstract class CarController : MonoBehaviour
         {
             rigidBody.AddForce((Vector3)gravity * rigidBody.mass);
         }
+    }
+
+    internal void CheckGravRoad()
+    {
+
     }
 
     public void GrappleBoost(Vector3 target)

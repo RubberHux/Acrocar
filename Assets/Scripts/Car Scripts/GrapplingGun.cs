@@ -67,7 +67,7 @@ public class GrapplingGun : MonoBehaviour
 
     void StartGrapple()
     {
-        float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+        float distanceFromPoint = Vector3.Distance(gunTip.position, grapplePoint);
 
         if (distanceFromPoint > maxGrappleDistance) return;
 
