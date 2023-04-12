@@ -94,16 +94,20 @@ public class CarController : MonoBehaviour
     {
         reset.performed -= Reset;
         jump.performed -= Jump;
+        dimensionSwitch.performed -= DoDimensionSwitch;
     }
 
     private void SetInput()
     {
-        dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
-        dimensionSwitch.Enable();
-        dimensionSwitch.performed += DoDimensionSwitch;
-        reset = InputHandler.playerInput.LevelInteraction.Reset;
-        reset.Enable();
-        reset.performed += Reset;
+        if (reset == null)
+        {
+            dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
+            dimensionSwitch.Enable();
+            dimensionSwitch.performed += DoDimensionSwitch;
+            reset = InputHandler.playerInput.LevelInteraction.Reset;
+            reset.Enable();
+            reset.performed += Reset;
+        }
         if (is2D)
         {
             move = InputHandler.playerInput.Player2D.Move;
@@ -166,6 +170,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (respawned) return;
         GetInput();
         CheckGrounded();
         HandleMotor();
@@ -220,7 +225,7 @@ public class CarController : MonoBehaviour
             }
         }
         rpm /= motorAmount;
-        currentBreakForce = (breaking.IsPressed() || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10000 : 0);
+        currentBreakForce = (breaking.IsPressed() || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10 : 0);
         ApplyBreaking();
     }
 
@@ -326,7 +331,7 @@ public class CarController : MonoBehaviour
         else
         {
             Vector3 checkpointPosition = lastCheckPoint.gameObject.transform.position;
-            rigidBody.MovePosition(new Vector3(checkpointPosition.x, checkpointPosition.y + 1, checkpointPosition.z));
+            rigidBody.MovePosition(new Vector3(checkpointPosition.x, checkpointPosition.y, checkpointPosition.z));
         }
 
         rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
@@ -384,8 +389,12 @@ public class CarController : MonoBehaviour
     {
         is2D = to2D;
         SetInput();
-        if (is2D) transform.rotation = Quaternion.identity;
         SetConstraints();
+        rigidBody.angularVelocity = Vector3.zero;
+        if (is2D)
+        {
+            rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
+        }
         camController.DimensionSwitch();
     }
 }
