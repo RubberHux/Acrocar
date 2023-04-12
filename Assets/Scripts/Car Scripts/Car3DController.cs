@@ -10,6 +10,7 @@ using UnityEngine.Rendering;
 
 public class Car3DController : CarController
 {
+    /*
     private float currentBreakForce;
     private float currentSteerAngle;
 
@@ -183,4 +184,5 @@ public class Car3DController : CarController
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
+    */
 }

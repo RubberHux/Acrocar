@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 
 public class Car2DController : CarController
 {
+    /*
     // list of axle infos, including wheel colliders
     public int maxTorque; // maximum torque
     private InputAction move, swing, rotate, fireHook, breaking, reset, jump;
@@ -140,4 +141,5 @@ public class Car2DController : CarController
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
     }
+    */
 }
