@@ -10,6 +10,7 @@ using UnityEngine.Rendering;
 
 public class Car3DController : CarController
 {
+    /*
     private float currentBreakForce;
     private float currentSteerAngle;
 
@@ -98,6 +99,63 @@ public class Car3DController : CarController
         }
     }
 
+    private void HandleMotor()
+    {
+        float driveDir = move.ReadValue<Vector2>().y;
+        float rpm = 0;
+        int motorAmount = 0;
+        foreach (AxleInfo axle in axleInfos)
+        {
+            if (axle.motor)
+            {
+                axle.leftWheel.motorTorque = driveDir * motorForce;
+                axle.rightWheel.motorTorque = driveDir * motorForce;
+                rpm += axle.leftWheel.rpm + axle.rightWheel.rpm;
+                motorAmount++;
+            }
+        }
+        rpm /= motorAmount;
+        currentBreakForce = (breaking.IsPressed() || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10000 : 0);
+        ApplyBreaking();
+    }
+
+    private void ApplyBreaking()
+    {
+        foreach (AxleInfo axle in axleInfos)
+        {
+            axle.leftWheel.brakeTorque = currentBreakForce;
+            axle.rightWheel.brakeTorque = currentBreakForce;
+        }
+    }
+
+    private void HandleSteering ()
+    {
+        float steerDir = move.ReadValue<Vector2>().x;
+        currentSteerAngle = maxSteeringAngle * steerDir;
+        foreach (AxleInfo axle in axleInfos)
+        {
+            if (axle.turnType == AxleInfo.TurnType.Normal)
+            {
+                axle.leftWheel.steerAngle = currentSteerAngle;
+                axle.rightWheel.steerAngle = currentSteerAngle;
+            }
+            else if (axle.turnType == AxleInfo.TurnType.Inverted)
+            {
+                axle.leftWheel.steerAngle = - currentSteerAngle;
+                axle.rightWheel.steerAngle = - currentSteerAngle;
+            }
+        }
+    }
+    private void UpdateWheels()
+    {
+        foreach (AxleInfo axle in axleInfos)
+        {
+
+            UpdateSingleWheel(axle.leftWheel, axle.leftTransform);
+            UpdateSingleWheel(axle.rightWheel, axle.rightTransform);
+        }
+    }
+
     private void AirRotate()
     {
         if (groundedWheels != 0 || grappling) return;
@@ -111,7 +169,6 @@ public class Car3DController : CarController
         if (rotateMod.IsPressed()) rigidBody.AddTorque(-rigidBody.transform.forward * shiftSpinForce * Rotate.x);
         else rigidBody.AddTorque(rigidBody.transform.up * sideSpinForce * Rotate.x);
     }
-
     private void Swing()
     {
         Vector2 swingDirection = swing.ReadValue<Vector2>();
@@ -127,4 +184,5 @@ public class Car3DController : CarController
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
+    */
 }
