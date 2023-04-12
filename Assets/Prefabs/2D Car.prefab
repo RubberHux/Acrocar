@@ -39,6 +39,7 @@ Transform:
   - {fileID: 7367766997369750142}
   - {fileID: 7367766996694782757}
   - {fileID: 1225379598542022396}
+  - {fileID: 967655589883906696}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -246,7 +247,6 @@ MonoBehaviour:
   grappleBoostTime: 1.5
   maxJointDist: 0.8
   minJointDist: 0
-  easyAim: 0
 --- !u!114 &7367766997025023925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,19 +259,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd03621214c92846a810c76f975d2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnTime: 1
-  respawnTimer: 0
-  maxRotationTorque: 300000
-  swingForce: 6000
-  grappleBoostForce: 1800000
   axleInfos:
   - leftWheel: {fileID: 7367766997011321618}
     rightWheel: {fileID: 7367766997664829277}
+    leftTransform: {fileID: 7367766996677025747}
+    rightTransform: {fileID: 7367766997653145535}
     motor: 1
+    turnType: 0
   - leftWheel: {fileID: 7367766996720563476}
     rightWheel: {fileID: 7367766998177352499}
+    leftTransform: {fileID: 7367766996336974222}
+    rightTransform: {fileID: 7367766996149055745}
     motor: 1
+    turnType: 0
+  respawnTime: 1
+  gravCheckDistance: 1
+  respawnTimer: 0
+  roadCheckers:
+  - {fileID: 8495723008072177909}
+  - {fileID: 2113392359936361092}
+  - {fileID: 3097248946589158279}
+  - {fileID: 1025241505922305167}
+  maxRotationTorque: 300000
+  swingForce: 6000
+  grappleBoostForce: 1800000
+  jumpForce: 700000
+  gravRoadLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  notCarLayers:
+    serializedVersion: 2
+    m_Bits: 187
+  gravRoadPercent: 0
   maxTorque: 800
+--- !u!1 &2747763863521360615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1025241505922305167}
+  m_Layer: 6
+  m_Name: RoadChecker (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1025241505922305167
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2747763863521360615}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.46, z: -0.482}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 967655589883906696}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3728564266512877692
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +394,103 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 237557121362785271}
+--- !u!1 &4301278039097405890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2113392359936361092}
+  m_Layer: 6
+  m_Name: RoadChecker (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2113392359936361092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4301278039097405890}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.46, z: -0.482}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 967655589883906696}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4648127328509543145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8495723008072177909}
+  m_Layer: 6
+  m_Name: RoadChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8495723008072177909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4648127328509543145}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.46, z: 0.51}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 967655589883906696}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5375721694257704915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 967655589883906696}
+  m_Layer: 6
+  m_Name: RoadCheckers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &967655589883906696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5375721694257704915}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8495723008072177909}
+  - {fileID: 2113392359936361092}
+  - {fileID: 3097248946589158279}
+  - {fileID: 1025241505922305167}
+  m_Father: {fileID: 1574893124479108525}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5831937814806680620
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,6 +586,37 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
+--- !u!1 &6539743823872478091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3097248946589158279}
+  m_Layer: 6
+  m_Name: RoadChecker (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3097248946589158279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6539743823872478091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.46, z: -0.482}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 967655589883906696}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7367766996149055746
 GameObject:
   m_ObjectHideFlags: 0

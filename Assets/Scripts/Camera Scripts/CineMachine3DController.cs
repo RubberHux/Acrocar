@@ -5,15 +5,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
+using UnityEngine.UIElements;
 
 public class CineMachine3DController : MonoBehaviour
 {
     public CinemachineFreeLook groundCam;
+    public float groundTimer;
     public CinemachineFreeLook airCam;
     public CinemachineVirtualCamera hoodCam;
     private CinemachineBrain brain;
     private Car3DController carController;
     private InputAction cameraSwitch;
+    bool frameSinceSwitch = false;
     private enum CamState { 
         follow,
         hood
@@ -39,26 +42,37 @@ public class CineMachine3DController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+
+    private void FixedUpdate()
     {
-        if (camState == CamState.follow) { 
+        if (camState == CamState.follow)
+        {
+            if (!frameSinceSwitch)
+            {
+                groundCam.m_Transitions.m_InheritPosition = true;
+                airCam.m_Transitions.m_InheritPosition = true;
+            }
             if (carController.groundedWheels == 4)
             {
+                if (carController.gravRoadPercent < 0.7f) groundCam.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetWithWorldUp;
+                else groundCam.m_BindingMode = CinemachineTransposer.BindingMode.LockToTarget;
+                groundTimer += Time.deltaTime;
                 groundCam.enabled = true;
                 airCam.enabled = false;
             }
             else
             {
+                groundTimer = 0;
                 groundCam.enabled = false;
                 airCam.enabled = true;
             }
         }
-    }
-    private void FixedUpdate()
-    {
+        frameSinceSwitch = false;
         //if (groundCam.enabled && groundCam.m_XAxis.Value != 0) groundCam.m_XAxis.Value = Mathf.Lerp(groundCam.m_XAxis.Value, 0, 0.1f);
         //if (groundCam.enabled && groundCam.m_YAxis.Value != 0.5f) groundCam.m_YAxis.Value = Mathf.Lerp(groundCam.m_YAxis.Value, 0.5f, 0.1f);
-        if (carController.gameObject.GetComponent<Rigidbody>().velocity.magnitude < 0.1)
+        Vector3 carVelocity = transform.InverseTransformDirection(carController.gameObject.GetComponent<Rigidbody>().velocity);
+        carVelocity.y = 0;
+        if (carVelocity.magnitude < 0.1 || groundTimer < 0.2f)
         {
             groundCam.m_YAxisRecentering.m_enabled = false;
             groundCam.m_RecenterToTargetHeading.m_enabled = false;
@@ -70,13 +84,16 @@ public class CineMachine3DController : MonoBehaviour
         }
 
     }
-
+        
     private void SwitchCam(InputAction.CallbackContext context)
     {
+        frameSinceSwitch = true;
         hoodCam.enabled = false;
         groundCam.enabled = false;
+        groundCam.m_Transitions.m_InheritPosition = false;
+        airCam.m_Transitions.m_InheritPosition = false;
         airCam.enabled = false;
-        if (camState == CamState.follow) { 
+        if (camState == CamState.follow) {
             camState = CamState.hood;
             hoodCam.enabled = true;
             carController.firstPerson = true;
@@ -86,6 +103,7 @@ public class CineMachine3DController : MonoBehaviour
             if (carController.groundedWheels == 4) airCam.enabled = true;
             else groundCam.enabled = true;
             carController.firstPerson = false;
+            groundCam.m_XAxis.Value = 0;
         }
     }
 }
