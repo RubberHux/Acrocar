@@ -46,7 +46,7 @@ public class Car2DController : CarController
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-        stationaryTolerance = 0.0005f;
+        stationaryTolerance = 0.001f;
         startpoint = transform.position;
     }
 
@@ -121,7 +121,8 @@ public class Car2DController : CarController
         else rigidBody.AddTorque(Vector3.right * maxRotationTorque * rotateDirection.y * Time.deltaTime);
 
         // if player car gets stuck on its back, you can flip it back up
-        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
+        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance
+            && rigidBody.angularVelocity.sqrMagnitude < stationaryTolerance
             && rigidBody.transform.up.y <= 10e-5 && !grappling)
         {
             // reset torque of wheels so you don't drive off immediately after bouncing back up
@@ -135,7 +136,7 @@ public class Car2DController : CarController
             }
 
             // apply explosion force and rotation to car to get it back up
-            rigidBody.AddExplosionForce(100000 * Time.deltaTime * 180, rigidBody.transform.position, 5, 5);
+            rigidBody.AddExplosionForce(300000 * Time.deltaTime * 60, rigidBody.transform.position, 5, 5);
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
     }
