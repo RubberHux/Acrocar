@@ -63,10 +63,8 @@ public abstract class CarController : MonoBehaviour
 
     internal void DoJump(InputAction.CallbackContext context)
     {
-        Jump();
+        if (groundedWheels == 4 && Time.timeScale != 0.0f) rigidBody.AddForce(rigidBody.transform.up * 700000);
     }
-
-    internal abstract void Respawn();
 
     public void Kill()
     {
@@ -97,11 +95,6 @@ public abstract class CarController : MonoBehaviour
 
     }
 
-    internal void Jump()
-    {
-        if (groundedWheels == 4) rigidBody.AddForce(rigidBody.transform.up * 700000);
-    }
-
     internal void CheckGravRoad()
     {
         gravRoadPercent = 0;
@@ -114,7 +107,6 @@ public abstract class CarController : MonoBehaviour
             else notGravRoadAmount++;
         }
         gravRoadPercent /= gravRoadPercent + notGravRoadAmount;
-        Debug.Log(gravRoadPercent);
     }
 
     internal void CheckGrounded()
@@ -130,5 +122,31 @@ public abstract class CarController : MonoBehaviour
     public void GrappleBoost(Vector3 target)
     {
         rigidBody.AddForce(Vector3.Normalize(target - this.transform.position) * grappleBoostForce);
+    }
+
+    internal void Respawn()
+    {
+        if (Time.timeScale == 0.0f) return;
+        if (lastCheckPoint == null) rigidBody.MovePosition(startpoint);
+        else
+        {
+            Vector3 checkpointPosition = lastCheckPoint.gameObject.transform.position;
+            rigidBody.MovePosition(new Vector3(checkpointPosition.x, checkpointPosition.y + 1, checkpointPosition.z));
+        }
+
+        rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.angularVelocity = Vector3.zero;
+        foreach (AxleInfo aInfo in axleInfos)
+        {
+            aInfo.leftWheel.brakeTorque = float.MaxValue;
+            aInfo.rightWheel.brakeTorque = float.MaxValue;
+
+            aInfo.leftWheel.motorTorque = 0;
+            aInfo.rightWheel.motorTorque = 0;
+        }
+        respawnTimer = 0.1f;
+        respawned = true;
+        grappling = false;
     }
 }

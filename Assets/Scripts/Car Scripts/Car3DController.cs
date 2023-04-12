@@ -182,21 +182,4 @@ public class Car3DController : CarController
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
-
-    internal override void Respawn()
-    {
-        if (lastCheckPoint == null) rigidBody.MovePosition(startpoint);
-        else
-        {
-            rigidBody.MovePosition(lastCheckPoint.gameObject.transform.position);
-        }
-
-        rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
-        rigidBody.velocity = Vector3.zero;
-        rigidBody.angularVelocity = Vector3.zero;
-        grapplingGun.StopGrapple();
-        respawned = true;
-        respawnTimer = respawnTime;
-        grappling = false;
-    }
 }
