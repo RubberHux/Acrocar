@@ -15,6 +15,39 @@ public class Car2DController : MonoBehaviour
 
     private float torque; // current torque
 
+    private void OnEnable()
+    {
+        move = InputHandler.playerInput.Player2D.Move;
+        move.Enable();
+        swing = InputHandler.playerInput.Player2D.Swing;
+        swing.Enable();
+        rotate = InputHandler.playerInput.Player2D.Rotate;
+        rotate.Enable();
+        breaking = InputHandler.playerInput.Player2D.Break;
+        breaking.Enable();
+        fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
+        fireHook.Enable();
+        reset = InputHandler.playerInput.LevelInteraction.Reset;
+        reset.Enable();
+        reset.performed += Reset;
+        jump = InputHandler.playerInput.Player2D.Jump;
+        jump.Enable();
+        jump.performed += DoJump;
+    }
+
+    private void OnDisable()
+    {
+        reset.performed -= Reset;
+        jump.performed -= DoJump;
+    }
+
+    void Start()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+        stationaryTolerance = 0.001f;
+        startpoint = transform.position;
+    }
+
     private void FixedUpdate()
     {
         CheckGrounded();
@@ -86,7 +119,8 @@ public class Car2DController : MonoBehaviour
         else rigidBody.AddTorque(Vector3.right * maxRotationTorque * rotateDirection.y * Time.deltaTime);
 
         // if player car gets stuck on its back, you can flip it back up
-        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
+        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance
+            && rigidBody.angularVelocity.sqrMagnitude < stationaryTolerance
             && rigidBody.transform.up.y <= 10e-5 && !grappling)
         {
             // reset torque of wheels so you don't drive off immediately after bouncing back up
@@ -100,7 +134,7 @@ public class Car2DController : MonoBehaviour
             }
 
             // apply explosion force and rotation to car to get it back up
-            rigidBody.AddExplosionForce(100000 * Time.deltaTime * 180, rigidBody.transform.position, 5, 5);
+            rigidBody.AddExplosionForce(300000 * Time.deltaTime * 60, rigidBody.transform.position, 5, 5);
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
     }*/

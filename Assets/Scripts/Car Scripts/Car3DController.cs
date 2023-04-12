@@ -10,7 +10,70 @@ using UnityEngine.Rendering;
 
 public class Car3DController : CarController
 {
-    /*
+    private float currentBreakForce;
+    private float currentSteerAngle;
+
+    [SerializeField] private float motorForce;
+    [SerializeField] private float breakForce;
+    [SerializeField] private float maxSteeringAngle;
+
+    [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
+    private InputAction move, rotate, swing, jump, fireHook, breaking, reset, rotateMod, grapplingLengthControl;
+
+    [SerializeField] private Camera mainCamera;
+    [NonSerialized] public bool firstPerson = false;
+
+    private void OnEnable()
+    {
+        move = InputHandler.playerInput.Player3D.Move;
+        move.Enable();
+        rotate = InputHandler.playerInput.Player3D.Rotate;
+        rotate.Enable();
+        rotateMod = InputHandler.playerInput.Player3D.RotateMod;
+        rotateMod.Enable();
+        swing = InputHandler.playerInput.Player3D.Swing;
+        swing.Enable();
+        grapplingLengthControl = InputHandler.playerInput.Player3D.GrappleLengthControl;
+        grapplingLengthControl.Enable();
+        breaking = InputHandler.playerInput.Player3D.Break;
+        breaking.Enable();
+        fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
+        fireHook.Enable();
+        reset = InputHandler.playerInput.LevelInteraction.Reset;
+        reset.Enable();
+        reset.performed += Reset;
+        jump = InputHandler.playerInput.Player3D.Jump;
+        jump.Enable();
+        jump.performed += DoJump;
+    }
+
+    private void OnDisable()
+    {
+        jump.performed -= DoJump;
+        reset.performed -= Reset;
+    }
+
+    private void Start()
+    {
+        stationaryTolerance = 0.001f;
+        rigidBody = GetComponent<Rigidbody>();
+        startpoint = transform.position;
+    }
+
+    private void FixedUpdate()
+    {
+        CheckGrounded();
+        HandleMotor();
+        if (groundedWheels != 0)
+        {
+            HandleSteering();
+            UpdateWheels();
+        }
+        AirRotate();
+        if (grappling) Swing();
+        CustomGravity();
+    }
+
     private void Update()
     {
         if (grappling) grapplingGun.ChangeLength(InputHandler.playerInput.Player3D.GrappleLengthControl.ReadValue<Vector2>().y);
@@ -26,7 +89,8 @@ public class Car3DController : CarController
             else return;
         }
         if (grappling) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
-        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
+        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance
+            && rigidBody.angularVelocity.sqrMagnitude < stationaryTolerance
             && rigidBody.transform.up.y <= 10e-5 && !grappling)
         {
             rigidBody.AddForce(Vector3.up * 200000 * Time.deltaTime * 180);
@@ -63,5 +127,4 @@ public class Car3DController : CarController
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
     }
-    */
 }
