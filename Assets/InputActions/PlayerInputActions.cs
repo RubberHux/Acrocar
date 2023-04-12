@@ -64,6 +64,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""GrappleLengthControl"",
+                    ""type"": ""Value"",
+                    ""id"": ""3281489e-b138-46d1-b9bf-bf12411c2244"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Break"",
                     ""type"": ""Button"",
                     ""id"": ""75423660-ccd9-4394-a004-994da0b20973"",
@@ -815,6 +824,72 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""e6ac2c8d-a3e0-4224-b4ce-918b2b75899c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""004c4a1c-92bd-411f-a890-4e1e3d7d837d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""2eea574f-d92c-40cf-9cb6-5572cb3e647d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""bc43dd9c-cd74-40cf-9d6f-6e42100c4132"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""748b33f4-2d19-4244-a21a-5380befa5d8f"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""fef62b30-ec57-4e1e-941f-2e297ed5e624"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -2695,6 +2770,34 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""42bb532b-5d77-45a3-8802-bcb32108bcba"",
+            ""actions"": [
+                {
+                    ""name"": ""DimensionSwitch"",
+                    ""type"": ""Button"",
+                    ""id"": ""88c33341-5adb-4bea-925b-5db4038dd627"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6785546e-8165-4d07-b91d-cd6f41be6547"",
+                    ""path"": ""<Keyboard>/pageUp"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DimensionSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -2766,6 +2869,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player2D_Aim = m_Player2D.FindAction("Aim", throwIfNotFound: true);
         m_Player2D_Rotate = m_Player2D.FindAction("Rotate", throwIfNotFound: true);
         m_Player2D_Swing = m_Player2D.FindAction("Swing", throwIfNotFound: true);
+        m_Player2D_GrappleLengthControl = m_Player2D.FindAction("GrappleLengthControl", throwIfNotFound: true);
         m_Player2D_Break = m_Player2D.FindAction("Break", throwIfNotFound: true);
         m_Player2D_Zoom = m_Player2D.FindAction("Zoom", throwIfNotFound: true);
         m_Player2D_CameraSwitch = m_Player2D.FindAction("CameraSwitch", throwIfNotFound: true);
@@ -2801,6 +2905,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // SchemeChecker
         m_SchemeChecker = asset.FindActionMap("SchemeChecker", throwIfNotFound: true);
         m_SchemeChecker_SchemeCheck = m_SchemeChecker.FindAction("SchemeCheck", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_DimensionSwitch = m_Debug.FindAction("DimensionSwitch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2864,6 +2971,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player2D_Aim;
     private readonly InputAction m_Player2D_Rotate;
     private readonly InputAction m_Player2D_Swing;
+    private readonly InputAction m_Player2D_GrappleLengthControl;
     private readonly InputAction m_Player2D_Break;
     private readonly InputAction m_Player2D_Zoom;
     private readonly InputAction m_Player2D_CameraSwitch;
@@ -2876,6 +2984,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Player2D_Aim;
         public InputAction @Rotate => m_Wrapper.m_Player2D_Rotate;
         public InputAction @Swing => m_Wrapper.m_Player2D_Swing;
+        public InputAction @GrappleLengthControl => m_Wrapper.m_Player2D_GrappleLengthControl;
         public InputAction @Break => m_Wrapper.m_Player2D_Break;
         public InputAction @Zoom => m_Wrapper.m_Player2D_Zoom;
         public InputAction @CameraSwitch => m_Wrapper.m_Player2D_CameraSwitch;
@@ -2901,6 +3010,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Swing.started -= m_Wrapper.m_Player2DActionsCallbackInterface.OnSwing;
                 @Swing.performed -= m_Wrapper.m_Player2DActionsCallbackInterface.OnSwing;
                 @Swing.canceled -= m_Wrapper.m_Player2DActionsCallbackInterface.OnSwing;
+                @GrappleLengthControl.started -= m_Wrapper.m_Player2DActionsCallbackInterface.OnGrappleLengthControl;
+                @GrappleLengthControl.performed -= m_Wrapper.m_Player2DActionsCallbackInterface.OnGrappleLengthControl;
+                @GrappleLengthControl.canceled -= m_Wrapper.m_Player2DActionsCallbackInterface.OnGrappleLengthControl;
                 @Break.started -= m_Wrapper.m_Player2DActionsCallbackInterface.OnBreak;
                 @Break.performed -= m_Wrapper.m_Player2DActionsCallbackInterface.OnBreak;
                 @Break.canceled -= m_Wrapper.m_Player2DActionsCallbackInterface.OnBreak;
@@ -2929,6 +3041,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Swing.started += instance.OnSwing;
                 @Swing.performed += instance.OnSwing;
                 @Swing.canceled += instance.OnSwing;
+                @GrappleLengthControl.started += instance.OnGrappleLengthControl;
+                @GrappleLengthControl.performed += instance.OnGrappleLengthControl;
+                @GrappleLengthControl.canceled += instance.OnGrappleLengthControl;
                 @Break.started += instance.OnBreak;
                 @Break.performed += instance.OnBreak;
                 @Break.canceled += instance.OnBreak;
@@ -3229,6 +3344,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public SchemeCheckerActions @SchemeChecker => new SchemeCheckerActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private IDebugActions m_DebugActionsCallbackInterface;
+    private readonly InputAction m_Debug_DimensionSwitch;
+    public struct DebugActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public DebugActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DimensionSwitch => m_Wrapper.m_Debug_DimensionSwitch;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void SetCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterface != null)
+            {
+                @DimensionSwitch.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnDimensionSwitch;
+                @DimensionSwitch.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnDimensionSwitch;
+                @DimensionSwitch.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnDimensionSwitch;
+            }
+            m_Wrapper.m_DebugActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @DimensionSwitch.started += instance.OnDimensionSwitch;
+                @DimensionSwitch.performed += instance.OnDimensionSwitch;
+                @DimensionSwitch.canceled += instance.OnDimensionSwitch;
+            }
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -3280,6 +3428,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
         void OnSwing(InputAction.CallbackContext context);
+        void OnGrappleLengthControl(InputAction.CallbackContext context);
         void OnBreak(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnCameraSwitch(InputAction.CallbackContext context);
@@ -3319,5 +3468,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface ISchemeCheckerActions
     {
         void OnSchemeCheck(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnDimensionSwitch(InputAction.CallbackContext context);
     }
 }

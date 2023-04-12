@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
 
 public class CineMachine2DController : MonoBehaviour
-{
+{/*
     public CinemachineVirtualCamera followCam;
     public CinemachineVirtualCamera hoodCam;
     private InputAction cameraSwitch;
@@ -51,5 +51,5 @@ public class CineMachine2DController : MonoBehaviour
             followCam.enabled = true;
             carController.firstPerson = false;
         }
-    }
+    }*/
 }

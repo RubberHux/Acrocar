@@ -8,12 +8,10 @@ using UnityEngine.InputSystem;
 // Class from Unity documentation, with slight modification (due to no need for steering):
 // https://docs.unity3d.com/Manual/WheelColliderTutorial.html
 
-public class Car2DController : CarController
+public class Car2DController : MonoBehaviour
 {
     // list of axle infos, including wheel colliders
-    public int maxTorque; // maximum torque
-    private InputAction move, swing, rotate, fireHook, breaking, reset, jump;
-    [NonSerialized] public bool firstPerson;
+    /*public int maxTorque; // maximum torque
 
     private float torque; // current torque
 
@@ -139,5 +137,5 @@ public class Car2DController : CarController
             rigidBody.AddExplosionForce(300000 * Time.deltaTime * 60, rigidBody.transform.position, 5, 5);
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
-    }
+    }*/
 }

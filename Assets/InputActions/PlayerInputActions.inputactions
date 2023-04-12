@@ -42,6 +42,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "GrappleLengthControl",
+                    "type": "Value",
+                    "id": "3281489e-b138-46d1-b9bf-bf12411c2244",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Break",
                     "type": "Button",
                     "id": "75423660-ccd9-4394-a004-994da0b20973",
@@ -793,6 +802,72 @@
                     "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Keyboard",
+                    "id": "e6ac2c8d-a3e0-4224-b4ce-918b2b75899c",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrappleLengthControl",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "004c4a1c-92bd-411f-a890-4e1e3d7d837d",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "GrappleLengthControl",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "2eea574f-d92c-40cf-9cb6-5572cb3e647d",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "GrappleLengthControl",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Gamepad",
+                    "id": "bc43dd9c-cd74-40cf-9d6f-6e42100c4132",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrappleLengthControl",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "748b33f4-2d19-4244-a21a-5380befa5d8f",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "GrappleLengthControl",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "fef62b30-ec57-4e1e-941f-2e297ed5e624",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "GrappleLengthControl",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
@@ -2669,6 +2744,34 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "SchemeCheck",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Debug",
+            "id": "42bb532b-5d77-45a3-8802-bcb32108bcba",
+            "actions": [
+                {
+                    "name": "DimensionSwitch",
+                    "type": "Button",
+                    "id": "88c33341-5adb-4bea-925b-5db4038dd627",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6785546e-8165-4d07-b91d-cd6f41be6547",
+                    "path": "<Keyboard>/pageUp",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DimensionSwitch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
