@@ -168,6 +168,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1838006970241383764}
   winMenu: {fileID: 6875219848999511810}
+  mainMenuButtons: {fileID: 7761353057206744961}
+  pauseDefualtButton: {fileID: 1838006969271020586}
+  winDefualtButton: {fileID: 2021903979202367231}
+  settingsDefualtButton: {fileID: 7418603302869786511}
+  mainMenuDefualtButton: {fileID: 1730865445726941163}
   uiTimeText:
   - {fileID: 6248116637870903569}
   - {fileID: 5434670636449223563}
@@ -829,7 +834,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 0.97054046, b: 0.3537736, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 1, g: 0.8378079, b: 0.51482475, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -2635,7 +2640,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 0.97054046, b: 0.3537736, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 1, g: 0.8378079, b: 0.51482475, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -3129,12 +3134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314e928dad49999428b3f4fcae078ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pause: {fileID: 1838006970241383764}
   backDoubleCheck: {fileID: 2313577343381497789}
-  lastSelected: {fileID: 0}
+  backDoubleCheckDefault: {fileID: 2400631234212861719}
   easyAimToggle: {fileID: 8626653507228474307}
   SaveButton: {fileID: 2815332072989546379}
-  eventSystem: {fileID: 1838006970368257328}
   uiController: {fileID: 1838006970368257334}
 --- !u!1 &3917588600919067611
 GameObject:
@@ -5931,7 +5934,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 0.97054046, b: 0.3537736, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 1, g: 0.8378079, b: 0.51482475, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
