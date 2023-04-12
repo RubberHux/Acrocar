@@ -69,7 +69,7 @@ public class Car3DController : CarController
     {
         wheelColliders = new WheelCollider[] { frontLeftWheelCollider, frontRightWheelCollider, backLeftWheelCollider, backRightWheelCollider };
         wheelTransforms = new Transform[] { frontLeftWheelTransform, frontRightWheelTransform, backLeftWheelTransform, backRightWheelTransform };
-        stationaryTolerance = 0.0005f;
+        stationaryTolerance = 0.001f;
         rigidBody = GetComponent<Rigidbody>();
         startpoint = transform.position;
     }
@@ -104,7 +104,8 @@ public class Car3DController : CarController
             else return;
         }
         if (grappling) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
-        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
+        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance
+            && rigidBody.angularVelocity.sqrMagnitude < stationaryTolerance
             && rigidBody.transform.up.y <= 10e-5 && !grappling)
         {
             rigidBody.AddForce(Vector3.up * 200000 * Time.deltaTime * 180);
