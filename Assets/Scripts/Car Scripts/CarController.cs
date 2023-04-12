@@ -36,11 +36,11 @@ public class CarController : MonoBehaviour
     [NonSerialized] public bool respawned = false;
     [NonSerialized] public CheckPoint lastCheckPoint = null;
     [SerializeField] internal Transform[] roadCheckers;
-
+    CineMachine3DController camController;
     private float currentBreakForce;
     private float currentSteerAngle;
 
-    internal InputAction move, swing, rotate, rotateMod, breaking, reset, jump, grapplingLengthControl;
+    internal InputAction move, swing, rotate, rotateMod, breaking, reset, jump, grapplingLengthControl, dimensionSwitch;
     public int swingForce; // the force with which to swing when grappled
     public int grappleBoostForce;
     public int jumpForce;
@@ -80,11 +80,13 @@ public class CarController : MonoBehaviour
     private void SetConstraints()
     {
         if (is2D) rigidBody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        else rigidBody.constraints = RigidbodyConstraints.None;
     }
 
     private void OnEnable()
     {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        camController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CineMachine3DController>();
         SetInput();
     }
 
@@ -96,6 +98,9 @@ public class CarController : MonoBehaviour
 
     private void SetInput()
     {
+        dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
+        dimensionSwitch.Enable();
+        dimensionSwitch.performed += DoDimensionSwitch;
         reset = InputHandler.playerInput.LevelInteraction.Reset;
         reset.Enable();
         reset.performed += Reset;
@@ -273,7 +278,6 @@ public class CarController : MonoBehaviour
         }
         if (noGravChanges) rigidBody.useGravity = true;
         else rigidBody.useGravity = false;
-
     }
 
     internal void CheckGravRoad()
@@ -288,7 +292,6 @@ public class CarController : MonoBehaviour
             else notGravRoadAmount++;
         }
         gravRoadPercent /= gravRoadPercent + notGravRoadAmount;
-        Debug.Log(gravRoadPercent);
     }
 
     internal void CheckGrounded()
@@ -370,5 +373,19 @@ public class CarController : MonoBehaviour
         wheelCollider.GetWorldPose(out pos, out rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
+    }
+
+    private void DoDimensionSwitch(InputAction.CallbackContext context)
+    {
+        DimensionSwitch(!is2D);
+    }
+
+    public void DimensionSwitch(bool to2D)
+    {
+        is2D = to2D;
+        SetInput();
+        if (is2D) transform.rotation = Quaternion.identity;
+        SetConstraints();
+        camController.DimensionSwitch();
     }
 }

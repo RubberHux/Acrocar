@@ -2770,6 +2770,34 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""42bb532b-5d77-45a3-8802-bcb32108bcba"",
+            ""actions"": [
+                {
+                    ""name"": ""DimensionSwitch"",
+                    ""type"": ""Button"",
+                    ""id"": ""88c33341-5adb-4bea-925b-5db4038dd627"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6785546e-8165-4d07-b91d-cd6f41be6547"",
+                    ""path"": ""<Keyboard>/pageUp"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DimensionSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -2877,6 +2905,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // SchemeChecker
         m_SchemeChecker = asset.FindActionMap("SchemeChecker", throwIfNotFound: true);
         m_SchemeChecker_SchemeCheck = m_SchemeChecker.FindAction("SchemeCheck", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_DimensionSwitch = m_Debug.FindAction("DimensionSwitch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -3313,6 +3344,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public SchemeCheckerActions @SchemeChecker => new SchemeCheckerActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private IDebugActions m_DebugActionsCallbackInterface;
+    private readonly InputAction m_Debug_DimensionSwitch;
+    public struct DebugActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public DebugActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DimensionSwitch => m_Wrapper.m_Debug_DimensionSwitch;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void SetCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterface != null)
+            {
+                @DimensionSwitch.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnDimensionSwitch;
+                @DimensionSwitch.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnDimensionSwitch;
+                @DimensionSwitch.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnDimensionSwitch;
+            }
+            m_Wrapper.m_DebugActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @DimensionSwitch.started += instance.OnDimensionSwitch;
+                @DimensionSwitch.performed += instance.OnDimensionSwitch;
+                @DimensionSwitch.canceled += instance.OnDimensionSwitch;
+            }
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -3404,5 +3468,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface ISchemeCheckerActions
     {
         void OnSchemeCheck(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnDimensionSwitch(InputAction.CallbackContext context);
     }
 }

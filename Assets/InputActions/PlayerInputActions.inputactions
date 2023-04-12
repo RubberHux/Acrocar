@@ -2748,6 +2748,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Debug",
+            "id": "42bb532b-5d77-45a3-8802-bcb32108bcba",
+            "actions": [
+                {
+                    "name": "DimensionSwitch",
+                    "type": "Button",
+                    "id": "88c33341-5adb-4bea-925b-5db4038dd627",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6785546e-8165-4d07-b91d-cd6f41be6547",
+                    "path": "<Keyboard>/pageUp",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DimensionSwitch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

@@ -134,6 +134,24 @@ public class CineMachine3DController : MonoBehaviour
         
     private void SwitchCam(InputAction.CallbackContext context)
     {
+        if (camState == CamState.follow || camState == CamState.side) SetState(CamState.hood);
+        else if (camState == CamState.hood && !carController.is2D) SetState(CamState.follow);
+        else if (camState == CamState.hood) SetState(CamState.side);
+    }
+    private void HandleZoom()
+    {
+        var offset = sideCam2D.GetCinemachineComponent<CinemachineTransposer>();
+        float x = offset.m_FollowOffset.x - zoom.ReadValue<Vector2>().y * zoomSpeed;
+        offset.m_FollowOffset.x = (x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));
+    }
+    public void DimensionSwitch()
+    {
+        if (carController.is2D) SetState(CamState.side);
+        else if (camState == CamState.side) SetState(CamState.follow);
+    }
+    
+    private void SetState(CamState state)
+    {
         bool firstPerson = false;
         frameSinceSwitch = true;
         hoodCam.enabled = false;
@@ -142,28 +160,22 @@ public class CineMachine3DController : MonoBehaviour
         groundCam.m_Transitions.m_InheritPosition = false;
         airCam.m_Transitions.m_InheritPosition = false;
         airCam.enabled = false;
-        if (camState == CamState.follow || camState == CamState.side) {
-            camState = CamState.hood;
+        camState = state;
+        if (camState == CamState.hood)
+        {
             hoodCam.enabled = true;
             firstPerson = true;
         }
-        else if (camState == CamState.hood && !carController.is2D) {
-            camState = CamState.follow;
+        else if (camState == CamState.follow)
+        {
             if (carController.groundedWheels == 4) airCam.enabled = true;
             else groundCam.enabled = true;
             groundCam.m_XAxis.Value = 0;
         }
-        else if (camState == CamState.hood)
+        else if (camState == CamState.side)
         {
-            camState = CamState.side;
             sideCam2D.enabled = true;
         }
         carController.firstPerson = firstPerson;
-    }
-    private void HandleZoom()
-    {
-        var offset = sideCam2D.GetCinemachineComponent<CinemachineTransposer>();
-        float x = offset.m_FollowOffset.x - zoom.ReadValue<Vector2>().y * zoomSpeed;
-        offset.m_FollowOffset.x = (x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));
     }
 }
