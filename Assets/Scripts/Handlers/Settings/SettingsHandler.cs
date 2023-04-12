@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
@@ -10,9 +11,10 @@ public class SettingsHandler : MonoBehaviour
     public static bool easyAim;
     private static bool easyAimNew;
     private static bool startedByPause = false;
-    [SerializeField] private GameObject pause, backDoubleCheck;
+    [SerializeField] private GameObject pause, backDoubleCheck, lastSelected;
     [SerializeField] private Toggle easyAimToggle;
     [SerializeField] private Button SaveButton;
+    [SerializeField] private EventSystem eventSystem;
     public UIController uiController;
 
     private void Awake()
@@ -21,6 +23,12 @@ public class SettingsHandler : MonoBehaviour
         easyAimNew = easyAim;
         easyAimToggle.isOn = easyAim;
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        lastSelected = eventSystem.currentSelectedGameObject;
+        eventSystem.SetSelectedGameObject(easyAimToggle.gameObject);
     }
 
     public void StartFromPause()
@@ -71,6 +79,7 @@ public class SettingsHandler : MonoBehaviour
         else uiController.SetState(UIController.GameState.MainMenu);
         backDoubleCheck.SetActive(false);
         startedByPause = false;
+        eventSystem.SetSelectedGameObject(lastSelected);
     }
 
     public void SetEasyAim(bool easyAimValue)
