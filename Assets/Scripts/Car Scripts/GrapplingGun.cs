@@ -67,6 +67,7 @@ public class GrapplingGun : MonoBehaviour
 
     void StartGrapple()
     {
+        if (Time.timeScale == 0.0f) return;
         float distanceFromPoint = Vector3.Distance(gunTip.position, grapplePoint);
 
         if (distanceFromPoint > maxGrappleDistance) return;
@@ -151,6 +152,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void StopGrapple()
     {
+        if (Time.timeScale == 0.0f) return;
         carController.grappling = false;
         aimPreTimer = aimPostTimer = -1;
         carController.grappling = false;

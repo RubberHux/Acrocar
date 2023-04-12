@@ -67,7 +67,7 @@ public class UIController : MonoBehaviour
     {
         if (eventSystem.currentSelectedGameObject == null)
         {
-            eventSystem.SetSelectedGameObject(lastObject);
+            //eventSystem.SetSelectedGameObject(lastObject);
         }
     }
 

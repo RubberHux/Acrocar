@@ -140,29 +140,4 @@ public class Car2DController : CarController
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
     }
-
-    internal override void Respawn()
-    {
-        if (lastCheckPoint == null) rigidBody.MovePosition(startpoint);
-        else
-        {
-            Vector3 checkpointPosition = lastCheckPoint.gameObject.transform.position;
-            rigidBody.MovePosition(new Vector3(checkpointPosition.x, checkpointPosition.y + 1, checkpointPosition.z));
-        }
-
-        rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
-        rigidBody.velocity = Vector3.zero;
-        rigidBody.angularVelocity = Vector3.zero;
-        foreach (AxleInfo aInfo in axleInfos)
-        {
-            aInfo.leftWheel.brakeTorque = float.MaxValue;
-            aInfo.rightWheel.brakeTorque = float.MaxValue;
-
-            aInfo.leftWheel.motorTorque = 0;
-            aInfo.rightWheel.motorTorque = 0;
-        }
-        respawnTimer = 0.1f;
-        respawned = true;
-        grappling = false;
-    }
 }

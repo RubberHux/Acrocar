@@ -11,7 +11,7 @@ public class SettingsHandler : MonoBehaviour
 {
     public static bool easyAim;
     private static bool easyAimNew;
-    [SerializeField] private GameObject backDoubleCheck, backDoubleCheckDefault;
+    [SerializeField] private GameObject backDoubleCheck;
     private GameObject lastSelected;
     [SerializeField] private Toggle easyAimToggle;
     [SerializeField] private Button SaveButton;
@@ -48,7 +48,6 @@ public class SettingsHandler : MonoBehaviour
         if (!CheckSame())
         {
             backDoubleCheck.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(backDoubleCheckDefault);
             setInteractive(false);
         }
         else
