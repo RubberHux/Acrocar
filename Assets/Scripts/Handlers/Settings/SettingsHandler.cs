@@ -5,17 +5,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static UIController;
 
 public class SettingsHandler : MonoBehaviour
 {
     public static bool easyAim;
     private static bool easyAimNew;
-    private static bool startedByPause = false;
-    [SerializeField] private GameObject pause, backDoubleCheck, lastSelected;
+    [SerializeField] private GameObject backDoubleCheck, backDoubleCheckDefault;
+    private GameObject lastSelected;
     [SerializeField] private Toggle easyAimToggle;
     [SerializeField] private Button SaveButton;
-    [SerializeField] private EventSystem eventSystem;
     public UIController uiController;
+    private GameState lastState;
+
 
     private void Awake()
     {
@@ -27,14 +29,11 @@ public class SettingsHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        lastSelected = eventSystem.currentSelectedGameObject;
-        eventSystem.SetSelectedGameObject(easyAimToggle.gameObject);
-    }
-
-    public void StartFromPause()
-    {
-        startedByPause = true;
-        uiController.SetState(UIController.GameState.Settings);
+        lastSelected = EventSystem.current.currentSelectedGameObject;
+        EventSystem.current.SetSelectedGameObject(easyAimToggle.gameObject);
+        lastState = uiController.gameState;
+        uiController.SetState(GameState.Settings);
+        setInteractive(true);
     }
 
     public void Save()
@@ -46,7 +45,12 @@ public class SettingsHandler : MonoBehaviour
 
     public void Back()
     {
-        if (!CheckSame()) backDoubleCheck.SetActive(true);
+        if (!CheckSame())
+        {
+            backDoubleCheck.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(backDoubleCheckDefault);
+            setInteractive(false);
+        }
         else
         {
             Exit();
@@ -71,20 +75,25 @@ public class SettingsHandler : MonoBehaviour
     {
         SaveButton.interactable = false;
         this.gameObject.SetActive(false);
-        if (startedByPause)
-        {
-            pause.SetActive(true);
-            uiController.SetState(UIController.GameState.Paused);
-        }
-        else uiController.SetState(UIController.GameState.MainMenu);
         backDoubleCheck.SetActive(false);
-        startedByPause = false;
-        eventSystem.SetSelectedGameObject(lastSelected);
+        uiController.BackTo(lastState, lastSelected);
     }
 
     public void SetEasyAim(bool easyAimValue)
     {
         easyAimNew = easyAimValue;
         CheckSame();
+    }
+
+    public void setInteractive(bool interactive)
+    {
+        foreach (Button button in gameObject.GetComponentsInChildren<Button>()) button.interactable = interactive;
+        foreach (Toggle toggle in gameObject.GetComponentsInChildren<Toggle>()) toggle.interactable = interactive;
+        if (interactive) CheckSame();
+    }
+
+    public void resetSelected()
+    {
+        EventSystem.current.SetSelectedGameObject(easyAimToggle.gameObject);
     }
 }
