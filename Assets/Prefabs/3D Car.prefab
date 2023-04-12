@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4232084182143968389}
   - component: {fileID: 7916120168122404825}
   - component: {fileID: 2122946091021414047}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4445874436172322136}
   - component: {fileID: 4536661680607480173}
   - component: {fileID: 6353992952604243288}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RearRightWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3495362187277647123}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RoadCheckFrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 345318731645210439}
   - component: {fileID: 345318731645210438}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackLeftCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345318731888106411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GunTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,7 +311,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345318732241237032}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 345318732265787236}
   - component: {fileID: 345318732265787243}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FrontLeftCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345318732953282191}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WheelColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 345318733267869249}
   - component: {fileID: 345318733267869248}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BackRightCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 345318733342974319}
   - component: {fileID: 345318733342974318}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FrontRightCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,9 +566,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345318733545692749}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraTrackPoint
-  m_TagString: Untagged
+  m_TagString: CameraTrackPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -598,13 +598,13 @@ GameObject:
   m_Component:
   - component: {fileID: 6847691492607844315}
   - component: {fileID: 5318412009458978722}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hood Cam
-  m_TagString: Untagged
+  m_TagString: HoodCam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6847691492607844315
 Transform:
   m_ObjectHideFlags: 0
@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 2681678799853955596}
   - component: {fileID: 5485049019281231828}
   - component: {fileID: 4561827617339463440}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 6893690774852986378}
   - component: {fileID: 575177233304198938}
   - component: {fileID: 4755919695644805984}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spoiler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -837,7 +837,7 @@ GameObject:
   - component: {fileID: 3530329027486806887}
   - component: {fileID: 2721867744011165973}
   - component: {fileID: 5618699810578022366}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FrontRightWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -918,7 +918,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 920915704073020982}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RoadCheckFrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -949,7 +949,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5138948733047826425}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RoadCheckBackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -980,7 +980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2418885030276749877}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Meshes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1017,7 +1017,7 @@ GameObject:
   - component: {fileID: 4779385844343569019}
   - component: {fileID: 2206996790673945370}
   - component: {fileID: 3154070106375248324}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RearLeftWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1098,7 +1098,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6970491879958410017}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RoadCheckers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1135,7 +1135,7 @@ GameObject:
   - component: {fileID: 683762731083175255}
   - component: {fileID: 2470645109704917594}
   - component: {fileID: 463876822166888290}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FrontLeftWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1218,10 +1218,11 @@ GameObject:
   - component: {fileID: 8671686526439328773}
   - component: {fileID: 1975006650651592674}
   - component: {fileID: 1975006650651592675}
+  - component: {fileID: 1907819255474660145}
   - component: {fileID: 1975006650651592668}
   - component: {fileID: 1975006650651592672}
   - component: {fileID: 1975006650651592679}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 3D Car
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1261,7 +1262,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!65 &1975006650651592675
@@ -1275,8 +1276,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.8493402, z: 4.7346487}
-  m_Center: {x: 0, y: 0.61156297, z: -0.036029696}
+  m_Size: {x: 2, y: 0.8493402, z: 4.0565557}
+  m_Center: {x: 0, y: 0.61156297, z: 0.034178853}
+--- !u!65 &1907819255474660145
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7373890725835698445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2150809, y: 0.32620335, z: 1.1853151}
+  m_Center: {x: -0.007700503, y: 1.1851575, z: -0.4924674}
 --- !u!114 &1975006650651592668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,32 +1316,27 @@ MonoBehaviour:
     rightTransform: {fileID: 4445874436172322136}
     motor: 0
     turnType: 0
-  respawnTime: 1
   gravCheckDistance: 2
-  respawnTimer: 0
   roadCheckers:
   - {fileID: 920915704073020982}
   - {fileID: 3495362187277647123}
   - {fileID: 5138948733047826425}
   - {fileID: 1826248031713813397}
-  maxRotationTorque: 0
-  swingForce: 0
+  swingForce: 100
   grappleBoostForce: 1800000
   jumpForce: 700000
   gravRoadLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   notCarLayers:
     serializedVersion: 2
-    m_Bits: 0
-  gravRoadPercent: 0
-  motorForce: 8000
-  breakForce: 3000
+    m_Bits: 137
+  motorForce: 300000
+  breakForce: 800000
   maxSteeringAngle: 20
   frontSpinForce: 20000
   sideSpinForce: 20000
   shiftSpinForce: 20000
-  mainCamera: {fileID: 0}
 --- !u!120 &1975006650651592672
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1447,12 +1456,12 @@ MonoBehaviour:
     m_Bits: 191
   gunTip: {fileID: 345318731888106411}
   player: {fileID: 8671686526439328773}
-  maxGrappleDistance: 50
+  maxGrappleDistance: 30
   aimLeniencyPreTime: 0.2
   aimLeniencyPostTime: 0.1
   grappleBoostTime: 1
-  maxJointDist: 0
-  minJointDist: 0.8
+  maxJointDist: 0.8
+  minJointDist: 0
 --- !u!1 &7834106809336206583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,7 +1471,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6208773822582024249}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1495,7 +1504,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1826248031713813397}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RoadCheckBackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

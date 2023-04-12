@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class Camera2DFollow : MonoBehaviour
 {
     [SerializeField] private Vector3 offset;
     Quaternion rotationOffset = Quaternion.identity;
-    [SerializeField] private Transform target;
+    [NonSerialized] public static Transform target;
     [SerializeField] private float translateSpeed, rotationSpeed;
     [SerializeField] private float maxZoom, minZoom, zoomSpeed;
     private InputAction zoom;
@@ -21,18 +22,19 @@ public class Camera2DFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (target == null) return;
         HandleTranslation();
         HandleRotation();
     }
     private void Update()
     {
+        if (target == null) return;
         HandleZoom();
     }
 
     private void HandleTranslation()
     {
         var targetPosition = target.TransformPoint(offset);
-        //transform.position = Vector3.SmoothDamp(transform.position, targetPosition);
         transform.position = Vector3.Lerp(transform.position, targetPosition, translateSpeed * Time.deltaTime);
     }
     private void HandleRotation()

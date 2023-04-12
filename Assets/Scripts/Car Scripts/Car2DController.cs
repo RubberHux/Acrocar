@@ -8,47 +8,12 @@ using UnityEngine.InputSystem;
 // Class from Unity documentation, with slight modification (due to no need for steering):
 // https://docs.unity3d.com/Manual/WheelColliderTutorial.html
 
-public class Car2DController : CarController
+public class Car2DController : MonoBehaviour
 {
     // list of axle infos, including wheel colliders
-    public int maxTorque; // maximum torque
-    private InputAction move, swing, rotate, fireHook, breaking, reset, jump;
-    [NonSerialized] public bool firstPerson;
+    /*public int maxTorque; // maximum torque
 
     private float torque; // current torque
-
-    private void OnEnable()
-    {
-        move = InputHandler.playerInput.Player2D.Move;
-        move.Enable();
-        swing = InputHandler.playerInput.Player2D.Swing;
-        swing.Enable();
-        rotate = InputHandler.playerInput.Player2D.Rotate;
-        rotate.Enable();
-        breaking = InputHandler.playerInput.Player2D.Break;
-        breaking.Enable();
-        fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
-        fireHook.Enable();
-        reset = InputHandler.playerInput.LevelInteraction.Reset;
-        reset.Enable();
-        reset.performed += Reset;
-        jump = InputHandler.playerInput.Player2D.Jump;
-        jump.Enable();
-        jump.performed += DoJump;
-    }
-
-    private void OnDisable()
-    {
-        reset.performed -= Reset;
-        jump.performed -= DoJump;
-    }
-
-    void Start()
-    {
-        rigidBody = GetComponent<Rigidbody>();
-        stationaryTolerance = 0.0005f;
-        startpoint = transform.position;
-    }
 
     private void FixedUpdate()
     {
@@ -138,5 +103,5 @@ public class Car2DController : CarController
             rigidBody.AddExplosionForce(100000 * Time.deltaTime * 180, rigidBody.transform.position, 5, 5);
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
-    }
+    }*/
 }

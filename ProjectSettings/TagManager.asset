@@ -9,6 +9,8 @@ TagManager:
   - InputHandler
   - UI
   - GravRoad
+  - HoodCam
+  - CameraTrackPoint
   layers:
   - Default
   - TransparentFX

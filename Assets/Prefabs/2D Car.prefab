@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 7046218446787719925}
   m_Layer: 0
   m_Name: Hood Cam
-  m_TagString: Untagged
+  m_TagString: HoodCam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

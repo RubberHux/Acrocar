@@ -64,6 +64,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""GrappleLengthControl"",
+                    ""type"": ""Value"",
+                    ""id"": ""3281489e-b138-46d1-b9bf-bf12411c2244"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Break"",
                     ""type"": ""Button"",
                     ""id"": ""75423660-ccd9-4394-a004-994da0b20973"",
@@ -815,6 +824,72 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""e6ac2c8d-a3e0-4224-b4ce-918b2b75899c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""004c4a1c-92bd-411f-a890-4e1e3d7d837d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""2eea574f-d92c-40cf-9cb6-5572cb3e647d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""bc43dd9c-cd74-40cf-9d6f-6e42100c4132"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""748b33f4-2d19-4244-a21a-5380befa5d8f"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""fef62b30-ec57-4e1e-941f-2e297ed5e624"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""GrappleLengthControl"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -2766,6 +2841,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player2D_Aim = m_Player2D.FindAction("Aim", throwIfNotFound: true);
         m_Player2D_Rotate = m_Player2D.FindAction("Rotate", throwIfNotFound: true);
         m_Player2D_Swing = m_Player2D.FindAction("Swing", throwIfNotFound: true);
+        m_Player2D_GrappleLengthControl = m_Player2D.FindAction("GrappleLengthControl", throwIfNotFound: true);
         m_Player2D_Break = m_Player2D.FindAction("Break", throwIfNotFound: true);
         m_Player2D_Zoom = m_Player2D.FindAction("Zoom", throwIfNotFound: true);
         m_Player2D_CameraSwitch = m_Player2D.FindAction("CameraSwitch", throwIfNotFound: true);
@@ -2864,6 +2940,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player2D_Aim;
     private readonly InputAction m_Player2D_Rotate;
     private readonly InputAction m_Player2D_Swing;
+    private readonly InputAction m_Player2D_GrappleLengthControl;
     private readonly InputAction m_Player2D_Break;
     private readonly InputAction m_Player2D_Zoom;
     private readonly InputAction m_Player2D_CameraSwitch;
@@ -2876,6 +2953,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Player2D_Aim;
         public InputAction @Rotate => m_Wrapper.m_Player2D_Rotate;
         public InputAction @Swing => m_Wrapper.m_Player2D_Swing;
+        public InputAction @GrappleLengthControl => m_Wrapper.m_Player2D_GrappleLengthControl;
         public InputAction @Break => m_Wrapper.m_Player2D_Break;
         public InputAction @Zoom => m_Wrapper.m_Player2D_Zoom;
         public InputAction @CameraSwitch => m_Wrapper.m_Player2D_CameraSwitch;
@@ -2901,6 +2979,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Swing.started -= m_Wrapper.m_Player2DActionsCallbackInterface.OnSwing;
                 @Swing.performed -= m_Wrapper.m_Player2DActionsCallbackInterface.OnSwing;
                 @Swing.canceled -= m_Wrapper.m_Player2DActionsCallbackInterface.OnSwing;
+                @GrappleLengthControl.started -= m_Wrapper.m_Player2DActionsCallbackInterface.OnGrappleLengthControl;
+                @GrappleLengthControl.performed -= m_Wrapper.m_Player2DActionsCallbackInterface.OnGrappleLengthControl;
+                @GrappleLengthControl.canceled -= m_Wrapper.m_Player2DActionsCallbackInterface.OnGrappleLengthControl;
                 @Break.started -= m_Wrapper.m_Player2DActionsCallbackInterface.OnBreak;
                 @Break.performed -= m_Wrapper.m_Player2DActionsCallbackInterface.OnBreak;
                 @Break.canceled -= m_Wrapper.m_Player2DActionsCallbackInterface.OnBreak;
@@ -2929,6 +3010,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Swing.started += instance.OnSwing;
                 @Swing.performed += instance.OnSwing;
                 @Swing.canceled += instance.OnSwing;
+                @GrappleLengthControl.started += instance.OnGrappleLengthControl;
+                @GrappleLengthControl.performed += instance.OnGrappleLengthControl;
+                @GrappleLengthControl.canceled += instance.OnGrappleLengthControl;
                 @Break.started += instance.OnBreak;
                 @Break.performed += instance.OnBreak;
                 @Break.canceled += instance.OnBreak;
@@ -3280,6 +3364,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
         void OnSwing(InputAction.CallbackContext context);
+        void OnGrappleLengthControl(InputAction.CallbackContext context);
         void OnBreak(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnCameraSwitch(InputAction.CallbackContext context);
