@@ -1313,6 +1313,7 @@ MonoBehaviour:
   maxRotationTorque: 0
   swingForce: 0
   grappleBoostForce: 1800000
+  jumpForce: 700000
   gravRoadLayer:
     serializedVersion: 2
     m_Bits: 0

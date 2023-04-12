@@ -52,7 +52,8 @@ public class Car2DController : CarController
 
     private void FixedUpdate()
     {
-        customGravity();
+        CheckGrounded();
+        CustomGravity();
     }
 
     // Update is called once per frame
@@ -137,15 +138,6 @@ public class Car2DController : CarController
             rigidBody.AddExplosionForce(100000 * Time.deltaTime * 180, rigidBody.transform.position, 5, 5);
             rigidBody.AddTorque(Vector3.right * maxRotationTorque * 100);
         }
-    }
-
-    internal override void Jump()
-    {
-        foreach (AxleInfo axle in axleInfos) {
-            axle.leftWheel.motorTorque = 0;
-            axle.rightWheel.motorTorque = 0;
-        }
-        rigidBody.AddForce(rigidBody.transform.up * 700000);
     }
 
     internal override void Respawn()

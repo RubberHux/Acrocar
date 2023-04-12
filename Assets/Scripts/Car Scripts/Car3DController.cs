@@ -21,8 +21,6 @@ public class Car3DController : CarController
     private InputAction move, rotate, swing, jump, fireHook, breaking, reset, rotateMod, grapplingLengthControl;
 
     [SerializeField] private Camera mainCamera;
-
-    [NonSerialized] public int groundedWheels = 0;
     [NonSerialized] public bool firstPerson = false;
 
     private void OnEnable()
@@ -73,7 +71,7 @@ public class Car3DController : CarController
         }
         AirRotate();
         if (grappling) Swing();
-        customGravity();
+        CustomGravity();
     }
 
     private void Update()
@@ -96,16 +94,6 @@ public class Car3DController : CarController
         {
             rigidBody.AddForce(Vector3.up * 200000 * Time.deltaTime * 180);
             rigidBody.AddTorque(rigidBody.transform.right * maxRotationTorque * 100);
-        }
-    }
-
-    private void CheckGrounded()
-    {
-        groundedWheels = 0;
-        foreach (AxleInfo axle in axleInfos)
-        {
-            if (axle.leftWheel.isGrounded) groundedWheels++;
-            if (axle.rightWheel.isGrounded) groundedWheels++;
         }
     }
 
@@ -193,11 +181,6 @@ public class Car3DController : CarController
         wheelCollider.GetWorldPose(out pos, out rot);
         wheelTransform.rotation = rot;
         wheelTransform.position = pos;
-    }
-
-    internal override void Jump()
-    {
-        if (groundedWheels == 4) rigidBody.AddForce(rigidBody.transform.up * 700000);
     }
 
     internal override void Respawn()

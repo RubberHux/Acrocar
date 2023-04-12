@@ -283,6 +283,11 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 0
+--- !u!1 &384635892 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1730865445726941163, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+  m_PrefabInstance: {fileID: 1780091735}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &480435232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,6 +1566,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1838006970368257328, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+      propertyPath: m_FirstSelected
+      value: 
+      objectReference: {fileID: 384635892}
     - target: {fileID: 1838006970368257340, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
       propertyPath: m_Pivot.x
       value: 0
