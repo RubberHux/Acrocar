@@ -11,7 +11,6 @@ public class Destructible : MonoBehaviour
         Rigidbody colliding = collision.rigidbody;
         if (colliding != null)
         {
-            float collidingVelocity = Mathf.Max(Mathf.Abs(colliding.velocity.y), Mathf.Abs(colliding.velocity.y));
             float mass = colliding.mass;
             float collisionForce = collision.relativeVelocity.magnitude * mass / 2;
             if (collisionForce >= breakForce) Destroy(gameObject);
