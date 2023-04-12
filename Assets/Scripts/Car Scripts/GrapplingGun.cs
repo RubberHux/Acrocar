@@ -7,7 +7,6 @@ public class GrapplingGun : MonoBehaviour
     private Vector3 grapplePoint;
     private Transform grappledObject; // object which the hook is attached to
     private Rigidbody grappledRigidBody; // rigidbody which hook is attached to
-    private Vector3 grapplePointDiff; // difference between object pos and grapple point
     public LayerMask whatIsGrappleable;
     public LayerMask notCarLayers;
     public Transform gunTip, player;
@@ -153,8 +152,6 @@ public class GrapplingGun : MonoBehaviour
             lr.positionCount = 2;
             aimPostTimer = aimLeniencyPostTime;
 
-            grappledObject = hit.transform;
-            grapplePointDiff = hit.transform.position - grapplePoint;
             grappledRigidBody = hit.rigidbody;
         }
         else
