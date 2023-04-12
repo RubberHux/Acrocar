@@ -5,12 +5,15 @@ using UnityEngine;
 public class CarLoader : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject car;
+    public GameObject car, carInstance;
     public bool is2D;
 
     private void OnEnable()
     {
-        car = Instantiate(car, transform);
-        car.GetComponent<CarController>().is2D = is2D;
+        if (carInstance == null)
+        {
+            carInstance = Instantiate(car, transform);
+            carInstance.GetComponent<CarController>().is2D = is2D;
+        }
     }
 }

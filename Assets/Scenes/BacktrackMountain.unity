@@ -2061,6 +2061,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3249381891122376600, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
+      propertyPath: is2D
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6389540439510499187, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
       propertyPath: m_Name
       value: CarLoader

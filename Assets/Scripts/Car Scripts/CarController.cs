@@ -178,7 +178,7 @@ public class CarController : MonoBehaviour
     {
         if (is2D)
         {
-            moveDir = new Vector2(0, firstPerson ? move.ReadValue<Vector2>().y : move.ReadValue<Vector2>().x);
+            moveDir = new Vector2(0, firstPerson ? move.ReadValue<Vector2>().y : move.ReadValue<Vector2>().y);
             rotateDir = new Vector2(0, firstPerson ? rotate.ReadValue<Vector2>().y : rotate.ReadValue<Vector2>().x);
             swingDir = new Vector2(0, (firstPerson ? swing.ReadValue<Vector2>().y : swing.ReadValue<Vector2>().x));
         }
@@ -288,6 +288,7 @@ public class CarController : MonoBehaviour
             else notGravRoadAmount++;
         }
         gravRoadPercent /= gravRoadPercent + notGravRoadAmount;
+        Debug.Log(gravRoadPercent);
     }
 
     internal void CheckGrounded()

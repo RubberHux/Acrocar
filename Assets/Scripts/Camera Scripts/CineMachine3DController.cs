@@ -59,7 +59,7 @@ public class CineMachine3DController : MonoBehaviour
             }
             else
             {
-                camState = CamState.side;
+                camState = CamState.follow;
                 sideCam2D.enabled = false;
             }
         }
@@ -78,7 +78,6 @@ public class CineMachine3DController : MonoBehaviour
             Camera2DFollow.target = trackPoint;
             sideCam2D.Follow = trackPoint;
         }
-        Debug.Log(hoodCam);
         if (carController != null && hoodCam != null && airCam.Follow != null) carFound = true;
     }
 

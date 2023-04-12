@@ -1276,8 +1276,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0.8493402, z: 4.0565557}
-  m_Center: {x: 0, y: 0.61156297, z: 0.034178853}
+  m_Size: {x: 2, y: 0.8493402, z: 3.4154568}
+  m_Center: {x: 0, y: 0.61156297, z: 0.038967073}
 --- !u!65 &1907819255474660145
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1314,7 +1314,7 @@ MonoBehaviour:
     rightWheel: {fileID: 345318733267869248}
     leftTransform: {fileID: 4779385844343569019}
     rightTransform: {fileID: 4445874436172322136}
-    motor: 0
+    motor: 1
     turnType: 0
   gravCheckDistance: 2
   roadCheckers:
@@ -1327,11 +1327,11 @@ MonoBehaviour:
   jumpForce: 700000
   gravRoadLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 128
   notCarLayers:
     serializedVersion: 2
     m_Bits: 137
-  motorForce: 300000
+  motorForce: 8000
   breakForce: 800000
   maxSteeringAngle: 20
   frontSpinForce: 20000
