@@ -78,7 +78,7 @@ public class CarController : MonoBehaviour
     private void Start()
     {
         firstPerson = false;
-        stationaryTolerance = 0.0005f;
+        stationaryTolerance = 0.001f;
         rigidBody = GetComponent<Rigidbody>();
         startpoint = transform.position;
         SetConstraints();
@@ -167,12 +167,14 @@ public class CarController : MonoBehaviour
             else return;
         }
         if (grappling) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
-        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
+        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance
+            && rigidBody.angularVelocity.sqrMagnitude < stationaryTolerance
             && rigidBody.transform.up.y <= 10e-5 && !grappling)
         {
             rigidBody.AddForce(Vector3.up * 200000 * Time.deltaTime * 180);
             rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
         }
+        //Debug.Log(Grounded());
     }
 
     private void FixedUpdate()
@@ -189,6 +191,11 @@ public class CarController : MonoBehaviour
         AirRotate();
         if (grappling) Swing();
         CustomGravity();
+    }
+
+    bool Grounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
     }
 
     void GetInput()

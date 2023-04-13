@@ -51,13 +51,6 @@ public class GrapplingGun : MonoBehaviour
         if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && fireHook.IsPressed()) StartGrapple();
         else if (fireHook.WasReleasedThisFrame()) StopGrapple();
 
-        if (joint && grappledRigidBody != null)
-        {
-            // make sure to move grapple point if grappled object moves
-            grapplePoint = grappledRigidBody.position;
-            Debug.Log(grapplePoint);
-        }
-
         if (aimPreTimer >= 0) aimPreTimer -= Time.deltaTime;
         if (aimPostTimer >= 0) aimPostTimer -= Time.deltaTime;
         if (grappleBoostTimer >= 0) grappleBoostTimer -= Time.deltaTime;
@@ -65,6 +58,12 @@ public class GrapplingGun : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (joint && grappledRigidBody != null)
+        {
+            // make sure to move grapple point if grappled object moves
+            grapplePoint = grappledRigidBody.position;
+        }
+
         DrawRope();
     }
 
@@ -104,7 +103,6 @@ public class GrapplingGun : MonoBehaviour
                 joint.connectedMassScale = 1000f;
                 joint.tolerance = 1f;
 
-                joint.maxDistance = maxGrappleDistance;
                 joint.autoConfigureConnectedAnchor = true;
             }
             else
@@ -183,6 +181,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void ChangeLength(float direction)
     {
+        Debug.Log("Direction: " + direction);
         float newDistance = joint.maxDistance - direction * 1f * Time.deltaTime * 60;
         if (newDistance > maxGrappleDistance) joint.maxDistance = maxGrappleDistance;
         else joint.maxDistance = newDistance;
