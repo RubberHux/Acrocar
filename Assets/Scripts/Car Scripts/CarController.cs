@@ -17,7 +17,14 @@ public class AxleInfo
     public WheelCollider leftWheel;
     public WheelCollider rightWheel;
     public Transform leftTransform, rightTransform;
-    public bool motor; // is this wheel attached to motor?
+    public MotorType motorType; // is this wheel attached to motor?
+    public enum MotorType
+    {
+        None,
+        Only2D,
+        Only3D,
+        Both
+    }
     public TurnType turnType;
     public enum TurnType
     {
@@ -216,7 +223,7 @@ public class CarController : MonoBehaviour
         int motorAmount = 0;
         foreach (AxleInfo axle in axleInfos)
         {
-            if (axle.motor)
+            if (axle.motorType == AxleInfo.MotorType.Both || (is2D && axle.motorType == AxleInfo.MotorType.Only2D) || (!is2D && axle.motorType == AxleInfo.MotorType.Only3D))
             {
                 axle.leftWheel.motorTorque = driveDir * motorForce;
                 axle.rightWheel.motorTorque = driveDir * motorForce;
@@ -276,7 +283,7 @@ public class CarController : MonoBehaviour
             rigidBody.AddForce(Physics.gravity.magnitude * rigidBody.mass * -transform.up);
             noGravChanges = false;
         }
-        if (gravity != null)
+        else if (gravity != null)
         {
             noGravChanges = false;
             rigidBody.AddForce((Vector3)gravity * rigidBody.mass);
