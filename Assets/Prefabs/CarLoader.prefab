@@ -45,4 +45,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 7373890725835698445, guid: 6eb4331424b4b134884989f71e29b114, type: 3}
+  cameras: {fileID: 4347467498851725030, guid: 7879255828f254442aa5d061e0ff0d77, type: 3}
   is2D: 0
+  amount: 1
+  camLayers:
+  - serializedVersion: 2
+    m_Bits: 268435456
+  - serializedVersion: 2
+    m_Bits: 536870912
+  - serializedVersion: 2
+    m_Bits: 1073741824
+  - serializedVersion: 2
+    m_Bits: 2147483648

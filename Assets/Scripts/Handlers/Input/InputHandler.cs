@@ -19,5 +19,6 @@ public static class InputHandler
     static void UpdateInput(InputAction.CallbackContext context)
     {
        currentScheme = context.control.device.deviceId;
+        Debug.Log(context.control.device);
     }
 }
