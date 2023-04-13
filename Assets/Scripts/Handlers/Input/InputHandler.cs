@@ -7,17 +7,17 @@ using UnityEngine.InputSystem;
 public static class InputHandler
 {
     public static PlayerInputActions playerInput = new PlayerInputActions();
-    private static InputAction schemeCheck;
-    public static int currentScheme;
+    private static InputAction deviceCheck;
+    public static int currentDevice;
     static InputHandler()
     {
-        schemeCheck = playerInput.SchemeChecker.SchemeCheck;
-        schemeCheck.Enable();
-        schemeCheck.performed += UpdateInput;
+        deviceCheck = playerInput.SchemeChecker.SchemeCheck;
+        deviceCheck.Enable();
+        deviceCheck.performed += UpdateInput;
     }
 
     static void UpdateInput(InputAction.CallbackContext context)
     {
-       currentScheme = context.control.device.deviceId;
+       currentDevice = context.control.device.deviceId;
     }
 }
