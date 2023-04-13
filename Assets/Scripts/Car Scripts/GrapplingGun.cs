@@ -148,7 +148,7 @@ public class GrapplingGun : MonoBehaviour
         Vector3 rayDirection = gunTip.forward;
         if (SettingsHandler.easyAim && carController.GetType() == typeof(Car2DController))
         {
-            if (InputHandler.currentScheme <= 2) rayDirection = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.transform.position.x)) - gunTip.position;
+            if (InputHandler.currentDevice <= 2) rayDirection = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.transform.position.x)) - gunTip.position;
             else
             {
                 Vector2 aimDir = aim;

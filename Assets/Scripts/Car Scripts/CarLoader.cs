@@ -14,7 +14,7 @@ public class CarLoader : MonoBehaviour
     // Start is called before the first frame update
     public GameObject car, cameras; 
     public bool is2D;
-    public int amount;
+    int Playercount;
     bool created;
     public LayerMask[] camLayers;
     private void OnEnable()
@@ -22,16 +22,21 @@ public class CarLoader : MonoBehaviour
         Physics.IgnoreLayerCollision(6, 6, true);
         if (!created)
         {
-            for (int i = 0; i < amount; i++)
+            Playercount = GameMaster.playerCount;
+            for (int i = 0; i < Playercount; i++)
             {
                 PlayerInput playerInput;
-                if (amount == 1) playerInput = PlayerInput.Instantiate(car);
-                else playerInput = PlayerInput.Instantiate(car, controlScheme: (i == 0 ? "Keyboard&Mouse" : "Gamepad") );
+                if (Playercount == 1) playerInput = PlayerInput.Instantiate(car);
+                else
+                {
+                    if (GameMaster.devices[i].deviceId == 1) playerInput = PlayerInput.Instantiate(car, controlScheme: "Keyboard&Mouse");
+                    else playerInput = PlayerInput.Instantiate(car, pairWithDevice: GameMaster.devices[i]);
+                }
                 GameObject carInstance = playerInput.gameObject;
                 carInstance.transform.position = transform.position;
                 CarController carController = carInstance.GetComponent<CarController>();
                 carController.is2D = is2D;
-                carController.isAlone = amount >= 1;
+                carController.isAlone = Playercount >= 1;
                 GameObject camInstance = Instantiate(cameras);
                 LinkCarAndCam(carController, camInstance, i, playerInput);
             }
@@ -47,11 +52,11 @@ public class CarLoader : MonoBehaviour
         carController.SetCam(cam, playerNumber);
         carController.gameObject.GetComponent<GrapplingGun>().SetCam(cam);
         Camera camera = cam.GetComponentInChildren<Camera>();
-        if (amount == 2)
+        if (Playercount == 2)
         {
             camera.rect = new Rect((playerNumber == 0 ? 0 : 0.5f), 0, 0.5f, 1);
         }
-        if (amount > 2 && amount <= 4)
+        if (Playercount > 2 && Playercount <= 4)
         {
             if (playerNumber == 0) camera.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
             else if (playerNumber == 1) camera.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
