@@ -1,16 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class GrapplingGun : MonoBehaviour
 {
     private LineRenderer lr;
     private Vector3 grapplePoint;
+    private Transform grappledObject; // object which the hook is attached to
+    private Rigidbody grappledRigidBody; // rigidbody which hook is attached to
     public LayerMask whatIsGrappleable;
     public LayerMask notCarLayers;
     public Transform gunTip, player;
@@ -54,8 +50,18 @@ public class GrapplingGun : MonoBehaviour
             return;
         }
         if (!joint && Time.timeScale != 0) Aim();
+
         if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && fireHook) StartGrapple();
         if (joint) ChangeLength(grapplingChange);
+
+
+        if (joint && grappledRigidBody != null)
+        {
+            // make sure to move grapple point if grappled object moves
+            grapplePoint = grappledRigidBody.position;
+            Debug.Log(grapplePoint);
+        }
+
         if (aimPreTimer >= 0) aimPreTimer -= Time.deltaTime;
         if (aimPostTimer >= 0) aimPostTimer -= Time.deltaTime;
         if (grappleBoostTimer >= 0) grappleBoostTimer -= Time.deltaTime;
@@ -87,15 +93,30 @@ public class GrapplingGun : MonoBehaviour
             joint = player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
             joint.connectedAnchor = grapplePoint;
+            joint.connectedBody = grappledRigidBody;
 
             joint.anchor = gunTip.localPosition;
 
             joint.maxDistance = distanceFromPoint * maxJointDist;
             joint.minDistance = distanceFromPoint * minJointDist;
 
-            joint.spring = 1000f;
-            joint.damper = 2000f;
-            joint.massScale = 1000f;
+            if (grappledRigidBody != null)
+            {
+                joint.spring = 1000f;
+                joint.damper = 10000f;
+                joint.massScale = 1000f;
+                joint.connectedMassScale = 1000f;
+                joint.tolerance = 1f;
+
+                joint.maxDistance = maxGrappleDistance;
+                joint.autoConfigureConnectedAnchor = true;
+            }
+            else
+            {
+                joint.spring = 1000f;
+                joint.damper = 2000f;
+                joint.massScale = 1000f;
+            }
         }
 
         lr.startColor = lr.endColor = Color.black;
@@ -152,6 +173,8 @@ public class GrapplingGun : MonoBehaviour
             aiming = true;
             lr.positionCount = 2;
             aimPostTimer = aimLeniencyPostTime;
+
+            grappledRigidBody = hit.rigidbody;
         }
         else
         {
@@ -176,12 +199,13 @@ public class GrapplingGun : MonoBehaviour
         carController.grappling = false;
         lr.positionCount = 0;
         Destroy(joint);
+        grappledRigidBody = null;
     }
 
     public void ChangeLength(float direction)
     {
-        float newDistance = joint.maxDistance - direction * 0.2f * Time.fixedDeltaTime * 60;
-        if (newDistance > maxGrappleDistance) joint.maxDistance = newDistance;
+        float newDistance = joint.maxDistance - direction * 1f * Time.fixedDeltaTime * 60;
+        if (newDistance > maxGrappleDistance) joint.maxDistance = maxGrappleDistance;
         else joint.maxDistance = newDistance;
     }
 }
