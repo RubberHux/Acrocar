@@ -75,7 +75,6 @@ public class CineMachine3DController : MonoBehaviour
             airCam.LookAt = trackPoint;
             groundCam.Follow = trackPoint;
             groundCam.LookAt = trackPoint;
-            Camera2DFollow.target = trackPoint;
             sideCam2D.Follow = trackPoint;
         }
         if (carController != null && hoodCam != null && airCam.Follow != null) carFound = true;

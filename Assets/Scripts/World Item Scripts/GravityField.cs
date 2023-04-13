@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
-public class GravitronRoad : MonoBehaviour
+public class GravityField : MonoBehaviour
 {
-    void Start()
-    {
-
-    }
+    [SerializeField] Transform direction;
+    [SerializeField] float power;
+    [SerializeField] bool scaleByWorldGravity;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<CarController>().SetCustomGravity(this.gameObject.transform.up * Physics.gravity.magnitude);
+            other.GetComponent<CarController>().SetCustomGravity(direction.transform.up * power * (scaleByWorldGravity ? Physics.gravity.magnitude : 1));
         }
     }
 
