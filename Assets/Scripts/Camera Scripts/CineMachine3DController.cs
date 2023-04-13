@@ -19,7 +19,6 @@ public class CineMachine3DController : MonoBehaviour
     private InputAction cameraSwitch;
     bool frameSinceSwitch = false;
     [SerializeField] private float maxZoom, minZoom, zoomSpeed;
-    private InputAction zoom;
     private enum CamState { 
         follow,
         side,
@@ -28,29 +27,10 @@ public class CineMachine3DController : MonoBehaviour
     private CamState camState = CamState.follow;
     bool carFound;
 
-    private void Awake()
+    public void SetCar(CarController car, int camLayer, LayerMask cullingMask, bool p1, PlayerInput playerInput)
     {
-        zoom = InputHandler.playerInput.Player2D.Zoom;
-        zoom.Enable();
-    }
-
-    private void OnEnable()
-    {
-        cameraSwitch = InputHandler.playerInput.Player3D.CameraSwitch;
-        cameraSwitch.Enable();
-        cameraSwitch.performed += SwitchCam;
-    }
-
-    private void OnDisable()
-    {
-        cameraSwitch.performed -= SwitchCam;
-    }
-
-    public void SetCar(CarController car, int camLayer, LayerMask cullingMask, bool p1)
-    {
-        Debug.Log("Hello!");
         //Set the car
-        carController = GameObject.FindGameObjectWithTag("Player").GetComponent<CarController>();
+        carController = car;
         if (carController.is2D)
         {
             camState = CamState.side;
@@ -73,6 +53,12 @@ public class CineMachine3DController : MonoBehaviour
         groundCam.Follow = trackPoint;
         groundCam.LookAt = trackPoint;
         sideCam2D.Follow = trackPoint;
+        InputActionReference LookRef = ScriptableObject.CreateInstance<InputActionReference>();
+        LookRef.Set(playerInput.currentActionMap.FindAction("Look"));
+        LookRef.action.Enable();
+        
+        airCam.gameObject.GetComponent<CinemachineInputProvider>().XYAxis = LookRef;
+        groundCam.gameObject.GetComponent<CinemachineInputProvider>().XYAxis = LookRef;
 
         Camera cam = GetComponent<Camera>();
         if (!p1) cam.GetComponent<AudioListener>().enabled = false;
@@ -82,16 +68,8 @@ public class CineMachine3DController : MonoBehaviour
         groundCam.gameObject.layer = camLayer;
         sideCam2D.gameObject.layer = camLayer;
         hoodCam.gameObject.layer = camLayer;
-        Debug.Log(camLayer);
 
         carFound = true;
-    }
-
-    // Update is called once per frame
-
-    private void Update()
-    {
-        HandleZoom();
     }
 
     private void FixedUpdate()
@@ -133,17 +111,17 @@ public class CineMachine3DController : MonoBehaviour
             groundCam.m_RecenterToTargetHeading.m_enabled = true;
         }
     }
-        
-    private void SwitchCam(InputAction.CallbackContext context)
+
+    public void SwitchCam()
     {
         if (camState == CamState.follow || camState == CamState.side) SetState(CamState.hood);
         else if (camState == CamState.hood && !carController.is2D) SetState(CamState.follow);
         else if (camState == CamState.hood) SetState(CamState.side);
     }
-    private void HandleZoom()
+    public void Zoom(float val)
     {
         var offset = sideCam2D.GetCinemachineComponent<CinemachineTransposer>();
-        float x = offset.m_FollowOffset.x - zoom.ReadValue<Vector2>().y * zoomSpeed;
+        float x = offset.m_FollowOffset.x - val * zoomSpeed;
         offset.m_FollowOffset.x = (x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));
     }
     public void DimensionSwitch()

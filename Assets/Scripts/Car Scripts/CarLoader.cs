@@ -24,22 +24,26 @@ public class CarLoader : MonoBehaviour
         {
             for (int i = 0; i < amount; i++)
             {
-                GameObject carInstance = Instantiate(car, transform);
+                PlayerInput playerInput;
+                if (amount == 1) playerInput = PlayerInput.Instantiate(car);
+                else playerInput = PlayerInput.Instantiate(car, controlScheme: (i == 0 ? "Keyboard&Mouse" : "Gamepad") );
+                GameObject carInstance = playerInput.gameObject;
+                carInstance.transform.position = transform.position;
                 CarController carController = carInstance.GetComponent<CarController>();
                 carController.is2D = is2D;
                 carController.isAlone = amount >= 1;
                 GameObject camInstance = Instantiate(cameras);
-                LinkCarAndCam(carController, camInstance, i);
+                LinkCarAndCam(carController, camInstance, i, playerInput);
             }
             created = true;
         }
     }
 
-    private void LinkCarAndCam(CarController carController, GameObject cam, int playerNumber)
+    private void LinkCarAndCam(CarController carController, GameObject cam, int playerNumber, PlayerInput playerInput)
     {
         LayerMask camLayerMask = ~0;
         for (int i = 0; i < camLayers.Length; i++) if (playerNumber != i) camLayerMask -= camLayers[i];
-        cam.GetComponentInChildren<CineMachine3DController>().SetCar(carController, (int)Mathf.Log(camLayers[playerNumber], 2), camLayerMask, playerNumber == 0) ;
+        cam.GetComponentInChildren<CineMachine3DController>().SetCar(carController, 28 + playerNumber, camLayerMask, playerNumber == 0, playerInput);
         carController.SetCam(cam, playerNumber);
         carController.gameObject.GetComponent<GrapplingGun>().SetCam(cam);
         Camera camera = cam.GetComponentInChildren<Camera>();
@@ -53,7 +57,6 @@ public class CarLoader : MonoBehaviour
             else if (playerNumber == 1) camera.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
             else if (playerNumber == 2) camera.rect = new Rect(0, 0, 0.5f, 0.5f);
             else if (playerNumber == 3) camera.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
-            Debug.Log("playerNumber == " + playerNumber + " x == " + camera.rect.x + " y == " + camera.rect.y);
         }
     }
 }
