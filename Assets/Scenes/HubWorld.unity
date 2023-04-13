@@ -4379,55 +4379,6 @@ Transform:
   m_Father: {fileID: 297980795}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -198.043, y: 0, z: 0}
---- !u!1 &1929592801 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6389540439510499187, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
-  m_PrefabInstance: {fileID: 3249381892368244716}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1929592804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929592801}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_NotificationBehavior: 0
-  m_MaxPlayerCount: -1
-  m_AllowJoining: 1
-  m_JoinBehavior: 0
-  m_PlayerJoinedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_PlayerLeftEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_JoinAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: 
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 0}
-  m_SplitScreen: 0
-  m_MaintainAspectRatioInSplitScreen: 0
-  m_FixedNumberOfSplitScreens: -1
-  m_SplitScreenRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!1 &1962833421
 GameObject:
   m_ObjectHideFlags: 0
@@ -5188,9 +5139,33 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3249381891122376600, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
+      propertyPath: camLayers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249381891122376600, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
+      propertyPath: camLayers.Array.data[0].m_Bits
+      value: 268435456
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249381891122376600, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
+      propertyPath: camLayers.Array.data[1].m_Bits
+      value: 536870912
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249381891122376600, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
+      propertyPath: camLayers.Array.data[2].m_Bits
+      value: 1073741824
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249381891122376600, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
+      propertyPath: camLayers.Array.data[3].m_Bits
+      value: 2281701376
+      objectReference: {fileID: 0}
     - target: {fileID: 6389540439510499187, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
       propertyPath: m_Name
       value: CarLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389540439510499187, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8760116507695871607, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
       propertyPath: m_RootOrder

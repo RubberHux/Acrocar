@@ -16,9 +16,11 @@ public class GrapplingGun : MonoBehaviour
     private float aimPreTimer = -1, aimPostTimer = -1, grappleBoostTimer = 0;
     private bool aiming = false;
     public float aimLeniencyPreTime, aimLeniencyPostTime, grappleBoostTime;
-    private InputAction fireHook, aim;
     public float maxJointDist, minJointDist;
     private Camera cam;
+    public float grapplingChange;
+    bool fireHook = false;
+    Vector2 aim;
 
     enum GrappleType
     {
@@ -31,10 +33,6 @@ public class GrapplingGun : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
         carController = GetComponent<CarController>();
-        fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
-        fireHook.Enable();
-        aim = InputHandler.playerInput.Player2D.Aim;
-        aim.Enable();
     }
 
     public void SetCam(GameObject cameras)
@@ -52,9 +50,10 @@ public class GrapplingGun : MonoBehaviour
             return;
         }
         if (!joint && Time.timeScale != 0) Aim();
-        if (fireHook.WasPressedThisFrame()) aimPreTimer = aimLeniencyPreTime;
-        if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && fireHook.IsPressed()) StartGrapple();
-        else if (fireHook.WasReleasedThisFrame()) StopGrapple();
+
+        if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && fireHook) StartGrapple();
+        if (joint) ChangeLength(grapplingChange);
+
 
         if (joint && grappledRigidBody != null)
         {
@@ -125,6 +124,23 @@ public class GrapplingGun : MonoBehaviour
         aiming = false;
     }
 
+    public void UpdateAim(InputAction.CallbackContext context) => aim = context.ReadValue<Vector2>();
+    public void SetGrapplingChange(InputAction.CallbackContext context) => grapplingChange = context.ReadValue<Vector2>().y;
+
+    public void SetFireHook(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            aimPreTimer = aimLeniencyPreTime;
+            fireHook = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            fireHook = false;
+            StopGrapple();
+        }
+    }
+
     void Aim()
     {
         RaycastHit hit;
@@ -135,7 +151,7 @@ public class GrapplingGun : MonoBehaviour
             if (InputHandler.currentScheme <= 2) rayDirection = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.transform.position.x)) - gunTip.position;
             else
             {
-                Vector2 aimDir = aim.ReadValue<Vector2>();
+                Vector2 aimDir = aim;
                 rayDirection = new Vector3(transform.position.x, aimDir.y, aimDir.x);
             }
         }

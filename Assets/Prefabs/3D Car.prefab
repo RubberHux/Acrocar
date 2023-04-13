@@ -1450,7 +1450,7 @@ MonoBehaviour:
   breakForce: 800000
   maxSteeringAngle: 20
   frontSpinForce: 20000
-  sideSpinForce: 10000
+  sideSpinForce: 8000
   shiftSpinForce: 20000
 --- !u!114 &1975006650651592679
 MonoBehaviour:
@@ -1478,6 +1478,7 @@ MonoBehaviour:
   grappleBoostTime: 1
   maxJointDist: 0.8
   minJointDist: 0
+  grapplingChange: 0
 --- !u!114 &5300588299387933951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1504,51 +1505,195 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: UpdateMoveDir
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 5b0743eb-4430-4a16-92a0-f3489b1beae6
     m_ActionName: Player2D/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1975006650651592679}
+        m_TargetAssemblyTypeName: GrapplingGun, Assembly-CSharp
+        m_MethodName: UpdateAim
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: fe6a2f91-2900-496a-b4a9-396ba896b60c
     m_ActionName: Player2D/Aim
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: UpdateRotateDir
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c2950fc4-3636-4152-ab29-314a56a2922f
     m_ActionName: Player2D/Rotate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: UpdateSwingDir
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3a7abe53-9fdc-4bf3-b586-8b19e26d97d6
     m_ActionName: Player2D/Swing[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1975006650651592679}
+        m_TargetAssemblyTypeName: GrapplingGun, Assembly-CSharp
+        m_MethodName: SetGrapplingChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3281489e-b138-46d1-b9bf-bf12411c2244
     m_ActionName: Player2D/GrappleLengthControl[/Keyboard/w,/Keyboard/s]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: SetBreak
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 75423660-ccd9-4394-a004-994da0b20973
     m_ActionName: Player2D/Break[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: Zoom
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: defa0443-c465-44cd-a265-f6b71f4c0067
     m_ActionName: Player2D/Zoom[/Mouse/scroll/up,/Mouse/scroll/down]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: ChangeCam
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 48efe5a3-b4fa-4158-9a56-fc907687bedd
     m_ActionName: Player2D/CameraSwitch[/Keyboard/tab]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: b5bb35b2-9234-467d-b38d-fcf0f840767c
     m_ActionName: Player2D/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: UpdateMoveDir
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2d285b89-d3a7-44d7-91c1-da0ac63738a9
     m_ActionName: Player3D/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: UpdateSwingDir
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 51ddc438-d847-4638-a476-d9ed4f282923
     m_ActionName: Player3D/Swing[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6e1259f6-101e-4ebd-92e4-56417597a57b
     m_ActionName: Player3D/Jump[/Keyboard/space]
   - m_PersistentCalls:
@@ -1556,23 +1701,83 @@ MonoBehaviour:
     m_ActionId: 12c9e6e3-b2f3-4988-a882-2a9498ef3f80
     m_ActionName: Player3D/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: SetBreak
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: dc0837ec-ed4d-438a-87d1-8b72efaf98c2
     m_ActionName: Player3D/Break[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: SetRotateMod
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a89a8297-0ccf-4637-af74-95e589c2fd92
     m_ActionName: Player3D/RotateMod[/Keyboard/shift]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1975006650651592679}
+        m_TargetAssemblyTypeName: GrapplingGun, Assembly-CSharp
+        m_MethodName: SetGrapplingChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3602879e-5b23-453d-873a-f32df42fd72a
     m_ActionName: Player3D/GrappleLengthControl[/Keyboard/shift,/Keyboard/ctrl]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: ChangeCam
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 04ad4058-0edd-4932-b21c-d3058169c233
     m_ActionName: Player3D/CameraSwitch[/Keyboard/tab]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: UpdateRotateDir
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d484cd1b-c39b-48f0-8aa0-af727b87c49e
     m_ActionName: Player3D/Rotate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
@@ -1580,7 +1785,19 @@ MonoBehaviour:
     m_ActionId: 44cb80f0-0572-40b2-a751-566882b50c7e
     m_ActionName: LevelInteraction/Pause[/Keyboard/escape]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2908deb4-02ce-414f-aeeb-d75bdd05d332
     m_ActionName: LevelInteraction/Reset[/Keyboard/r]
   - m_PersistentCalls:
@@ -1632,12 +1849,96 @@ MonoBehaviour:
     m_ActionId: 6a72ad98-2ed4-4e19-b2c2-eca7a13bf25a
     m_ActionName: SchemeChecker/SchemeCheck[/Keyboard/anyKey,/Mouse/leftButton,/Mouse/rightButton,/Mouse/middleButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7373890725835698445}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 88c33341-5adb-4bea-925b-5db4038dd627
     m_ActionName: Debug/DimensionSwitch[/Keyboard/pageUp]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1975006650651592679}
+        m_TargetAssemblyTypeName: GrapplingGun, Assembly-CSharp
+        m_MethodName: SetFireHook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cf8a8ebb-c402-4fae-86c4-0c5b2a8e5f19
+    m_ActionName: Player2D/FireHook[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: Reset
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1375cefa-4bfd-43c7-81b4-5db6dccb0e7a
+    m_ActionName: Player2D/Reset[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6935396153977540499}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: Reset
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b4ad9753-3c41-44ac-95d2-33e1525035f1
+    m_ActionName: Player3D/Reset[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1975006650651592679}
+        m_TargetAssemblyTypeName: GrapplingGun, Assembly-CSharp
+        m_MethodName: SetFireHook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 45cde6cc-942b-4e7a-bec7-f6082a3be473
+    m_ActionName: Player3D/FireHook[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1365fe57-b347-4878-846c-537427a80aa5
+    m_ActionName: Player3D/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 80b43f3d-6976-4b30-addb-21f04f365fbf
+    m_ActionName: Player2D/Look[/XInputControllerWindows/rightStick,/Mouse/delta,/Pen/delta]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player2D
+  m_DefaultActionMap: Player3D
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &7834106809336206583
