@@ -40,10 +40,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - CamP1
+  - CamP2
+  - CamP3
+  - CamP4
   m_SortingLayers:
   - name: Default
     uniqueID: 0

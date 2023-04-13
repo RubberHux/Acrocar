@@ -46,6 +46,9 @@ public class CarController : MonoBehaviour
     CineMachine3DController camController;
     private float currentBreakForce;
     private float currentSteerAngle;
+    float timeSinceCreation = 0;
+    public int playerNumber = 0;
+    public bool isAlone = true;
 
     internal InputAction move, swing, rotate, rotateMod, breaking, reset, jump, grapplingLengthControl, dimensionSwitch;
     public int swingForce; // the force with which to swing when grappled
@@ -92,9 +95,14 @@ public class CarController : MonoBehaviour
 
     private void OnEnable()
     {
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        camController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CineMachine3DController>();
         SetInput();
+    }
+
+    public void SetCam(GameObject cameras, int playNum)
+    {
+        playerNumber = playNum;
+        mainCamera = cameras.GetComponentInChildren<Camera>();
+        camController = cameras.GetComponentInChildren<CineMachine3DController>();
     }
 
     private void OnDisable()
@@ -117,6 +125,7 @@ public class CarController : MonoBehaviour
         }
         if (is2D)
         {
+            PlayerInputActions playerinput = new PlayerInputActions();
             move = InputHandler.playerInput.Player2D.Move;
             move.Enable();
             swing = InputHandler.playerInput.Player2D.Swing;
@@ -152,32 +161,16 @@ public class CarController : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (grappling) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
-        if (respawned)
-        {
-            respawnTimer -= Time.deltaTime;
-            if (respawnTimer <= 0)
-            {
-                respawned = false;
-                respawnTimer = 0;
-                rigidBody.isKinematic = false;
-            }
-            else return;
-        }
-        if (grappling) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
-        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
-            && rigidBody.transform.up.y <= 10e-5 && !grappling)
-        {
-            rigidBody.AddForce(Vector3.up * 200000 * Time.deltaTime * 180);
-            rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
-        }
-    }
-
     private void FixedUpdate()
     {
-        if (respawned) return;
+        if (playerNumber != 0) return;
+        if (camController == null) return; 
+        if (respawned)
+        {
+            RespawnLock();
+            return;
+        }
+        if (grappling) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
         GetInput();
         CheckGrounded();
         HandleMotor();
@@ -189,6 +182,33 @@ public class CarController : MonoBehaviour
         AirRotate();
         if (grappling) Swing();
         CustomGravity();
+        FlipCar();
+    }
+
+    void RespawnLock()
+    {
+        if (respawned)
+        {
+            respawnTimer -= Time.fixedDeltaTime;
+            if (respawnTimer <= 0)
+            {
+                respawned = false;
+                respawnTimer = 0;
+                rigidBody.isKinematic = false;
+            }
+            else return;
+        }
+    }
+
+    void FlipCar()
+    {
+        if (timeSinceCreation > 1 && rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
+            && groundedWheels != 4 && !grappling)
+        {
+            rigidBody.AddForce(rigidBody.transform.up * 200000 * Time.fixedDeltaTime * 180);
+            rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
+        }
+        timeSinceCreation += Time.fixedDeltaTime;
     }
 
     void GetInput()
@@ -374,8 +394,8 @@ public class CarController : MonoBehaviour
 
     private void Swing()
     {
-        rigidBody.AddForce((firstPerson ? -mainCamera.transform.up : mainCamera.transform.forward) * swingDir.y * swingForce * Time.deltaTime);
-        rigidBody.AddForce(mainCamera.transform.right * swingDir.x * swingForce * Time.deltaTime);
+        rigidBody.AddForce((firstPerson ? -mainCamera.transform.up : mainCamera.transform.forward) * swingDir.y * swingForce * Time.fixedDeltaTime);
+        rigidBody.AddForce(mainCamera.transform.right * swingDir.x * swingForce * Time.fixedDeltaTime);
     }
 
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)

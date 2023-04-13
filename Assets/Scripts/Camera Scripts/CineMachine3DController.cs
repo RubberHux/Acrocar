@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CineMachine3DController : MonoBehaviour
 {
@@ -31,7 +32,6 @@ public class CineMachine3DController : MonoBehaviour
     {
         zoom = InputHandler.playerInput.Player2D.Zoom;
         zoom.Enable();
-        FindCar();
     }
 
     private void OnEnable()
@@ -46,38 +46,45 @@ public class CineMachine3DController : MonoBehaviour
         cameraSwitch.performed -= SwitchCam;
     }
 
-    private void FindCar()
+    public void SetCar(CarController car, int camLayer, LayerMask cullingMask, bool p1)
     {
-        if (GameObject.FindGameObjectWithTag("Player") != null)
+        Debug.Log("Hello!");
+        //Set the car
+        carController = GameObject.FindGameObjectWithTag("Player").GetComponent<CarController>();
+        if (carController.is2D)
         {
-            carController = GameObject.FindGameObjectWithTag("Player").GetComponent<CarController>();
-            if (carController.is2D)
-            {
-                camState = CamState.side;
-                groundCam.enabled = false;
-                airCam.enabled = false;
-            }
-            else
-            {
-                camState = CamState.follow;
-                sideCam2D.enabled = false;
-            }
+            camState = CamState.side;
+            groundCam.enabled = false;
+            airCam.enabled = false;
         }
-        if (GameObject.FindGameObjectWithTag("HoodCam") != null)
+        else
         {
-            hoodCam = GameObject.FindGameObjectWithTag("HoodCam").GetComponent<CinemachineVirtualCamera>();
-            hoodCam.enabled = false;
+            camState = CamState.follow;
+            sideCam2D.enabled = false;
         }
-        if (GameObject.FindGameObjectWithTag("CameraTrackPoint") != null)
-        {
-            Transform trackPoint = GameObject.FindGameObjectWithTag("CameraTrackPoint").transform;
-            airCam.Follow = trackPoint;
-            airCam.LookAt = trackPoint;
-            groundCam.Follow = trackPoint;
-            groundCam.LookAt = trackPoint;
-            sideCam2D.Follow = trackPoint;
-        }
-        if (carController != null && hoodCam != null && airCam.Follow != null) carFound = true;
+        //Set the hood camera
+        
+        hoodCam = car.GetComponentInChildren<CinemachineVirtualCamera>();
+        hoodCam.enabled = false;
+
+        Transform trackPoint = car.GetComponentInChildren<CameraTrackPoint>().transform;
+        airCam.Follow = trackPoint;
+        airCam.LookAt = trackPoint;
+        groundCam.Follow = trackPoint;
+        groundCam.LookAt = trackPoint;
+        sideCam2D.Follow = trackPoint;
+
+        Camera cam = GetComponent<Camera>();
+        if (!p1) cam.GetComponent<AudioListener>().enabled = false;
+
+        cam.cullingMask = cullingMask;
+        airCam.gameObject.layer = camLayer;
+        groundCam.gameObject.layer = camLayer;
+        sideCam2D.gameObject.layer = camLayer;
+        hoodCam.gameObject.layer = camLayer;
+        Debug.Log(camLayer);
+
+        carFound = true;
     }
 
     // Update is called once per frame
@@ -89,11 +96,7 @@ public class CineMachine3DController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!carFound)
-        {
-            FindCar();
-            return;
-        }
+        if (!carFound) return;
         if (camState == CamState.follow)
         {
             if (!frameSinceSwitch)

@@ -31,16 +31,21 @@ public class GrapplingGun : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
         carController = GetComponent<CarController>();
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
         fireHook.Enable();
         aim = InputHandler.playerInput.Player2D.Aim;
         aim.Enable();
     }
 
+    public void SetCam(GameObject cameras)
+    {
+        cam = cameras.GetComponentInChildren<Camera>();
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (cam == null) return;
         if (carController.respawned)
         {
             if (joint) StopGrapple();
@@ -183,7 +188,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void ChangeLength(float direction)
     {
-        float newDistance = joint.maxDistance - direction * 1f * Time.deltaTime * 60;
+        float newDistance = joint.maxDistance - direction * 1f * Time.fixedDeltaTime * 60;
         if (newDistance > maxGrappleDistance) joint.maxDistance = maxGrappleDistance;
         else joint.maxDistance = newDistance;
     }
