@@ -149,6 +149,7 @@ public class CarController : MonoBehaviour
     void UpdateTimers()
     {
         jumpTimer -= Time.fixedDeltaTime;
+        respawnTimer -= Time.fixedDeltaTime;
     }
 
     void RespawnLock()
@@ -159,7 +160,6 @@ public class CarController : MonoBehaviour
             if (respawnTimer <= 0)
             {
                 respawned = false;
-                respawnTimer = 0;
                 rigidBody.isKinematic = false;
             }
             else return;
@@ -168,7 +168,7 @@ public class CarController : MonoBehaviour
 
     void FlipCar()
     {
-        if (timeSinceCreation > 1 && rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
+        if (respawnTimer < -1 && rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
             && groundedWheels != 4 && !grappling)
         {
             rigidBody.AddForce(rigidBody.transform.up * 200000 * Time.fixedDeltaTime * 180);
