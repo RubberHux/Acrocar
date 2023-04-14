@@ -69,6 +69,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float breakForce;
     [SerializeField] private float maxSteeringAngle;
     [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
+    float xPos;
 
     private Camera mainCamera;
     [NonSerialized] public bool firstPerson = false;
@@ -95,7 +96,11 @@ public class CarController : MonoBehaviour
 
     private void SetConstraints()
     {
-        if (is2D) rigidBody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        if (is2D)
+        {
+            rigidBody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            xPos = rigidBody.position.x;
+        }
         else rigidBody.constraints = RigidbodyConstraints.None;
     }
 
@@ -128,6 +133,17 @@ public class CarController : MonoBehaviour
         CustomGravity();
         FlipCar();
         UpdateTimers();
+        ConstraintsFix();
+    }
+
+    void ConstraintsFix()
+    {
+        if (is2D)
+        {
+            rigidBody.angularVelocity = new Vector3(rigidBody.angularVelocity.x, 0, 0);
+            rigidBody.rotation = new Quaternion(rigidBody.rotation.x, 0, 0, rigidBody.rotation.w).normalized;
+            rigidBody.position = new Vector3(xPos, rigidBody.position.y, rigidBody.position.z);
+        }
     }
 
     void UpdateTimers()
