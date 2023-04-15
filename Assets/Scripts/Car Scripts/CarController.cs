@@ -84,7 +84,7 @@ public class CarController : MonoBehaviour
     private void Start()
     {
         firstPerson = false;
-        stationaryTolerance = 0.0005f;
+        stationaryTolerance = 0.001f;
         rigidBody = GetComponent<Rigidbody>();
         startpoint = transform.position;
         SetConstraints();
