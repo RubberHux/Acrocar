@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
+using UnityEngine.Windows;
 
 [System.Serializable]
 // Class from Unity documentation, with slight modification (due to no need for steering):
@@ -39,15 +40,18 @@ public class CarController : MonoBehaviour
     [NonSerialized] public int groundedWheels = 0;
     [NonSerialized] public bool grappling;
     public float gravCheckDistance;
-    [NonSerialized]  public float respawnTimer = 0;
+    [NonSerialized] public float respawnTimer = 0;
     [NonSerialized] public bool respawned = false;
     [NonSerialized] public CheckPoint lastCheckPoint = null;
     [SerializeField] internal Transform[] roadCheckers;
     CineMachine3DController camController;
     private float currentBreakForce;
     private float currentSteerAngle;
-
-    internal InputAction move, swing, rotate, rotateMod, breaking, reset, jump, grapplingLengthControl, dimensionSwitch;
+    float timeSinceCreation = 0;
+    public int playerNumber = 0;
+    public bool isAlone = true;
+    bool breaking, rotateMod;
+    internal InputAction dimensionSwitch;
     public int swingForce; // the force with which to swing when grappled
     public int grappleBoostForce;
     public int jumpForce;
@@ -61,20 +65,22 @@ public class CarController : MonoBehaviour
     public LayerMask notCarLayers;
     [NonSerialized] public float gravRoadPercent;
     [NonSerialized] public bool is2D;
-
     [SerializeField] private float motorForce;
     [SerializeField] private float breakForce;
     [SerializeField] private float maxSteeringAngle;
-
     [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
+    float xPos;
 
     private Camera mainCamera;
     [NonSerialized] public bool firstPerson = false;
+    float jumpTimer = 0;
+    float jumpTime = 0.1f;
 
     private void Awake()
     {
         grapplingGun = GetComponent<GrapplingGun>();
     }
+
     private void Start()
     {
         firstPerson = false;
@@ -82,115 +88,107 @@ public class CarController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         startpoint = transform.position;
         SetConstraints();
+        dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
+        dimensionSwitch.Enable();
+        dimensionSwitch.performed += DoDimensionSwitch;
+        SetActionMap();
     }
 
     private void SetConstraints()
     {
-        if (is2D) rigidBody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        if (is2D)
+        {
+            rigidBody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            xPos = rigidBody.position.x;
+        }
         else rigidBody.constraints = RigidbodyConstraints.None;
     }
 
-    private void OnEnable()
+    public void SetCam(GameObject cameras, int playNum)
     {
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        camController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CineMachine3DController>();
-        SetInput();
+        playerNumber = playNum;
+        mainCamera = cameras.GetComponentInChildren<Camera>();
+        camController = cameras.GetComponentInChildren<CineMachine3DController>();
     }
 
     private void OnDisable()
     {
-        reset.performed -= Reset;
-        jump.performed -= Jump;
         dimensionSwitch.performed -= DoDimensionSwitch;
-    }
-
-    private void SetInput()
-    {
-        if (reset == null)
-        {
-            dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
-            dimensionSwitch.Enable();
-            dimensionSwitch.performed += DoDimensionSwitch;
-            reset = InputHandler.playerInput.LevelInteraction.Reset;
-            reset.Enable();
-            reset.performed += Reset;
-        }
-        if (is2D)
-        {
-            move = InputHandler.playerInput.Player2D.Move;
-            move.Enable();
-            swing = InputHandler.playerInput.Player2D.Swing;
-            swing.Enable();
-            grapplingLengthControl = InputHandler.playerInput.Player2D.GrappleLengthControl;
-            grapplingLengthControl.Enable();
-            rotate = InputHandler.playerInput.Player2D.Rotate;
-            rotate.Enable();
-            breaking = InputHandler.playerInput.Player2D.Break;
-            breaking.Enable();
-            jump = InputHandler.playerInput.Player3D.Jump;
-            jump.Enable();
-            jump.performed += Jump;
-        }
-        else
-        {
-            move = InputHandler.playerInput.Player3D.Move;
-            move.Enable();
-            rotate = InputHandler.playerInput.Player3D.Rotate;
-            rotate.Enable();
-            rotateMod = InputHandler.playerInput.Player3D.RotateMod;
-            rotateMod.Enable();
-            swing = InputHandler.playerInput.Player3D.Swing;
-            swing.Enable();
-            grapplingLengthControl = InputHandler.playerInput.Player3D.GrappleLengthControl;
-            grapplingLengthControl.Enable();
-            breaking = InputHandler.playerInput.Player3D.Break;
-            breaking.Enable();
-            if (jump != null) jump.performed -= Jump;
-            jump = InputHandler.playerInput.Player3D.Jump;
-            jump.Enable();
-            jump.performed += Jump;
-        }
-    }
-
-    private void Update()
-    {
-        if (grappling && !Grounded()) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
-        if (respawned)
-        {
-            respawnTimer -= Time.deltaTime;
-            if (respawnTimer <= 0)
-            {
-                respawned = false;
-                respawnTimer = 0;
-                rigidBody.isKinematic = false;
-            }
-            else return;
-        }
-        if (grappling) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
-        if (rigidBody.velocity.sqrMagnitude < stationaryTolerance
-            && rigidBody.angularVelocity.sqrMagnitude < stationaryTolerance
-            && rigidBody.transform.up.y <= 10e-5 && !grappling)
-        {
-            rigidBody.AddForce(Vector3.up * 200000 * Time.deltaTime * 180);
-            rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
-        }
-        //Debug.Log(Grounded());
     }
 
     private void FixedUpdate()
     {
-        if (respawned) return;
-        GetInput();
+        if (camController == null) return; 
+        if (respawned)
+        {
+            RespawnLock();
+            return;
+        }
         CheckGrounded();
         HandleMotor();
-        if (!is2D && groundedWheels != 0)
-        {
-            HandleSteering();
-            UpdateWheels();
-        }
+        if (!is2D && groundedWheels != 0) HandleSteering();
+        if (groundedWheels != 0) UpdateWheels();
         AirRotate();
         if (grappling) Swing();
         CustomGravity();
+        FlipCar();
+        UpdateTimers();
+        ConstraintsFix();
+    }
+
+    void ConstraintsFix()
+    {
+        if (is2D)
+        {
+            rigidBody.angularVelocity = new Vector3(rigidBody.angularVelocity.x, 0, 0);
+            rigidBody.rotation = new Quaternion(rigidBody.rotation.x, 0, 0, rigidBody.rotation.w).normalized;
+            rigidBody.position = new Vector3(xPos, rigidBody.position.y, rigidBody.position.z);
+        }
+    }
+
+    void UpdateTimers()
+    {
+        jumpTimer -= Time.fixedDeltaTime;
+        respawnTimer -= Time.fixedDeltaTime;
+    }
+
+    void RespawnLock()
+    {
+        if (respawned)
+        {
+            respawnTimer -= Time.fixedDeltaTime;
+            if (respawnTimer <= 0)
+            {
+                respawned = false;
+                rigidBody.isKinematic = false;
+            }
+            else return;
+        }
+    }
+
+    void FlipCar()
+    {
+        if (respawnTimer < -1 && rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
+            && groundedWheels != 4 && !grappling)
+        {
+            rigidBody.AddForce(rigidBody.transform.up * 200000 * Time.fixedDeltaTime * 180);
+            rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
+        }
+        timeSinceCreation += Time.fixedDeltaTime;
+    }
+
+    public void UpdateMoveDir(InputAction.CallbackContext context)
+    {
+        Vector2 move = context.ReadValue<Vector2>();
+        if (is2D) moveDir = new Vector2(0, move.y);
+        else moveDir = move;
+    }
+
+    public void UpdateRotateDir(InputAction.CallbackContext context)
+    {
+        Vector2 val = context.ReadValue<Vector2>();
+        if (is2D) rotateDir = new Vector2(0, firstPerson ? val.y : val.x);
+        else rotateDir = val;
     }
 
     bool Grounded()
@@ -198,19 +196,46 @@ public class CarController : MonoBehaviour
         return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
     }
 
-    void GetInput()
+    public void UpdateSwingDir(InputAction.CallbackContext context)
+    {
+        Vector2 val = context.ReadValue<Vector2>();
+        if (is2D) swingDir = new Vector2(0, firstPerson ? val.y : val.x);
+        else swingDir = val;
+    }
+
+    public void SetBreak(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started) breaking = true;
+        else if (context.phase == InputActionPhase.Canceled) breaking = false;
+    }
+
+    public void SetRotateMod(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started) rotateMod = true;
+        else if (context.phase == InputActionPhase.Canceled) rotateMod = false;
+    }
+
+    public void ChangeCam(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started) camController.SwitchCam();
+    }
+
+    public void Zoom(InputAction.CallbackContext context)
+    {
+        if (is2D) camController.Zoom(context.ReadValue<Vector2>().y);
+    }
+
+    void SetActionMap()
     {
         if (is2D)
         {
-            moveDir = new Vector2(0, firstPerson ? move.ReadValue<Vector2>().y : move.ReadValue<Vector2>().y);
-            rotateDir = new Vector2(0, firstPerson ? rotate.ReadValue<Vector2>().y : rotate.ReadValue<Vector2>().x);
-            swingDir = new Vector2(0, (firstPerson ? swing.ReadValue<Vector2>().y : swing.ReadValue<Vector2>().x));
+            gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player2D");
+            gameObject.GetComponent<PlayerInput>().defaultActionMap = "Player2D";
         }
         else
         {
-            moveDir = move.ReadValue<Vector2>();
-            rotateDir = rotate.ReadValue<Vector2>();
-            swingDir = swing.ReadValue<Vector2>();
+            gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player3D");
+            gameObject.GetComponent<PlayerInput>().defaultActionMap = "Player3D";
         }
     }
 
@@ -239,7 +264,7 @@ public class CarController : MonoBehaviour
             }
         }
         rpm /= motorAmount;
-        currentBreakForce = (breaking.IsPressed() || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10 : 0);
+        currentBreakForce = (breaking || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10 : 0);
         ApplyBreaking();
     }
 
@@ -271,9 +296,13 @@ public class CarController : MonoBehaviour
         }
     }
 
-    internal void Jump(InputAction.CallbackContext context)
+    public void Jump(InputAction.CallbackContext context)
     {
-        if (groundedWheels == 4 && Time.timeScale != 0.0f) rigidBody.AddForce(rigidBody.transform.up * 700000);
+        if (context.phase == InputActionPhase.Started && jumpTimer <= 0 && groundedWheels == 4 && Time.timeScale != 0.0f)
+        {
+            rigidBody.AddForce(rigidBody.transform.up * 700000);
+            jumpTimer = jumpTime;
+        }
     }
 
     public void SetCustomGravity(Vector3? gravityDirection)
@@ -328,9 +357,9 @@ public class CarController : MonoBehaviour
         rigidBody.AddForce(Vector3.Normalize(target - this.transform.position) * grappleBoostForce);
     }
 
-    internal void Reset(InputAction.CallbackContext context)
+    public void Reset(InputAction.CallbackContext context)
     {
-        Respawn();
+        if (context.phase == InputActionPhase.Started) Respawn();
     }
 
     public void Kill()
@@ -374,15 +403,15 @@ public class CarController : MonoBehaviour
         //Side rotate
         if (!is2D)
         {
-            if (rotateMod.IsPressed()) rigidBody.AddTorque(-rigidBody.transform.forward * shiftSpinForce * rotateDir.x);
+            if (rotateMod) rigidBody.AddTorque(-rigidBody.transform.forward * shiftSpinForce * rotateDir.x);
             else rigidBody.AddTorque(rigidBody.transform.up * sideSpinForce * rotateDir.x);
         }
     }
 
     private void Swing()
     {
-        rigidBody.AddForce((firstPerson ? -mainCamera.transform.up : mainCamera.transform.forward) * swingDir.y * swingForce * Time.deltaTime);
-        rigidBody.AddForce(mainCamera.transform.right * swingDir.x * swingForce * Time.deltaTime);
+        rigidBody.AddForce((firstPerson ? -mainCamera.transform.up : mainCamera.transform.forward) * swingDir.y * swingForce * Time.fixedDeltaTime);
+        rigidBody.AddForce(mainCamera.transform.right * swingDir.x * swingForce * Time.fixedDeltaTime);
     }
 
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
@@ -402,7 +431,7 @@ public class CarController : MonoBehaviour
     public void DimensionSwitch(bool to2D)
     {
         is2D = to2D;
-        SetInput();
+        SetActionMap();
         SetConstraints();
         rigidBody.angularVelocity = Vector3.zero;
         if (is2D)

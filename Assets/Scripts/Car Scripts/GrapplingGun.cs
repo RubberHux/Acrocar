@@ -15,10 +15,11 @@ public class GrapplingGun : MonoBehaviour
     private float aimPreTimer = -1, aimPostTimer = -1, grappleBoostTimer = 0;
     private bool aiming = false;
     public float aimLeniencyPreTime, aimLeniencyPostTime, grappleBoostTime;
-    private InputAction fireHook, aim;
     public float maxJointDist, minJointDist;
     private Camera cam;
-    public float lengthChangeSpeed; // the speed at which the hook is retracted/extended
+    public float grapplingChange;
+    bool fireHook = false;
+    Vector2 aim;
 
     enum GrappleType
     {
@@ -31,25 +32,27 @@ public class GrapplingGun : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
         carController = GetComponent<CarController>();
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        fireHook = InputHandler.playerInput.LevelInteraction.FireHook;
-        fireHook.Enable();
-        aim = InputHandler.playerInput.Player2D.Aim;
-        aim.Enable();
+    }
+
+    public void SetCam(GameObject cameras)
+    {
+        cam = cameras.GetComponentInChildren<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (cam == null) return;
         if (carController.respawned)
         {
             if (joint) StopGrapple();
             return;
         }
         if (!joint && Time.timeScale != 0) Aim();
-        if (fireHook.WasPressedThisFrame()) aimPreTimer = aimLeniencyPreTime;
-        if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && fireHook.IsPressed()) StartGrapple();
-        else if (fireHook.WasReleasedThisFrame()) StopGrapple();
+
+        if (!joint && ((aimPreTimer >= 0 && aiming) || aimPostTimer >= 0) && fireHook) StartGrapple();
+        if (joint) ChangeLength(grapplingChange);
+
 
         if (aimPreTimer >= 0) aimPreTimer -= Time.deltaTime;
         if (aimPostTimer >= 0) aimPostTimer -= Time.deltaTime;
@@ -119,6 +122,23 @@ public class GrapplingGun : MonoBehaviour
         aiming = false;
     }
 
+    public void UpdateAim(InputAction.CallbackContext context) => aim = context.ReadValue<Vector2>();
+    public void SetGrapplingChange(InputAction.CallbackContext context) => grapplingChange = context.ReadValue<Vector2>().y;
+
+    public void SetFireHook(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            aimPreTimer = aimLeniencyPreTime;
+            fireHook = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            fireHook = false;
+            StopGrapple();
+        }
+    }
+
     void Aim()
     {
         RaycastHit hit;
@@ -126,10 +146,10 @@ public class GrapplingGun : MonoBehaviour
         Vector3 rayDirection = gunTip.forward;
         if (SettingsHandler.easyAim && carController.GetType() == typeof(Car2DController))
         {
-            if (InputHandler.currentScheme <= 2) rayDirection = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.transform.position.x)) - gunTip.position;
+            if (InputHandler.currentDevice <= 2) rayDirection = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, cam.transform.position.x)) - gunTip.position;
             else
             {
-                Vector2 aimDir = aim.ReadValue<Vector2>();
+                Vector2 aimDir = aim;
                 rayDirection = new Vector3(transform.position.x, aimDir.y, aimDir.x);
             }
         }
@@ -182,7 +202,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void ChangeLength(float direction)
     {
-        float newDistance = joint.maxDistance - direction * lengthChangeSpeed * Time.deltaTime * 60;
+        float newDistance = joint.maxDistance - direction * 1f * Time.fixedDeltaTime * 60;
         if (newDistance > maxGrappleDistance) joint.maxDistance = maxGrappleDistance;
         else joint.maxDistance = newDistance;
     }
