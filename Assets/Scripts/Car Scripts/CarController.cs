@@ -191,11 +191,6 @@ public class CarController : MonoBehaviour
         else rotateDir = val;
     }
 
-    bool Grounded()
-    {
-        return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
-    }
-
     public void UpdateSwingDir(InputAction.CallbackContext context)
     {
         Vector2 val = context.ReadValue<Vector2>();
