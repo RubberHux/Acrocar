@@ -154,7 +154,7 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
-        if (grappling) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
+        if (grappling && !Grounded()) grapplingGun.ChangeLength(grapplingLengthControl.ReadValue<Vector2>().y);
         if (respawned)
         {
             respawnTimer -= Time.deltaTime;

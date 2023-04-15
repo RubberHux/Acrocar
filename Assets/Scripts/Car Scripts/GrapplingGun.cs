@@ -5,7 +5,6 @@ public class GrapplingGun : MonoBehaviour
 {
     private LineRenderer lr;
     private Vector3 grapplePoint;
-    private Transform grappledObject; // object which the hook is attached to
     private Rigidbody grappledRigidBody; // rigidbody which hook is attached to
     public LayerMask whatIsGrappleable;
     public LayerMask notCarLayers;
@@ -19,6 +18,7 @@ public class GrapplingGun : MonoBehaviour
     private InputAction fireHook, aim;
     public float maxJointDist, minJointDist;
     private Camera cam;
+    public float lengthChangeSpeed; // the speed at which the hook is retracted/extended
 
     enum GrappleType
     {
@@ -54,15 +54,16 @@ public class GrapplingGun : MonoBehaviour
         if (aimPreTimer >= 0) aimPreTimer -= Time.deltaTime;
         if (aimPostTimer >= 0) aimPostTimer -= Time.deltaTime;
         if (grappleBoostTimer >= 0) grappleBoostTimer -= Time.deltaTime;
+
+        if (joint && grappledRigidBody != null)
+        {
+            // make sure to move grapple point if grappled object moves
+            grapplePoint = grappledRigidBody.transform.position;
+        }
     }
 
     private void LateUpdate()
     {
-        if (joint && grappledRigidBody != null)
-        {
-            // make sure to move grapple point if grappled object moves
-            grapplePoint = grappledRigidBody.position;
-        }
 
         DrawRope();
     }
@@ -94,7 +95,7 @@ public class GrapplingGun : MonoBehaviour
 
             joint.maxDistance = distanceFromPoint * maxJointDist;
             joint.minDistance = distanceFromPoint * minJointDist;
-
+            
             if (grappledRigidBody != null)
             {
                 joint.spring = 1000f;
@@ -181,8 +182,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void ChangeLength(float direction)
     {
-        Debug.Log("Direction: " + direction);
-        float newDistance = joint.maxDistance - direction * 1f * Time.deltaTime * 60;
+        float newDistance = joint.maxDistance - direction * lengthChangeSpeed * Time.deltaTime * 60;
         if (newDistance > maxGrappleDistance) joint.maxDistance = maxGrappleDistance;
         else joint.maxDistance = newDistance;
     }

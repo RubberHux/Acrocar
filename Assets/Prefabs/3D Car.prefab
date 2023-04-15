@@ -1462,6 +1462,7 @@ MonoBehaviour:
   grappleBoostTime: 1
   maxJointDist: 0.8
   minJointDist: 0
+  lengthChangeSpeed: 0.1
 --- !u!1 &7834106809336206583
 GameObject:
   m_ObjectHideFlags: 0
