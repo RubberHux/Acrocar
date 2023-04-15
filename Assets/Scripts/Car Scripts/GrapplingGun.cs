@@ -18,6 +18,7 @@ public class GrapplingGun : MonoBehaviour
     public float maxJointDist, minJointDist;
     private Camera cam;
     public float grapplingChange;
+    public float grapplingChangeSpeed;
     bool fireHook = false;
     Vector2 aim;
 
@@ -202,7 +203,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void ChangeLength(float direction)
     {
-        float newDistance = joint.maxDistance - direction * 1f * Time.fixedDeltaTime * 60;
+        float newDistance = joint.maxDistance - direction * grapplingChangeSpeed * Time.fixedDeltaTime * 60;
         if (newDistance > maxGrappleDistance) joint.maxDistance = maxGrappleDistance;
         else joint.maxDistance = newDistance;
     }
