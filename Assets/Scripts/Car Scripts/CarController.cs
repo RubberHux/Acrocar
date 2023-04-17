@@ -148,15 +148,15 @@ public class CarController : MonoBehaviour
 
     void UpdateTimers()
     {
-        jumpTimer -= Time.fixedDeltaTime;
-        respawnTimer -= Time.fixedDeltaTime;
+        jumpTimer -= Time.deltaTime;
+        respawnTimer -= Time.deltaTime;
     }
 
     void RespawnLock()
     {
         if (respawned)
         {
-            respawnTimer -= Time.fixedDeltaTime;
+            respawnTimer -= Time.deltaTime;
             if (respawnTimer <= 0)
             {
                 respawned = false;
@@ -171,10 +171,10 @@ public class CarController : MonoBehaviour
         if (respawnTimer < -1 && rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
             && groundedWheels != 4 && !grappling)
         {
-            rigidBody.AddForce(rigidBody.transform.up * 200000 * Time.fixedDeltaTime * 180);
+            rigidBody.AddForce(rigidBody.transform.up * 200000 * Time.deltaTime * 180);
             rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
         }
-        timeSinceCreation += Time.fixedDeltaTime;
+        timeSinceCreation += Time.deltaTime;
     }
 
     public void UpdateMoveDir(InputAction.CallbackContext context)
@@ -405,8 +405,8 @@ public class CarController : MonoBehaviour
 
     private void Swing()
     {
-        rigidBody.AddForce((firstPerson ? -mainCamera.transform.up : mainCamera.transform.forward) * swingDir.y * swingForce * Time.fixedDeltaTime);
-        rigidBody.AddForce(mainCamera.transform.right * swingDir.x * swingForce * Time.fixedDeltaTime);
+        rigidBody.AddForce((firstPerson ? -mainCamera.transform.up : mainCamera.transform.forward) * swingDir.y * swingForce * Time.deltaTime);
+        rigidBody.AddForce(mainCamera.transform.right * swingDir.x * swingForce * Time.deltaTime);
     }
 
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
