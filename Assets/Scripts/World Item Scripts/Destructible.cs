@@ -14,7 +14,6 @@ public class Destructible : MonoBehaviour
             float mass = colliding.mass;
             float collisionForce = collision.relativeVelocity.magnitude * mass / 2;
             if (collisionForce >= breakForce) Destroy(gameObject);
-            Debug.Log(collisionForce);
         }
     }
 }

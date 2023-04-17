@@ -1479,6 +1479,7 @@ MonoBehaviour:
   maxJointDist: 0.8
   minJointDist: 0
   grapplingChange: 0
+  grapplingChangeSpeed: 0.1
 --- !u!114 &5300588299387933951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1939,6 +1940,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c8e3a231-286e-48b9-93a4-a0bfd1b71d30
+    m_ActionName: 
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player3D
