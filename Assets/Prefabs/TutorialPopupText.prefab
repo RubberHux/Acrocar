@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 2104214477174300833}
   - component: {fileID: 2104214477174300834}
   - component: {fileID: 2104214477174300835}
+  - component: {fileID: 6294473807608440338}
   m_Layer: 0
   m_Name: TutorialPopupText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2104214477174300832
 Transform:
   m_ObjectHideFlags: 0
@@ -110,3 +111,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af96ed4159e4aeabb4d93b7ec21c156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &6294473807608440338
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104214477174300844}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6e9151d70f00c4cca9d30306e74b27e3, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

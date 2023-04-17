@@ -74,8 +74,9 @@ public class PopupTextPool
         return pt;
     }
 
-    public void HidePopupText(PopupText pt)
+    public async void HidePopupText(PopupText pt)
     {
+        await pt.HideText();
         pt.SetText("");
         Pool.Release(pt);
     }

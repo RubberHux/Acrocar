@@ -37,6 +37,11 @@ public class TutorialTextTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!_triggered)
+        {
+            return;
+        }
+        
         if (other.gameObject.layer == LayerMask.NameToLayer("Car"))
         {
             HideTutorialMessage();
