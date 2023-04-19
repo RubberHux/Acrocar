@@ -63,12 +63,12 @@ public class PopupTextPool
         return newPopupText;
     }
 
-    public PopupText GetPopupText(String message, Color color, Transform trans, int scale)
+    public PopupText GetPopupText(String message, Color color, Vector3 position, float scale)
     {
         PopupText pt = Pool.Get();
         pt.SetText(message);
         pt.SetColor(color);
-        pt.SetPosition(trans.position + Vector3.up * heightOffset);
+        pt.SetPosition(position + Vector3.up * heightOffset);
         pt.SetScale(scale);
         pt.transform.SetParent(_parent.transform);
         return pt;
@@ -87,7 +87,7 @@ public class PopupTextGenerator : MonoBehaviour
     
     private PopupTextPool _popupTextPool;
     
-    public static PopupTextGenerator Instance;
+    public static PopupTextGenerator Instance;  // Singleton
 
     private void OnEnable()
     {
@@ -104,9 +104,9 @@ public class PopupTextGenerator : MonoBehaviour
         _popupTextPool ??= new PopupTextPool(ptPrefab, gameObject);
     }
 
-    public PopupText Generate(String message, Color color, Transform trans, int scale)
+    public PopupText Generate(String message, Color color, Vector3 position, float scale)
     {
-        return _popupTextPool.GetPopupText(message, color, trans, scale);
+        return _popupTextPool.GetPopupText(message, color, position, scale);
     }
 
     public void HidePopupText(PopupText pt)

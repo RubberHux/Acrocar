@@ -8,7 +8,8 @@ public class TutorialMessage
 {
     public String message = "This is a tutorial message";
     public Color color = Color.white;
-    public int scale = 1;
+    public float scale = 1.0f;
+    public float extraYSpacing = 0.0f;
 }
 
 [RequireComponent(typeof(BoxCollider))]
@@ -16,6 +17,8 @@ public class TutorialTextTrigger : MonoBehaviour
 {
     
     public TutorialMessage[] messages;
+
+    public float ySpacing = 2.0f;
 
     private List<PopupText> _activatedPT = new List<PopupText>();
 
@@ -51,9 +54,12 @@ public class TutorialTextTrigger : MonoBehaviour
 
     private void DisplayTutorialMessages()
     {
+        Vector3 position = transform.position;
         foreach (var m in messages)
         {
-            _activatedPT.Add(PopupTextGenerator.Instance.Generate(m.message, m.color, transform, m.scale));
+            position.y += m.extraYSpacing;  // allow more flexible control
+            _activatedPT.Add(PopupTextGenerator.Instance.Generate(m.message, m.color, position, m.scale));
+            position.y += ySpacing; // vertical offset
         }
     }
 
