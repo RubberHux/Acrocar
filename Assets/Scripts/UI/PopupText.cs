@@ -30,6 +30,11 @@ public class PopupText : MonoBehaviour
         _lookingCamera = Camera.current;
     }
 
+    private void Start()
+    {
+        transform.forward = _lookingCamera.transform.forward;
+    }
+
     public void SetText(String textInput)
     {
         _textMesh.text = textInput;
