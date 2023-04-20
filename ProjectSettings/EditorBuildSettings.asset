@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HubWorld.unity
     guid: 666a45b1122bbfe40b281fbf2767f265
+  - enabled: 1
+    path: Assets/Scenes/NewStuffShowOff.unity
+    guid: e86b2345b269e084699121b642281ffc
   m_configObjects: {}

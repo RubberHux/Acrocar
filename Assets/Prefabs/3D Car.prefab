@@ -1447,11 +1447,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 137
   motorForce: 16000
-  breakForce: 800000
+  breakForce: 8000000
   maxSteeringAngle: 20
   frontSpinForce: 20000
   sideSpinForce: 15000
-  shiftSpinForce: 5000
+  shiftSpinForce: 10000
 --- !u!114 &1975006650651592679
 MonoBehaviour:
   m_ObjectHideFlags: 0
