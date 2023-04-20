@@ -148,7 +148,7 @@ public class CineMachine3DController : MonoBehaviour
         }
         else if (camState == CamState.follow)
         {
-            if (carController.groundedWheels == 4) airCam.enabled = true;
+            if (carController.groundedWheels != 4) airCam.enabled = true;
             else groundCam.enabled = true;
             groundCam.m_XAxis.Value = 0;
         }

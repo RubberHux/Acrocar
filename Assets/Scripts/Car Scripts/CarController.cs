@@ -18,6 +18,7 @@ public class AxleInfo
     public WheelCollider leftWheel;
     public WheelCollider rightWheel;
     public Transform leftTransform, rightTransform;
+    [NonSerialized] public Vector3 leftOrigin, rightOrigin;
     public MotorType motorType; // is this wheel attached to motor?
     public enum MotorType
     {
@@ -47,7 +48,6 @@ public class CarController : MonoBehaviour
     CineMachine3DController camController;
     private float currentBreakForce;
     private float currentSteerAngle;
-    float timeSinceCreation = 0;
     public int playerNumber = 0;
     public bool isAlone = true;
     bool breaking, rotateMod;
@@ -86,12 +86,17 @@ public class CarController : MonoBehaviour
         firstPerson = false;
         stationaryTolerance = 0.001f;
         rigidBody = GetComponent<Rigidbody>();
-        startpoint = transform.position;
+        startpoint = transform.localPosition;
         SetConstraints();
         dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
         dimensionSwitch.Enable();
         dimensionSwitch.performed += DoDimensionSwitch;
         SetActionMap();
+        foreach(AxleInfo axle in axleInfos)
+        {
+            axle.leftOrigin = axle.leftTransform.localPosition;
+            axle.rightOrigin = axle.rightTransform.localPosition;
+        }
     }
 
     private void SetConstraints()
@@ -127,7 +132,7 @@ public class CarController : MonoBehaviour
         CheckGrounded();
         HandleMotor();
         if (!is2D && groundedWheels != 0) HandleSteering();
-        if (groundedWheels != 0) UpdateWheels();
+        UpdateWheels();
         AirRotate();
         if (grappling) Swing();
         CustomGravity();
@@ -138,6 +143,7 @@ public class CarController : MonoBehaviour
 
     void ConstraintsFix()
     {
+        //Unity's physics engine is a bit broken and let's the car drift out of its constraints. This fixes that by resetting the constrained axes.
         if (is2D)
         {
             rigidBody.angularVelocity = new Vector3(rigidBody.angularVelocity.x, 0, 0);
@@ -148,12 +154,14 @@ public class CarController : MonoBehaviour
 
     void UpdateTimers()
     {
+        //Updates Timers
         jumpTimer -= Time.deltaTime;
         respawnTimer -= Time.deltaTime;
     }
 
     void RespawnLock()
     {
+        //Makes sure that the momentum of the car is removed on a respawn
         if (respawned)
         {
             respawnTimer -= Time.deltaTime;
@@ -168,17 +176,18 @@ public class CarController : MonoBehaviour
 
     void FlipCar()
     {
+        //Flips the car over if it has landed on its back/side.
         if (respawnTimer < -1 && rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
             && groundedWheels != 4 && !grappling)
         {
             rigidBody.AddForce(rigidBody.transform.up * 200000 * Time.deltaTime * 180);
             rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
         }
-        timeSinceCreation += Time.deltaTime;
     }
 
     public void UpdateMoveDir(InputAction.CallbackContext context)
     {
+        //Gets the value for movement from PlayerInput
         Vector2 move = context.ReadValue<Vector2>();
         if (is2D) moveDir = new Vector2(0, move.y);
         else moveDir = move;
@@ -186,6 +195,7 @@ public class CarController : MonoBehaviour
 
     public void UpdateRotateDir(InputAction.CallbackContext context)
     {
+        //Gets the value for rotation from PlayerInput
         Vector2 val = context.ReadValue<Vector2>();
         if (is2D) rotateDir = new Vector2(0, firstPerson ? val.y : val.x);
         else rotateDir = val;
@@ -193,6 +203,7 @@ public class CarController : MonoBehaviour
 
     public void UpdateSwingDir(InputAction.CallbackContext context)
     {
+        //Gets the value for swinging from PlayerInput
         Vector2 val = context.ReadValue<Vector2>();
         if (is2D) swingDir = new Vector2(0, firstPerson ? val.y : val.x);
         else swingDir = val;
@@ -200,28 +211,33 @@ public class CarController : MonoBehaviour
 
     public void SetBreak(InputAction.CallbackContext context)
     {
+        //Gets the value for breaking from PlayerInput
         if (context.phase == InputActionPhase.Started) breaking = true;
         else if (context.phase == InputActionPhase.Canceled) breaking = false;
     }
 
     public void SetRotateMod(InputAction.CallbackContext context)
     {
+        //Gets the value for rotateMod from PlayerInput
         if (context.phase == InputActionPhase.Started) rotateMod = true;
         else if (context.phase == InputActionPhase.Canceled) rotateMod = false;
     }
 
     public void ChangeCam(InputAction.CallbackContext context)
     {
+        //Allows PlayerInput to change the camera
         if (context.phase == InputActionPhase.Started) camController.SwitchCam();
     }
 
     public void Zoom(InputAction.CallbackContext context)
     {
+        //Allows PlayerInput to zoom
         if (is2D) camController.Zoom(context.ReadValue<Vector2>().y);
     }
 
     void SetActionMap()
     {
+        //Changes between using the controls for 2D or 3D when dimensions change
         if (is2D)
         {
             gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player2D");
@@ -236,11 +252,22 @@ public class CarController : MonoBehaviour
 
     private void UpdateWheels()
     {
+        // Updates the wheel transforms to match with the wheel colliders
         foreach (AxleInfo axle in axleInfos)
         {
-            UpdateSingleWheel(axle.leftWheel, axle.leftTransform);
-            UpdateSingleWheel(axle.rightWheel, axle.rightTransform);
+            UpdateSingleWheel(axle.leftWheel, axle.leftTransform, axle.leftOrigin);
+            UpdateSingleWheel(axle.rightWheel, axle.rightTransform, axle.rightOrigin);
         }
+    }
+
+    private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform, Vector3 origin)
+    {
+        Vector3 pos;
+        Quaternion rot;
+        wheelCollider.GetWorldPose(out pos, out rot);
+        if (wheelCollider.isGrounded) wheelTransform.position = pos;
+        else wheelTransform.localPosition = Vector3.Lerp(wheelTransform.localPosition, origin, 0.999f);
+        wheelTransform.rotation = rot;
     }
 
     private void HandleMotor()
@@ -383,6 +410,7 @@ public class CarController : MonoBehaviour
             aInfo.leftWheel.motorTorque = 0;
             aInfo.rightWheel.motorTorque = 0;
         }
+        xPos = rigidBody.position.x;
         respawnTimer = 0.1f;
         respawned = true;
         grappling = false;
@@ -407,15 +435,6 @@ public class CarController : MonoBehaviour
     {
         rigidBody.AddForce((firstPerson ? -mainCamera.transform.up : mainCamera.transform.forward) * swingDir.y * swingForce * Time.deltaTime);
         rigidBody.AddForce(mainCamera.transform.right * swingDir.x * swingForce * Time.deltaTime);
-    }
-
-    private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
-    {
-        Vector3 pos;
-        Quaternion rot;
-        wheelCollider.GetWorldPose(out pos, out rot);
-        wheelTransform.rotation = rot;
-        wheelTransform.position = pos;
     }
 
     private void DoDimensionSwitch(InputAction.CallbackContext context)
