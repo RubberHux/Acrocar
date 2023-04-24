@@ -3323,6 +3323,45 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""XRSpecific"",
+            ""id"": ""653f9383-3731-455a-a863-f8e96d284478"",
+            ""actions"": [
+                {
+                    ""name"": ""XRReset"",
+                    ""type"": ""Button"",
+                    ""id"": ""da128330-e73b-4e4e-865d-6b59ed27e783"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=1)"",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e6e90215-233f-4f6d-b09c-0318463fef7c"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""XRReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36242bf4-e4f1-473c-9e13-2afa35702475"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""XRReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -3440,6 +3479,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_DimensionSwitch = m_Debug.FindAction("DimensionSwitch", throwIfNotFound: true);
+        // XRSpecific
+        m_XRSpecific = asset.FindActionMap("XRSpecific", throwIfNotFound: true);
+        m_XRSpecific_XRReset = m_XRSpecific.FindAction("XRReset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -3965,6 +4007,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public DebugActions @Debug => new DebugActions(this);
+
+    // XRSpecific
+    private readonly InputActionMap m_XRSpecific;
+    private IXRSpecificActions m_XRSpecificActionsCallbackInterface;
+    private readonly InputAction m_XRSpecific_XRReset;
+    public struct XRSpecificActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public XRSpecificActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @XRReset => m_Wrapper.m_XRSpecific_XRReset;
+        public InputActionMap Get() { return m_Wrapper.m_XRSpecific; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(XRSpecificActions set) { return set.Get(); }
+        public void SetCallbacks(IXRSpecificActions instance)
+        {
+            if (m_Wrapper.m_XRSpecificActionsCallbackInterface != null)
+            {
+                @XRReset.started -= m_Wrapper.m_XRSpecificActionsCallbackInterface.OnXRReset;
+                @XRReset.performed -= m_Wrapper.m_XRSpecificActionsCallbackInterface.OnXRReset;
+                @XRReset.canceled -= m_Wrapper.m_XRSpecificActionsCallbackInterface.OnXRReset;
+            }
+            m_Wrapper.m_XRSpecificActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @XRReset.started += instance.OnXRReset;
+                @XRReset.performed += instance.OnXRReset;
+                @XRReset.canceled += instance.OnXRReset;
+            }
+        }
+    }
+    public XRSpecificActions @XRSpecific => new XRSpecificActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -4067,5 +4142,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface IDebugActions
     {
         void OnDimensionSwitch(InputAction.CallbackContext context);
+    }
+    public interface IXRSpecificActions
+    {
+        void OnXRReset(InputAction.CallbackContext context);
     }
 }

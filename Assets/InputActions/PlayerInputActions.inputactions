@@ -3301,6 +3301,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "XRSpecific",
+            "id": "653f9383-3731-455a-a863-f8e96d284478",
+            "actions": [
+                {
+                    "name": "XRReset",
+                    "type": "Button",
+                    "id": "da128330-e73b-4e4e-865d-6b59ed27e783",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=1)",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e6e90215-233f-4f6d-b09c-0318463fef7c",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "XRReset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36242bf4-e4f1-473c-9e13-2afa35702475",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "XRReset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
