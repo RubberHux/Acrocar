@@ -8,6 +8,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.Experimental.AI;
 using UnityEngine.InputSystem;
+using Unity.XR.CoreUtils;
 
 public class CarLoader : MonoBehaviour
 {
@@ -51,6 +52,7 @@ public class CarLoader : MonoBehaviour
         cam.GetComponentInChildren<CineMachine3DController>().SetCar(carController, 28 + playerNumber, camLayerMask, playerNumber == 0, playerInput);
         carController.SetCam(cam, playerNumber);
         carController.gameObject.GetComponent<GrapplingGun>().SetCam(cam);
+        if (playerNumber != 0 && !GameMaster.vr) cam.GetComponentInChildren<XROrigin>().gameObject.SetActive(false);
         Camera camera = cam.GetComponentInChildren<Camera>();
         if (Playercount == 2)
         {
