@@ -15,6 +15,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject pauseDefualtButton, winDefualtButton, settingsDefualtButton, mainMenuDefualtButton;
     [SerializeField] private TextMeshProUGUI[] uiTimeText;
     [SerializeField] private SettingsHandler settingsHandler;
+    [SerializeField] bool dontFollow;
+    Transform follow = null;
     private EventSystem eventSystem;
     private double time;
     private InputAction pause, uiNavigate;
@@ -28,6 +30,7 @@ public class UIController : MonoBehaviour
         Win,
     }
     public GameState gameState { get; private set; }
+    bool vrCamTryGet = false;
 
     public void SetState(GameState newState)
     {
@@ -51,11 +54,27 @@ public class UIController : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex == 0) gameState = GameState.MainMenu;
         else gameState = GameState.Playing;
+
+        if (GameMaster.vr && Camera.main != null)
+        {
+            SetVRMode();
+        }
+        else if (GameMaster.vr) vrCamTryGet = true;
     }
 
     private void OnDisable()
     {
         pause.performed -= PerformPause;
+    }
+
+    void SetVRMode()
+    {
+        Canvas canvas = GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace;
+        canvas.worldCamera = Camera.main;
+        follow = Camera.main.transform;
+        canvas.transform.localScale = new Vector3(0.003709593f, 0.003709593f, 0.003709593f);
+        vrCamTryGet = false;
     }
 
     private void PerformPause(InputAction.CallbackContext context)
@@ -115,6 +134,7 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
+        if (vrCamTryGet && Camera.main != null) SetVRMode();
         if (eventSystem.currentSelectedGameObject != null) lastObject = eventSystem.currentSelectedGameObject;
         if (gameState == GameState.Playing)
         {
@@ -125,6 +145,10 @@ public class UIController : MonoBehaviour
                 uiTimeText[i].text = timeString;
             }
         }
-        
+        if (follow != null && !dontFollow)
+        {
+            transform.position = follow.position + transform.forward * 4;
+            transform.rotation = follow.rotation;
+        }
     }
 }

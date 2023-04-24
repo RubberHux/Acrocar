@@ -7,4 +7,5 @@ public class GameMaster : MonoBehaviour
 {
     public static int playerCount = 1;
     public static InputDevice[] devices;
+    public static bool vr = false;
 }
