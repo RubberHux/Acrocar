@@ -11,11 +11,16 @@ public class XRCameraReset : MonoBehaviour
     InputAction resetAction;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         resetAction = InputHandler.playerInput.XRSpecific.XRReset;
         resetAction.Enable();
         resetAction.performed += DoResetOffset;
+    }
+
+    private void OnDisable()
+    {
+        resetAction.performed -= DoResetOffset;
     }
 
     // Update is called once per frame

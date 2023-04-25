@@ -1,12 +1,4 @@
-using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UIController;
-using UnityEngine.InputSystem.XR;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.Experimental.AI;
 using UnityEngine.InputSystem;
 using Unity.XR.CoreUtils;
 
@@ -52,18 +44,28 @@ public class CarLoader : MonoBehaviour
         cam.GetComponentInChildren<CineMachine3DController>().SetCar(carController, 28 + playerNumber, camLayerMask, playerNumber == 0, playerInput);
         carController.SetCam(cam, playerNumber);
         carController.gameObject.GetComponent<GrapplingGun>().SetCam(cam);
-        if (playerNumber != 0 && !GameMaster.vr) cam.GetComponentInChildren<XROrigin>().gameObject.SetActive(false);
-        Camera camera = cam.GetComponentInChildren<Camera>();
-        if (Playercount == 2)
+        if (playerNumber != 0 || !GameMaster.vr) cam.GetComponentInChildren<XROrigin>().gameObject.SetActive(false);
+        
+        Camera[] cameras = cam.GetComponentsInChildren<Camera>();
+        foreach (Camera camera in cameras)
         {
-            camera.rect = new Rect((playerNumber == 0 ? 0 : 0.5f), 0, 0.5f, 1);
-        }
-        if (Playercount > 2 && Playercount <= 4)
-        {
-            if (playerNumber == 0) camera.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
-            else if (playerNumber == 1) camera.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-            else if (playerNumber == 2) camera.rect = new Rect(0, 0, 0.5f, 0.5f);
-            else if (playerNumber == 3) camera.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+            if (!camera.gameObject.CompareTag("XRCam"))
+            {
+                if (Playercount == 2)
+                {
+                    camera.rect = new Rect((playerNumber == 0 ? 0 : 0.5f), 0, 0.5f, 1);
+                }
+                if (Playercount > 2 && Playercount <= 4)
+                {
+                    if (playerNumber == 0)
+                    {
+                        camera.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                    }
+                    else if (playerNumber == 1) camera.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                    else if (playerNumber == 2) camera.rect = new Rect(0, 0, 0.5f, 0.5f);
+                    else if (playerNumber == 3) camera.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+                }
+            }
         }
     }
 }

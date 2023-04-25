@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -71,7 +68,7 @@ public class UIController : MonoBehaviour
     {
         Canvas canvas = GetComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
-        canvas.worldCamera = Camera.main;
+        canvas.worldCamera = Camera.current;
         follow = Camera.main.transform;
         canvas.transform.localScale = new Vector3(0.003709593f, 0.003709593f, 0.003709593f);
         vrCamTryGet = false;
@@ -86,7 +83,7 @@ public class UIController : MonoBehaviour
     {
         if (eventSystem.currentSelectedGameObject == null)
         {
-            //eventSystem.SetSelectedGameObject(lastObject);
+            eventSystem.SetSelectedGameObject(lastObject);
         }
     }
 
@@ -136,6 +133,7 @@ public class UIController : MonoBehaviour
     {
         if (vrCamTryGet && Camera.main != null) SetVRMode();
         if (eventSystem.currentSelectedGameObject != null) lastObject = eventSystem.currentSelectedGameObject;
+        //else eventSystem.SetSelectedGameObject(lastObject);
         if (gameState == GameState.Playing)
         {
             time += Time.deltaTime;
