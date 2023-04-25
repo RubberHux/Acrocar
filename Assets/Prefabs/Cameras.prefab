@@ -2018,6 +2018,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 490550779182919755, guid: cf8b21c458a22534d9d15e70bd8ba0d9, type: 3}
+      propertyPath: m_TagString
+      value: XRCam
+      objectReference: {fileID: 0}
     - target: {fileID: 1071506042937504269, guid: cf8b21c458a22534d9d15e70bd8ba0d9, type: 3}
       propertyPath: m_InteractionManager
       value: 

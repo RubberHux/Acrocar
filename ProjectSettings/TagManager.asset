@@ -12,6 +12,7 @@ TagManager:
   - HoodCam
   - CameraTrackPoint
   - XROrigin
+  - XRCam
   layers:
   - Default
   - TransparentFX
