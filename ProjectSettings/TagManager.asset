@@ -13,6 +13,7 @@ TagManager:
   - CameraTrackPoint
   - XROrigin
   - XRCam
+  - EditorVisual
   layers:
   - Default
   - TransparentFX
