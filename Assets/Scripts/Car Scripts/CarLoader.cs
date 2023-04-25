@@ -26,11 +26,13 @@ public class CarLoader : MonoBehaviour
                     else playerInput = PlayerInput.Instantiate(car, pairWithDevice: GameMaster.devices[i]);
                 }
                 GameObject carInstance = playerInput.gameObject;
+                carInstance.name = $"Player {i+1}";
                 carInstance.transform.position = transform.position;
                 CarController carController = carInstance.GetComponent<CarController>();
                 carController.is2D = is2D;
                 carController.isAlone = Playercount >= 1;
                 GameObject camInstance = Instantiate(cameras);
+                camInstance.name = $"Cam {i + 1}";
                 LinkCarAndCam(carController, camInstance, i, playerInput);
             }
             created = true;
