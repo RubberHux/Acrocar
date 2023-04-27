@@ -60,9 +60,11 @@ public class CarController : MonoBehaviour
     internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
     public Vector3? gravity = null;
+    private InputAction rotateAction, moveAction, swingAction;
     private Vector2 rotateDir, moveDir, swingDir;
     public LayerMask gravRoadLayer;
     public LayerMask notCarLayers;
+    PlayerInput playerInput;
     [NonSerialized] public float gravRoadPercent;
     [NonSerialized] public bool is2D;
     [SerializeField] private float motorForce;
@@ -85,6 +87,7 @@ public class CarController : MonoBehaviour
     {
         firstPerson = false;
         stationaryTolerance = 0.001f;
+        playerInput = GetComponent<PlayerInput>();
         rigidBody = GetComponent<Rigidbody>();
         startpoint = transform.localPosition;
         SetConstraints();
@@ -123,6 +126,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        UpdateDirections();
         if (camController == null) return; 
         if (respawned)
         {
@@ -185,26 +189,21 @@ public class CarController : MonoBehaviour
         }
     }
 
-    public void UpdateMoveDir(InputAction.CallbackContext context)
+    public void UpdateDirections()
     {
         //Gets the value for movement from PlayerInput
-        Vector2 move = context.ReadValue<Vector2>();
+        //Vector2 move = context.ReadValue<Vector2>();
+        Vector2 move = playerInput.actions["Move"].ReadValue<Vector2>();
         if (is2D) moveDir = new Vector2(0, move.y);
         else moveDir = move;
-    }
-
-    public void UpdateRotateDir(InputAction.CallbackContext context)
-    {
+    
         //Gets the value for rotation from PlayerInput
-        Vector2 val = context.ReadValue<Vector2>();
+        Vector2 val = playerInput.actions["Rotate"].ReadValue<Vector2>();
         if (is2D) rotateDir = new Vector2(0, firstPerson ? val.y : val.x);
         else rotateDir = val;
-    }
-
-    public void UpdateSwingDir(InputAction.CallbackContext context)
-    {
+    
         //Gets the value for swinging from PlayerInput
-        Vector2 val = context.ReadValue<Vector2>();
+        val = playerInput.actions["Swing"].ReadValue<Vector2>();
         if (is2D) swingDir = new Vector2(0, firstPerson ? val.y : val.x);
         else swingDir = val;
     }
