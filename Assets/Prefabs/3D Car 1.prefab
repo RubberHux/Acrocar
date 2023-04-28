@@ -1454,13 +1454,13 @@ MonoBehaviour:
     rightWheel: {fileID: 3307011692566959519}
     leftTransform: {fileID: 8000444649039330415}
     rightTransform: {fileID: 5841946564065548728}
-    motor: 1
+    motorType: 0
     turnType: 1
   - leftWheel: {fileID: 2675703141618232182}
     rightWheel: {fileID: 900750226281289370}
     leftTransform: {fileID: 5092612180518933546}
     rightTransform: {fileID: 4175377604479337215}
-    motor: 1
+    motorType: 0
     turnType: 0
   gravCheckDistance: 2
   roadCheckers:
@@ -1608,6 +1608,7 @@ MonoBehaviour:
   grappleBoostTime: 1
   maxJointDist: 0.8
   minJointDist: 0
+  lengthChangeSpeed: 0.1
 --- !u!1 &8340736202897388025
 GameObject:
   m_ObjectHideFlags: 0

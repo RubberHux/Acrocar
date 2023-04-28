@@ -11,6 +11,10 @@ TagManager:
   - GravRoad
   - HoodCam
   - CameraTrackPoint
+  - XROrigin
+  - XRCam
+  - EditorVisual
+  - TimeText
   layers:
   - Default
   - TransparentFX
@@ -47,4 +51,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 2632958221
     locked: 0

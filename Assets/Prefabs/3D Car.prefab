@@ -582,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345318733545692750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.58, z: 0}
+  m_LocalPosition: {x: 0, y: 0.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1277,8 +1277,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 98
+  m_CollisionDetection: 1
 --- !u!65 &1975006650651592675
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1447,11 +1447,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 137
   motorForce: 16000
-  breakForce: 800000
+  breakForce: 8000000
   maxSteeringAngle: 20
   frontSpinForce: 20000
-  sideSpinForce: 8000
-  shiftSpinForce: 20000
+  sideSpinForce: 15000
+  shiftSpinForce: 10000
 --- !u!114 &1975006650651592679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1479,6 +1479,7 @@ MonoBehaviour:
   maxJointDist: 0.8
   minJointDist: 0
   grapplingChange: 0
+  grapplingChangeSpeed: 0.1
 --- !u!114 &5300588299387933951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1936,6 +1937,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 80b43f3d-6976-4b30-addb-21f04f365fbf
     m_ActionName: Player2D/Look[/XInputControllerWindows/rightStick,/Mouse/delta,/Pen/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c8e3a231-286e-48b9-93a4-a0bfd1b71d30
+    m_ActionName: 
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player3D
