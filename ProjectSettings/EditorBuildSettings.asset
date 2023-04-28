@@ -9,17 +9,17 @@ EditorBuildSettings:
     path: Assets/Scenes/StartSceneNew.unity
     guid: dfac208f588117140a182f3dbba581dd
   - enabled: 1
-    path: Assets/Scenes/Test levelly.unity
-    guid: 8c5f5888ec840b24aa2a57aae7ac8d8c
-  - enabled: 1
-    path: Assets/Scenes/BacktrackMountain.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
     path: Assets/Scenes/HubWorld.unity
     guid: 666a45b1122bbfe40b281fbf2767f265
   - enabled: 1
     path: Assets/Scenes/NewStuffShowOff.unity
     guid: e86b2345b269e084699121b642281ffc
+  - enabled: 1
+    path: Assets/Scenes/Test level.unity
+    guid: 8c5f5888ec840b24aa2a57aae7ac8d8c
+  - enabled: 1
+    path: Assets/Scenes/BacktrackMountain.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 57bb631b575ebcf40b667892164ad0e8, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: cd95ef827d95def409e6667bf504f0dd, type: 2}
