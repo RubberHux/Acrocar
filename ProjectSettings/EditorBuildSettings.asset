@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartSceneNew.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: dfac208f588117140a182f3dbba581dd
   - enabled: 1
     path: Assets/Scenes/HubWorld.unity
@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BacktrackMountain.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/CarCustomisation.unity
+    guid: 2272173351f8b6b44bbb55fe79440083
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 57bb631b575ebcf40b667892164ad0e8, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: cd95ef827d95def409e6667bf504f0dd, type: 2}
