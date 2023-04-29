@@ -556,9 +556,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""left"",
+                    ""name"": ""up"",
                     ""id"": ""3147a1d9-c341-4ff9-9ac9-7e3d0d76fa41"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -567,9 +567,31 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
+                    ""name"": ""up"",
                     ""id"": ""9431260f-d11e-4e77-97f6-0194862a20d7"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""5eafd071-7e23-4d8e-8ce7-50da149a05c1"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""350c0944-99ae-4d95-992a-2083122af9f3"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -579,7 +601,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""5eafd071-7e23-4d8e-8ce7-50da149a05c1"",
+                    ""id"": ""e7ba69e0-8173-4de4-8e81-6d34aefd7b37"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -590,8 +612,30 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""350c0944-99ae-4d95-992a-2083122af9f3"",
+                    ""id"": ""d9b3a04c-07b1-4aa4-8a55-7f68132d76a9"",
                     ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""178c3a63-f7fd-40ef-9470-3fc708a648e3"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d6c2bf61-c6b7-40dd-9891-bb59ac1b61df"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -3323,6 +3367,45 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""XRSpecific"",
+            ""id"": ""653f9383-3731-455a-a863-f8e96d284478"",
+            ""actions"": [
+                {
+                    ""name"": ""XRReset"",
+                    ""type"": ""Button"",
+                    ""id"": ""da128330-e73b-4e4e-865d-6b59ed27e783"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=1)"",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e6e90215-233f-4f6d-b09c-0318463fef7c"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""XRReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36242bf4-e4f1-473c-9e13-2afa35702475"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""XRReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -3440,6 +3523,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_DimensionSwitch = m_Debug.FindAction("DimensionSwitch", throwIfNotFound: true);
+        // XRSpecific
+        m_XRSpecific = asset.FindActionMap("XRSpecific", throwIfNotFound: true);
+        m_XRSpecific_XRReset = m_XRSpecific.FindAction("XRReset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -3965,6 +4051,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public DebugActions @Debug => new DebugActions(this);
+
+    // XRSpecific
+    private readonly InputActionMap m_XRSpecific;
+    private IXRSpecificActions m_XRSpecificActionsCallbackInterface;
+    private readonly InputAction m_XRSpecific_XRReset;
+    public struct XRSpecificActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public XRSpecificActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @XRReset => m_Wrapper.m_XRSpecific_XRReset;
+        public InputActionMap Get() { return m_Wrapper.m_XRSpecific; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(XRSpecificActions set) { return set.Get(); }
+        public void SetCallbacks(IXRSpecificActions instance)
+        {
+            if (m_Wrapper.m_XRSpecificActionsCallbackInterface != null)
+            {
+                @XRReset.started -= m_Wrapper.m_XRSpecificActionsCallbackInterface.OnXRReset;
+                @XRReset.performed -= m_Wrapper.m_XRSpecificActionsCallbackInterface.OnXRReset;
+                @XRReset.canceled -= m_Wrapper.m_XRSpecificActionsCallbackInterface.OnXRReset;
+            }
+            m_Wrapper.m_XRSpecificActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @XRReset.started += instance.OnXRReset;
+                @XRReset.performed += instance.OnXRReset;
+                @XRReset.canceled += instance.OnXRReset;
+            }
+        }
+    }
+    public XRSpecificActions @XRSpecific => new XRSpecificActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -4067,5 +4186,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface IDebugActions
     {
         void OnDimensionSwitch(InputAction.CallbackContext context);
+    }
+    public interface IXRSpecificActions
+    {
+        void OnXRReset(InputAction.CallbackContext context);
     }
 }

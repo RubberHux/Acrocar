@@ -5,7 +5,6 @@ public class GrapplingGun : MonoBehaviour
 {
     private LineRenderer lr;
     private Vector3 grapplePoint;
-    private Transform grappledObject; // object which the hook is attached to
     private Rigidbody grappledRigidBody; // rigidbody which hook is attached to
     public LayerMask whatIsGrappleable;
     public LayerMask notCarLayers;
@@ -19,6 +18,7 @@ public class GrapplingGun : MonoBehaviour
     public float maxJointDist, minJointDist;
     private Camera cam;
     public float grapplingChange;
+    public float grapplingChangeSpeed;
     bool fireHook = false;
     Vector2 aim;
 
@@ -55,20 +55,20 @@ public class GrapplingGun : MonoBehaviour
         if (joint) ChangeLength(grapplingChange);
 
 
-        if (joint && grappledRigidBody != null)
-        {
-            // make sure to move grapple point if grappled object moves
-            grapplePoint = grappledRigidBody.position;
-            Debug.Log(grapplePoint);
-        }
-
         if (aimPreTimer >= 0) aimPreTimer -= Time.deltaTime;
         if (aimPostTimer >= 0) aimPostTimer -= Time.deltaTime;
         if (grappleBoostTimer >= 0) grappleBoostTimer -= Time.deltaTime;
+
+        if (joint && grappledRigidBody != null)
+        {
+            // make sure to move grapple point if grappled object moves
+            grapplePoint = grappledRigidBody.transform.position;
+        }
     }
 
     private void LateUpdate()
     {
+
         DrawRope();
     }
 
@@ -99,7 +99,7 @@ public class GrapplingGun : MonoBehaviour
 
             joint.maxDistance = distanceFromPoint * maxJointDist;
             joint.minDistance = distanceFromPoint * minJointDist;
-
+            
             if (grappledRigidBody != null)
             {
                 joint.spring = 1000f;
@@ -108,7 +108,6 @@ public class GrapplingGun : MonoBehaviour
                 joint.connectedMassScale = 1000f;
                 joint.tolerance = 1f;
 
-                joint.maxDistance = maxGrappleDistance;
                 joint.autoConfigureConnectedAnchor = true;
             }
             else
@@ -204,7 +203,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void ChangeLength(float direction)
     {
-        float newDistance = joint.maxDistance - direction * 1f * Time.fixedDeltaTime * 60;
+        float newDistance = joint.maxDistance - direction * grapplingChangeSpeed * Time.deltaTime * 60;
         if (newDistance > maxGrappleDistance) joint.maxDistance = maxGrappleDistance;
         else joint.maxDistance = newDistance;
     }
