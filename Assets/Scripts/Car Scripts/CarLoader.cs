@@ -27,7 +27,13 @@ public class CarLoader : MonoBehaviour
                 }
                 GameObject carInstance = playerInput.gameObject;
                 carInstance.name = $"Player {i+1}";
-                carInstance.transform.position = transform.position;
+
+                LevelMetaData lmd = FindObjectOfType<LevelMetaData>();
+                print(GameMaster.hubWorldReturnPoint);
+                if (lmd != null && lmd.stageType == LevelMetaData.StageType.HubWorld && GameMaster.hubWorldReturnPoint != null) 
+                    carInstance.transform.SetPositionAndRotation((Vector3)GameMaster.hubWorldReturnPoint, GameMaster.hubWorldReturnRotation);
+                else carInstance.transform.SetPositionAndRotation(transform.position, transform.rotation);
+
                 CarController carController = carInstance.GetComponent<CarController>();
                 carController.is2D = is2D;
                 carController.isAlone = Playercount >= 1;
