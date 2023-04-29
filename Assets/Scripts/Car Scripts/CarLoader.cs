@@ -5,13 +5,15 @@ using Unity.XR.CoreUtils;
 public class CarLoader : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject car, cameras; 
+    [SerializeField] GameObject cameras;
+    [SerializeField] GameObject carKeeperPrefab;
     public bool is2D;
     int Playercount;
     bool created;
     public LayerMask[] camLayers;
-    private void OnEnable()
+    private void Start()
     {
+        CarKeeper carKeeper = carKeeperPrefab.GetComponent<CarKeeper>();
         Physics.IgnoreLayerCollision(6, 6, true);
         if (!created)
         {
@@ -19,17 +21,17 @@ public class CarLoader : MonoBehaviour
             for (int i = 0; i < Playercount; i++)
             {
                 PlayerInput playerInput;
-                if (Playercount == 1) playerInput = PlayerInput.Instantiate(car);
+                GameObject currentCar = carKeeper.cars[GameMaster.playerCars[i]].prefab;
+                if (Playercount == 1) playerInput = PlayerInput.Instantiate(currentCar);
                 else
                 {
-                    if (GameMaster.devices[i].deviceId == 1) playerInput = PlayerInput.Instantiate(car, controlScheme: "Keyboard&Mouse");
-                    else playerInput = PlayerInput.Instantiate(car, pairWithDevice: GameMaster.devices[i]);
+                    if (GameMaster.devices[i].deviceId == 1) playerInput = PlayerInput.Instantiate(currentCar, controlScheme: "Keyboard&Mouse");
+                    else playerInput = PlayerInput.Instantiate(currentCar, pairWithDevice: GameMaster.devices[i]);
                 }
                 GameObject carInstance = playerInput.gameObject;
                 carInstance.name = $"Player {i+1}";
 
                 LevelMetaData lmd = FindObjectOfType<LevelMetaData>();
-                print(GameMaster.hubWorldReturnPoint);
                 if (lmd != null && lmd.stageType == LevelMetaData.StageType.HubWorld && GameMaster.hubWorldReturnPoint != null) 
                     carInstance.transform.SetPositionAndRotation((Vector3)GameMaster.hubWorldReturnPoint, GameMaster.hubWorldReturnRotation);
                 else carInstance.transform.SetPositionAndRotation(transform.position, transform.rotation);

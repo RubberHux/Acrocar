@@ -1941,6 +1941,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: c8e3a231-286e-48b9-93a4-a0bfd1b71d30
     m_ActionName: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: da128330-e73b-4e4e-865d-6b59ed27e783
+    m_ActionName: XRSpecific/XRReset[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player3D

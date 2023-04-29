@@ -9,6 +9,7 @@ public class LevelMetaData : MonoBehaviour
         Level,
         HubWorld,
     }
+    public string ID;
     public StageType stageType;
     public double bronzeTime, silverTime, goldTime;
 }
