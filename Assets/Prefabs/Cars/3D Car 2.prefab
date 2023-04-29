@@ -585,7 +585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4590032966840559031}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.573, z: 2.417}
+  m_LocalPosition: {x: -0.16, y: 0.627, z: 2.175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2610,7 +2610,7 @@ GameObject:
   - component: {fileID: 2310734947481614836}
   - component: {fileID: 8284015126453660396}
   m_Layer: 6
-  m_Name: 3D Car
+  m_Name: 3D Car 2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2820,11 +2820,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 137
   motorForce: 16000
-  breakForce: 800000
+  breakForce: 8000000
   maxSteeringAngle: 20
   frontSpinForce: 20000
-  sideSpinForce: 8000
-  shiftSpinForce: 20000
+  sideSpinForce: 15000
+  shiftSpinForce: 10000
 --- !u!114 &2310734947481614836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2852,6 +2852,7 @@ MonoBehaviour:
   maxJointDist: 0.8
   minJointDist: 0
   grapplingChange: 0
+  grapplingChangeSpeed: 0.1
 --- !u!114 &8284015126453660396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3309,6 +3310,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 80b43f3d-6976-4b30-addb-21f04f365fbf
     m_ActionName: Player2D/Look[/XInputControllerWindows/rightStick,/Mouse/delta,/Pen/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c8e3a231-286e-48b9-93a4-a0bfd1b71d30
+    m_ActionName: UI/Join[/Keyboard/anyKey]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: da128330-e73b-4e4e-865d-6b59ed27e783
+    m_ActionName: XRSpecific/XRReset[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player3D

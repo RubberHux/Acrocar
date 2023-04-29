@@ -2492,6 +2492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7373ec6ae6dfa774d91bb581a9735bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: HubWorld
   stageType: 1
   bronzeTime: 0
   silverTime: 0
@@ -4416,6 +4417,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3249381891122376600, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
+      propertyPath: carKeeperPrefab
+      value: 
+      objectReference: {fileID: 3461644506459499686, guid: 6bddd860baf63f541a2b3291f33b7731, type: 3}
     - target: {fileID: 3249381891122376600, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
       propertyPath: camLayers.Array.size
       value: 4

@@ -13,7 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 public class UIController : MonoBehaviour
 {
     [SerializeField] SceneType sceneType;
-    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, mainMenu;
+    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, mainMenu, customisationMenu;
     private GameObject pauseMenuInstance, addPlayerMenuInstance;
     [NonSerialized] public GameObject settingsInstance;
     private List<TextMeshProUGUI> uiTimeText = new List<TextMeshProUGUI>();
@@ -26,7 +26,8 @@ public class UIController : MonoBehaviour
     {
         MainMenu,
         HubWorld,
-        Level
+        Level,
+        CarCustomization
     }
     public enum GameState
     {
@@ -35,6 +36,7 @@ public class UIController : MonoBehaviour
         Paused,
         Settings,
         Win,
+        CarCustomization
     }
     public GameState gameState { get; private set; }
     bool vrCamTryGet = false;

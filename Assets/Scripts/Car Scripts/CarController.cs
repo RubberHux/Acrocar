@@ -83,7 +83,7 @@ public class CarController : MonoBehaviour
         grapplingGun = GetComponent<GrapplingGun>();
     }
 
-    private void Start()
+    void OnEnable()
     {
         firstPerson = false;
         stationaryTolerance = 0.001f;
@@ -121,6 +121,7 @@ public class CarController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (dimensionSwitch != null)
         dimensionSwitch.performed -= DoDimensionSwitch;
     }
 
