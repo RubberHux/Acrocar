@@ -15,13 +15,15 @@ public class GameMaster : MonoBehaviour
     [NonSerialized] public static bool vr = false;
     [NonSerialized] public static Vector3? hubWorldReturnPoint;
     [NonSerialized] public static Quaternion hubWorldReturnRotation;
-    [NonSerialized] public static int[] playerCars = new int[4];
-    [SerializeField] List<GameObject> carPrefabs;
-    
-    void OnEnable()
+    [NonSerialized] public static int[] playerCars = null;
+
+    static GameMaster()
     {
+        playerCars = new int[4];
         for (int i = 0; i < playerCars.Length; i++) playerCars[i] = PlayerPrefs.GetInt($"p{i + 1}Car", 0);
+        Debug.Log(PlayerPrefs.GetInt($"p{1}Car", 0));
     }
+    
 
     public static void Exit()
     {
@@ -32,5 +34,10 @@ public class GameMaster : MonoBehaviour
     {
         hubWorldReturnPoint = point.position;
         hubWorldReturnRotation = point.rotation;
+    }
+
+    public static void SetPlayerCar(int playerIndex, int carIndex) {
+        playerCars[playerIndex - 1] = carIndex;
+        PlayerPrefs.SetInt($"p{playerIndex}Car", carIndex);
     }
 }

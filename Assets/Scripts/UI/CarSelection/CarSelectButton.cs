@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,12 @@ using UnityEngine;
 public class CarSelectButton : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [NonSerialized] public int index;
+    [NonSerialized] public CarSelectMenu menu;
 
-    // Update is called once per frame
-    void Update()
+    public void Select()
     {
-        
+        menu.SetCar(index);
+        print(index);
     }
 }
