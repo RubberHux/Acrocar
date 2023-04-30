@@ -568,7 +568,7 @@ GameObject:
   - component: {fileID: 345318733545692749}
   - component: {fileID: 6458999302308822475}
   m_Layer: 6
-  m_Name: CameraTrackPoint
+  m_Name: CenterOfMass
   m_TagString: CameraTrackPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -582,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345318733545692750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.62, z: 0}
+  m_LocalPosition: {x: 0, y: 0.478, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1430,6 +1430,7 @@ MonoBehaviour:
     motorType: 1
     turnType: 0
   gravCheckDistance: 2
+  centerOfMass: {fileID: 345318733545692749}
   roadCheckers:
   - {fileID: 920915704073020982}
   - {fileID: 3495362187277647123}
@@ -1473,6 +1474,7 @@ MonoBehaviour:
   gunTip: {fileID: 345318731888106411}
   player: {fileID: 8671686526439328773}
   maxGrappleDistance: 30
+  hookParts: []
   aimLeniencyPreTime: 0.2
   aimLeniencyPostTime: 0.1
   grappleBoostTime: 1

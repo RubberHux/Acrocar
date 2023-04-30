@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class GrapplingGun : MonoBehaviour
     public LayerMask notCarLayers;
     public Transform gunTip, player;
     public float maxGrappleDistance;
+    public List<GameObject> hookParts;
     private SpringJoint joint;
     private CarController carController;
     private float aimPreTimer = -1, aimPostTimer = -1, grappleBoostTimer = 0;
@@ -69,7 +71,6 @@ public class GrapplingGun : MonoBehaviour
 
     private void LateUpdate()
     {
-
         DrawRope();
     }
 
@@ -95,7 +96,7 @@ public class GrapplingGun : MonoBehaviour
             joint.autoConfigureConnectedAnchor = false;
             joint.connectedAnchor = grapplePoint;
             joint.connectedBody = grappledRigidBody;
-
+            hookParts.ForEach(part => part.SetActive(false));
             joint.anchor = gunTip.localPosition;
 
             joint.maxDistance = distanceFromPoint * maxJointDist;
@@ -167,9 +168,11 @@ public class GrapplingGun : MonoBehaviour
                 grapplePoint = hit.point;
             }
             float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
-            if (distanceFromPoint < maxGrappleDistance * 0.8f) lr.startColor = lr.endColor = Color.yellow;
-            else if (distanceFromPoint < maxGrappleDistance * 0.9f) lr.startColor = lr.endColor = new Color(1, 0.5f, 0);
-            else lr.startColor = lr.endColor = Color.red;
+            Color lrColor = Color.yellow;
+            if (distanceFromPoint > maxGrappleDistance * 0.9f) lrColor = Color.red; 
+            else if (distanceFromPoint > maxGrappleDistance * 0.8f) lrColor = new Color(1, 0.5f, 0);
+            lrColor.a = 0.5f;
+            lr.startColor = lr.endColor = lrColor;
             aiming = true;
             lr.positionCount = 2;
             aimPostTimer = aimLeniencyPostTime;
@@ -200,6 +203,7 @@ public class GrapplingGun : MonoBehaviour
         lr.positionCount = 0;
         Destroy(joint);
         grappledRigidBody = null;
+        hookParts.ForEach(part => part.SetActive(true));
     }
 
     public void ChangeLength(float direction)
