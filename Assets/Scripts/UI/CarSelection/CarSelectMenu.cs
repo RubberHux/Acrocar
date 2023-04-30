@@ -10,6 +10,7 @@ public class CarSelectMenu : MonoBehaviour
     [SerializeField] GameObject buttonPrefab, carKeeperPrefab;
     List<GameObject> carButtons;
     [SerializeField] int playerIndex;
+    [SerializeField] CustomiseCar car;
 
     void Start()
     {
@@ -33,6 +34,6 @@ public class CarSelectMenu : MonoBehaviour
     public void SetCar(int index)
     {
         GameMaster.SetPlayerCar(playerIndex, index);
-        FindObjectOfType<CustomiseCar>().InstantiateCar(index);
+        car.InstantiateCar(index);
     }
 }

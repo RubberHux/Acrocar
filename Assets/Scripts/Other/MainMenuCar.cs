@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class CustomiseCar : MonoBehaviour
+public class MainMenuCar : MonoBehaviour
 {
     [SerializeField] private int playerIndex;
     [SerializeField] GameObject carKeeperPrefab;
@@ -23,15 +22,11 @@ public class CustomiseCar : MonoBehaviour
         if (carInstance != null) Destroy(carInstance);
         GameObject currentCar = carKeeper.cars[carIndex].prefab;
         carInstance = Instantiate(currentCar);
+        carInstance.transform.localScale = transform.localScale;
         colorChangers = carInstance.GetComponentsInChildren<ColorChanger>().ToList();
         carInstance.GetComponent<CarController>().enabled = false;
         carInstance.GetComponent<GrapplingGun>().enabled = false;
         carInstance.transform.SetPositionAndRotation(transform.position, transform.rotation);
-    }
-
-    public void ChangeMainColor(Color color)
-    {
-        GameMaster.playerCarMainColours[playerIndex] = color;
         colorChangers.ForEach(x => x.UpdateColours(playerIndex));
     }
 }
