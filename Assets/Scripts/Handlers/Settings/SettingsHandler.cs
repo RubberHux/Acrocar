@@ -3,20 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using static UIController;
 
 public class SettingsHandler : MonoBehaviour
 {
-    public static bool easyAim;
-    private static bool easyAimNew;
+    public static bool easyAim, mpCollisions;
+    private static bool easyAimNew, mpCollisionsNew;
     [SerializeField] private GameObject backDoubleCheck;
     private GameObject lastSelected;
-    [SerializeField] private Toggle easyAimToggle;
+    [SerializeField] private Toggle easyAimToggle, mpCollisionToggle;
     [SerializeField] private Button SaveButton;
-    public UIController uiController;
+    private UIController uiController;
     private GameState lastState;
+    private InputAction back;
 
 
     private void Awake()
@@ -24,31 +26,47 @@ public class SettingsHandler : MonoBehaviour
         easyAim = PlayerPrefs.GetInt("easyAim", 0) == 1;
         easyAimNew = easyAim;
         easyAimToggle.isOn = easyAim;
+        mpCollisions = PlayerPrefs.GetInt("mpCollisions", 0) == 1;
+        mpCollisionsNew = mpCollisions;
+        mpCollisionToggle.isOn = mpCollisions;
         gameObject.SetActive(false);
     }
 
     private void OnEnable()
     {
+        uiController = GetComponentInParent<UIController>();
         lastSelected = EventSystem.current.currentSelectedGameObject;
         EventSystem.current.SetSelectedGameObject(easyAimToggle.gameObject);
         lastState = uiController.gameState;
         uiController.SetState(GameState.Settings);
         setInteractive(true);
+        back = InputHandler.playerInput.LevelInteraction.Pause;
+        back.Enable();
+        back.performed += goBack;
+    }
+
+    private void OnDisable()
+    {
+        if (back != null) back.performed -= goBack;
     }
 
     public void Save()
     {
         easyAim = easyAimNew;
+        mpCollisions = mpCollisionsNew;
         PlayerPrefs.SetInt("easyAim", easyAim ? 1 : 0);
+        PlayerPrefs.SetInt("mpCollisions", mpCollisions ? 1 : 0);
         Exit();
     }
+
+    void goBack(InputAction.CallbackContext context) { Back(); }
 
     public void Back()
     {
         if (!CheckSame())
         {
-            backDoubleCheck.SetActive(true);
             setInteractive(false);
+            backDoubleCheck.SetActive(true);
         }
         else
         {
@@ -60,12 +78,15 @@ public class SettingsHandler : MonoBehaviour
     {
         easyAimNew = easyAim;
         easyAimToggle.isOn = easyAim;
+        mpCollisionsNew = mpCollisions;
+        mpCollisionToggle.isOn = mpCollisions;
     }
 
     public bool CheckSame()
     {
         bool allSame = true;
         if (easyAim != easyAimNew) allSame = false;
+        if (mpCollisions != mpCollisionsNew) allSame = false;
         SaveButton.interactable = !allSame;
         return allSame;
     }
@@ -81,6 +102,12 @@ public class SettingsHandler : MonoBehaviour
     public void SetEasyAim(bool easyAimValue)
     {
         easyAimNew = easyAimValue;
+        CheckSame();
+    }
+
+    public void SetMultiplayerCollisions(bool doCollide)
+    {
+        mpCollisionsNew = doCollide;
         CheckSame();
     }
 

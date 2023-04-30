@@ -32,6 +32,7 @@ public class GrapplingGun : MonoBehaviour
     void Awake()
     {
         lr = GetComponent<LineRenderer>();
+        lr.positionCount= 0;
         carController = GetComponent<CarController>();
     }
 

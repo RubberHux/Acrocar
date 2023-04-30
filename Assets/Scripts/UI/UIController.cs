@@ -1,24 +1,34 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenu, winMenu, mainMenuButtons;
-    [SerializeField] private GameObject pauseDefualtButton, winDefualtButton, settingsDefualtButton, mainMenuDefualtButton;
-    [SerializeField] private TextMeshProUGUI[] uiTimeText;
-    [SerializeField] private SettingsHandler settingsHandler;
+    [SerializeField] SceneType sceneType;
+    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, mainMenu, customisationMenu;
+    private GameObject pauseMenuInstance, addPlayerMenuInstance;
+    [NonSerialized] public GameObject settingsInstance;
+    private List<TextMeshProUGUI> uiTimeText = new List<TextMeshProUGUI>();
+    Transform follow = null;
     private EventSystem eventSystem;
     private double time;
     private InputAction pause, uiNavigate;
     private GameObject lastObject;
+    public enum SceneType
+    {
+        MainMenu,
+        HubWorld,
+        Level,
+        CarCustomization
+    }
     public enum GameState
     {
         MainMenu,
@@ -26,14 +36,20 @@ public class UIController : MonoBehaviour
         Paused,
         Settings,
         Win,
+        CarCustomization
     }
     public GameState gameState { get; private set; }
+    bool vrCamTryGet = false;
 
     public void SetState(GameState newState)
     {
-        if (gameState == GameState.MainMenu)
+        if (gameState == GameState.MainMenu && newState != GameState.MainMenu)
         {
-            foreach (Button button in mainMenuButtons.GetComponentsInChildren<Button>()) button.interactable = false;
+            foreach (Button button in GetComponentInChildren<MainMenu>().gameObject.GetComponentsInChildren<Button>())
+            {
+                print(button);
+                button.interactable = false;
+            }
         }
         gameState = newState;
     }
@@ -51,11 +67,37 @@ public class UIController : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex == 0) gameState = GameState.MainMenu;
         else gameState = GameState.Playing;
+
+        if (sceneType == SceneType.HubWorld || sceneType == SceneType.Level)
+        {
+            pauseMenuInstance = Instantiate(pauseMenu, transform);
+            if (sceneType == SceneType.HubWorld) pauseMenuInstance.GetComponentInChildren<HubWorldButton>().gameObject.SetActive(false);
+            Instantiate(gameUI, transform).GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(text => { if (text.gameObject.CompareTag("TimeText")) uiTimeText.Append(text); });
+        }
+        else if (sceneType == SceneType.MainMenu) Instantiate(mainMenu, transform);
+        settingsInstance = Instantiate(settingsMenu, transform);
+
+        if (GameMaster.vr && Camera.main != null)
+        {
+            SetVRMode();
+        }
+        else if (GameMaster.vr) vrCamTryGet = true;
     }
 
     private void OnDisable()
     {
         pause.performed -= PerformPause;
+        uiNavigate.performed -= UINavFix;
+    }
+
+    void SetVRMode()
+    {
+        Canvas canvas = GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace;
+        canvas.worldCamera = Camera.current;
+        follow = Camera.main.transform;
+        canvas.transform.localScale = new Vector3(0.003709593f, 0.003709593f, 0.003709593f);
+        vrCamTryGet = false;
     }
 
     private void PerformPause(InputAction.CallbackContext context)
@@ -67,7 +109,8 @@ public class UIController : MonoBehaviour
     {
         if (eventSystem.currentSelectedGameObject == null)
         {
-            //eventSystem.SetSelectedGameObject(lastObject);
+            if (lastObject != null) eventSystem.SetSelectedGameObject(lastObject);
+            else if (gameState != GameState.Playing && GetComponentInChildren<Button>() != null) eventSystem.SetSelectedGameObject(GetComponentInChildren<Button>().gameObject);
         }
     }
 
@@ -77,17 +120,13 @@ public class UIController : MonoBehaviour
         {
             gameState = GameState.Paused;
             Time.timeScale = 0.0f;
-            pauseMenu.SetActive(true);
+            pauseMenuInstance.SetActive(true);
         }
         else if (gameState == GameState.Paused)
         {
             gameState = GameState.Playing;
             Time.timeScale = 1.0f;
-            pauseMenu.SetActive(false);
-        }
-        else if (gameState == GameState.Settings)
-        {
-            settingsHandler.Back();
+            pauseMenuInstance.SetActive(false);
         }
     }
 
@@ -95,36 +134,48 @@ public class UIController : MonoBehaviour
     {
         if (state == GameState.Paused)
         {
-            pauseMenu.SetActive(true);
+            pauseMenuInstance.SetActive(true);
             SetState(GameState.Paused);
         }
         if (state == GameState.MainMenu)
         {
-            foreach(Button button in mainMenuButtons.GetComponentsInChildren<Button>()) button.interactable = true;
+            foreach (Button button in GetComponentInChildren<MainMenu>().gameObject.GetComponentsInChildren<Button>()) button.interactable = true;
             SetState(GameState.MainMenu);
         }
         if (lastSelected != null) eventSystem.SetSelectedGameObject(lastSelected);
+    }
+
+    public void OpenAddPlayers()
+    {
+        if (addPlayerMenuInstance == null) addPlayerMenuInstance = Instantiate(addPlayerMenu, transform);
+        addPlayerMenuInstance.SetActive(true);
     }
 
     public void SetWin()
     {
         gameState = GameState.Win;
         Time.timeScale = 0.0f;
-        winMenu.SetActive(true);
+        GameObject winInstance = Instantiate(winMenu, transform);
+        winInstance.GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(x => x.text = x.gameObject.CompareTag("TimeText") ? String.Format("{0:0.00}", time) + "s" : x.text);
     }
 
     private void Update()
     {
+        if (vrCamTryGet && Camera.main != null) SetVRMode();
         if (eventSystem.currentSelectedGameObject != null) lastObject = eventSystem.currentSelectedGameObject;
         if (gameState == GameState.Playing)
         {
             time += Time.deltaTime;
             string timeString = String.Format("{0:0.00}", time) + "s";
-            for (int i = 0; i < uiTimeText.Length; i++)
+            //for (int i = 0; i < uiTimeText.Length; i++)
             {
-                uiTimeText[i].text = timeString;
+                //uiTimeText[i].text = timeString;
             }
         }
-        
+        if (follow != null && !mainMenu)
+        {
+            transform.position = follow.position + transform.forward * 4;
+            transform.rotation = follow.rotation;
+        }
     }
 }
