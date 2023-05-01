@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class MovingPlatform : MonoBehaviour
 {
    public float speed = 2.5f;
+   [Range(0.01f, 0.5f)] public float fadePercent = 0.1f;
+   public AnimationCurve speedFadeCurve;
    
    // Icon used in editor
    private enum IconColor
@@ -20,11 +23,29 @@ public class MovingPlatform : MonoBehaviour
       Red,
       Purple
    }
-   
+
+   public enum MovementTypes
+   {
+      ConstantVelocity,
+      Smooth
+   }
+
    private LinkedList<Vector3> _wayPoints;
    private LinkedListNode<Vector3> _targetPoint;
-   private bool _inversed;
+   private LinkedListNode<Vector3> _prevPoint;
+   private float _disBetweenPoints;
 
+   private Rigidbody _body;
+   private Vector3 _velocity;
+
+   private bool _inversed;
+   private bool _playerEntered;
+
+   public Vector3 GetVelocity()
+   {
+      return _velocity;
+   }
+   
    private void Reset()
    {
       ClearAllWayPoints();
@@ -38,6 +59,10 @@ public class MovingPlatform : MonoBehaviour
          Vector3 curPoint = transform.GetChild(i).position;
          Vector3 nextPoint = transform.GetChild(i + 1).position;
          Gizmos.DrawLine(curPoint, nextPoint);
+      }
+      if (Application.isPlaying)
+      {
+         Debug.DrawLine(transform.position, transform.position + _velocity * 5f, Color.red);
       }
    }
    
@@ -82,16 +107,39 @@ public class MovingPlatform : MonoBehaviour
    {
       _wayPoints?.Clear();
       _wayPoints = new LinkedList<Vector3>();
-      for (int i = transform.childCount; i > 0; --i)
+      for (int i = transform.childCount-1; i > 0; --i)
       {
-         var pointPos = transform.GetChild(0).position;
-         DestroyImmediate(transform.GetChild(0).gameObject);
+         if (transform.GetChild(i).name == "[Mesh]")
+         {
+            continue;
+         }
+         var pointPos = transform.GetChild(i).position;
+         transform.GetChild(i).gameObject.SetActive(false);
          _wayPoints.AddLast(pointPos);
       }
-      _targetPoint = _wayPoints.First;
+      
+      _body = GetComponent<Rigidbody>();
+      _prevPoint = _wayPoints.First;
+      _targetPoint = _prevPoint.Next;
+      _velocity = (_targetPoint.Value - _body.transform.position).normalized * speed;
+      _disBetweenPoints = Vector3.Distance(_targetPoint.Value, _prevPoint.Value);
+      _body.velocity = _velocity;
+   }
+   
+   private void OnTriggerEnter(Collider other)
+   {
+      if (_playerEntered)
+      {
+         return;
+      }
+      if (other.gameObject.CompareTag("Player"))
+      {
+         _playerEntered = true;
+         other.transform.SetParent(transform);
+      }
    }
 
-   private void OnTriggerEnter(Collider other)
+   private void OnTriggerStay(Collider other)
    {
       if (other.gameObject.CompareTag("Player"))
       {
@@ -99,7 +147,7 @@ public class MovingPlatform : MonoBehaviour
       }
    }
 
-   private void OnCollisionExit(Collision other)
+   private void OnTriggerExit(Collider other)
    {
       if (other.gameObject.CompareTag("Player"))
       {
@@ -109,13 +157,24 @@ public class MovingPlatform : MonoBehaviour
 
    private void FixedUpdate()
    {
-      if (_targetPoint.Value == transform.position)
+      float distanceToTarget = Vector3.Distance(transform.position, _targetPoint.Value);
+      float distanceFromPrev = Vector3.Distance(transform.position, _prevPoint.Value);
+      
+      if (distanceToTarget <= 0.1f) // == transform.position)
       {
+         Debug.Log("Update Target");
          UpdateTargetPoint();
       }
+      
+      // float stopSpeedFade = Mathf.InverseLerp(0.0f, fadePercent * _disBetweenPoints, distanceToTarget);
+      // float startSpeedFade = Mathf.InverseLerp(0.0f, fadePercent * _disBetweenPoints, distanceFromPrev);
+      //float magnitude = Mathf.Min(stopSpeedFade, startSpeedFade) * speed;
 
-      var step = speed * Time.fixedDeltaTime;
-      transform.position = Vector3.MoveTowards(transform.position, _targetPoint.Value, step);
+      float fadeFactor = Mathf.InverseLerp(0, _disBetweenPoints, distanceFromPrev);
+      Debug.Log(fadeFactor);
+      float speedFactor = speedFadeCurve.Evaluate(fadeFactor);
+      
+      _body.velocity = _velocity.normalized * speed * speedFactor;
    }
 
    private void UpdateTargetPoint()
@@ -129,7 +188,14 @@ public class MovingPlatform : MonoBehaviour
       {
          _inversed = false;
       }
-
+      
+      Vector3 preTarget = _targetPoint.Value;
       _targetPoint = _inversed ? _targetPoint.Previous : _targetPoint.Next;
+      _prevPoint = _inversed ? _targetPoint.Next : _targetPoint.Previous;
+      
+      if (_targetPoint != null) _velocity = (_targetPoint.Value - preTarget).normalized * speed;
+      _body.velocity = _velocity;
+
+      _disBetweenPoints = Vector3.Distance(_targetPoint.Value,preTarget);
    }
 }
