@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -41,6 +42,7 @@ public class CarController : MonoBehaviour
     [NonSerialized] public int groundedWheels = 0;
     [NonSerialized] public bool grappling;
     public float gravCheckDistance;
+    [SerializeField] Transform centerOfMass;
     [NonSerialized] public float respawnTimer = 0;
     [NonSerialized] public bool respawned = false;
     [NonSerialized] public CheckPoint lastCheckPoint = null;
@@ -48,14 +50,15 @@ public class CarController : MonoBehaviour
     CineMachine3DController camController;
     private float currentBreakForce;
     private float currentSteerAngle;
-    public int playerNumber = 0;
+    public int playerIndex = 0;
     public bool isAlone = true;
     bool breaking, rotateMod;
     internal InputAction dimensionSwitch;
     public int swingForce; // the force with which to swing when grappled
     public int grappleBoostForce;
     public int jumpForce;
-    internal Vector3 startpoint;
+    [NonSerialized] public Vector3 startpoint;
+    [NonSerialized] public Quaternion startRot;
     internal GrapplingGun grapplingGun;
     internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
@@ -87,11 +90,16 @@ public class CarController : MonoBehaviour
 
     void OnEnable()
     {
+        rigidBody = GetComponent<Rigidbody>();
+        if (centerOfMass != null) rigidBody.centerOfMass = centerOfMass.position;
+        GetComponentsInChildren<ColorChanger>().ToList().ForEach(x => x.UpdateColours(playerIndex));
+
         firstPerson = false;
         stationaryTolerance = 0.001f;
         playerInput = GetComponent<PlayerInput>();
-        rigidBody = GetComponent<Rigidbody>();
+        
         startpoint = transform.localPosition;
+        startRot = transform.localRotation;
         SetConstraints();
         dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
         dimensionSwitch.Enable();
@@ -116,7 +124,7 @@ public class CarController : MonoBehaviour
 
     public void SetCam(GameObject cameras, int playNum)
     {
-        playerNumber = playNum;
+        playerIndex = playNum;
         mainCamera = cameras.GetComponentInChildren<Camera>();
         camController = cameras.GetComponentInChildren<CineMachine3DController>();
     }
@@ -420,14 +428,16 @@ public class CarController : MonoBehaviour
     internal void Respawn()
     {
         if (Time.timeScale == 0.0f) return;
-        if (lastCheckPoint == null) rigidBody.MovePosition(startpoint);
+        if (lastCheckPoint == null)
+        {
+            rigidBody.MovePosition(startpoint);
+            rigidBody.MoveRotation(startRot);
+        }
         else
         {
-            Vector3 checkpointPosition = lastCheckPoint.gameObject.transform.position;
-            rigidBody.MovePosition(new Vector3(checkpointPosition.x, checkpointPosition.y, checkpointPosition.z));
+            rigidBody.MovePosition(lastCheckPoint.gameObject.transform.position);
+            rigidBody.MoveRotation(lastCheckPoint.gameObject.transform.rotation);
         }
-
-        rigidBody.MoveRotation(new Quaternion(0, 0, 0, 0).normalized);
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;
         foreach (AxleInfo aInfo in axleInfos)
