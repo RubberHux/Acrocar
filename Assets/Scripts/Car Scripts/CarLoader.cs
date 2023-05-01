@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.XR.CoreUtils;
+using System.Linq;
 
 public class CarLoader : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class CarLoader : MonoBehaviour
     [SerializeField] GameObject cameras;
     [SerializeField] GameObject carKeeperPrefab;
     public bool is2D;
-    int Playercount;
+    int playerCount;
     bool created;
     public LayerMask[] camLayers;
     private void Start()
@@ -17,12 +18,12 @@ public class CarLoader : MonoBehaviour
         Physics.IgnoreLayerCollision(6, 6, true);
         if (!created)
         {
-            Playercount = GameMaster.playerCount;
-            for (int i = 0; i < Playercount; i++)
+            playerCount = GameMaster.playerCount;
+            for (int i = 0; i < playerCount; i++)
             {
                 PlayerInput playerInput;
                 GameObject currentCar = carKeeper.cars[GameMaster.playerCars[i]].prefab;
-                if (Playercount == 1) playerInput = PlayerInput.Instantiate(currentCar);
+                if (playerCount == 1) playerInput = PlayerInput.Instantiate(currentCar);
                 else
                 {
                     if (GameMaster.devices[i].deviceId == 1) playerInput = PlayerInput.Instantiate(currentCar, controlScheme: "Keyboard&Mouse");
@@ -32,7 +33,9 @@ public class CarLoader : MonoBehaviour
                 carInstance.name = $"Player {i+1}";
                 CarController carController = carInstance.GetComponent<CarController>();
                 carController.is2D = is2D;
-                carController.isAlone = Playercount >= 1;
+                carController.isAlone = playerCount >= 1;
+                carController.playerIndex = i;
+                carInstance.GetComponentsInChildren<ColorChanger>().ToList().ForEach(x => x.UpdateColours(i));
 
                 LevelMetaData lmd = FindObjectOfType<LevelMetaData>();
                 if (lmd != null && lmd.stageType == LevelMetaData.StageType.HubWorld && GameMaster.hubWorldReturnPoint != null)
@@ -66,11 +69,11 @@ public class CarLoader : MonoBehaviour
         {
             if (!camera.gameObject.CompareTag("XRCam"))
             {
-                if (Playercount == 2)
+                if (playerCount == 2)
                 {
-                    camera.rect = new Rect((playerNumber == 0 ? 0 : 0.5f), 0, 0.5f, 1);
+                    camera.rect = new Rect(0, (playerNumber == 0 ? 0.5f : 0), 1, 0.5f);
                 }
-                if (Playercount > 2 && Playercount <= 4)
+                if (playerCount > 2 && playerCount <= 4)
                 {
                     if (playerNumber == 0)
                     {

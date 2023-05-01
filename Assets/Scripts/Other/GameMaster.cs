@@ -18,6 +18,7 @@ public class GameMaster : MonoBehaviour
     [NonSerialized] public static int[] playerCars = null;
     [NonSerialized] public static Color[] playerCarMainColours = null;
     [NonSerialized] public const int maxPlayerCount = 4;
+    [NonSerialized] public static int vrPlayerIndex = 0;
     
 
     static GameMaster()
@@ -69,7 +70,6 @@ public class GameMaster : MonoBehaviour
         {
             playerCarMainColours[playerIndex] = color;
             PlayerPrefs.SetString($"p{playerIndex + 1}CarColorMain", $"{color.r},{color.g},{color.b},{color.a}");
-            print(playerIndex + 1);
         }
     }
 }

@@ -90,7 +90,6 @@ public class CarController : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         if (centerOfMass != null) rigidBody.centerOfMass = centerOfMass.position;
-        GetComponentsInChildren<ColorChanger>().ToList().ForEach(x => x.UpdateColours(playerIndex));
 
         firstPerson = false;
         stationaryTolerance = 0.001f;
@@ -234,13 +233,13 @@ public class CarController : MonoBehaviour
     public void ChangeCam(InputAction.CallbackContext context)
     {
         //Allows PlayerInput to change the camera
-        if (context.phase == InputActionPhase.Started) camController.SwitchCam();
+        if (context.phase == InputActionPhase.Started && camController != null) camController.SwitchCam();
     }
 
     public void Zoom(InputAction.CallbackContext context)
     {
         //Allows PlayerInput to zoom
-        if (is2D) camController.Zoom(context.ReadValue<Vector2>().y);
+        if (is2D && camController != null) camController.Zoom(context.ReadValue<Vector2>().y);
     }
 
     void SetActionMap()

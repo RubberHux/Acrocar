@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 public class ColorChangeMenu : MonoBehaviour
 {
     [SerializeField] Slider sliderRed, sliderGreen, sliderBlue;
-    [SerializeField] int playerIndex;
     private Color color = Color.red;
     [SerializeField] CustomiseCar car;
+    [SerializeField] private GameObject defaultSelect;
+    [SerializeField] MultiplayerEventSystem eventSystem;
+
+    private void OnEnable()
+    {
+        eventSystem.SetSelectedGameObject(defaultSelect);
+    }
 
     void Start()
     {
-        color = GameMaster.playerCarMainColours[playerIndex];
+        color = GameMaster.playerCarMainColours[GetComponentInParent<Customizer9001>().playerIndex];
         if (color == null) return;
         float r = color.r;
         if (sliderRed != null) sliderRed.value = r;
@@ -44,6 +51,6 @@ public class ColorChangeMenu : MonoBehaviour
 
     public void SetColour()
     {
-        GameMaster.SetPlayerCarMainColor(playerIndex, color);
+        GameMaster.SetPlayerCarMainColor(GetComponentInParent<Customizer9001>().playerIndex, color);
     }
 }

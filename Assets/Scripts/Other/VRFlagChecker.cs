@@ -13,13 +13,29 @@ public class VRFlagChecker : MonoBehaviour
         StartCoroutine(StartXRCoroutine());
     }
 
+    private static bool GetArg(string name)
+    {
+        var args = System.Environment.GetCommandLineArgs();
+        for (int i = 0; i < args.Length; i++)
+        {
+            //bug.Log($"Arg {i}: {args[i]}");
+            if (args[i] == name)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // From unity docs
     // https://docs.unity3d.com/Packages/com.unity.xr.management@4.0/manual/EndUser.html
     public IEnumerator StartXRCoroutine()
     {
+        var enableVRArg = "--enable-vr";
+
         // Only run the code block when we want VR
         Debug.Log("Looking if VR should enable");
-        if (System.Environment.GetCommandLineArgs().Contains("--enable-vr"))
+        if (GetArg(enableVRArg))
         {
             Debug.Log("Initializing XR...");
             yield return XRGeneralSettings.Instance.Manager.InitializeLoader();
@@ -31,8 +47,8 @@ public class VRFlagChecker : MonoBehaviour
             else
             {
                 Debug.Log("Starting XR...");
-                XRGeneralSettings.Instance.Manager.StartSubsystems();
                 GameMaster.vr = true;
+                XRGeneralSettings.Instance.Manager.StartSubsystems();
             }
         }
         else

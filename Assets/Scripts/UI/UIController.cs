@@ -13,7 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 public class UIController : MonoBehaviour
 {
     [SerializeField] SceneType sceneType;
-    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, mainMenu, customisationMenu;
+    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, mainMenu;
     private GameObject pauseMenuInstance, addPlayerMenuInstance;
     [NonSerialized] public GameObject settingsInstance;
     private List<TextMeshProUGUI> uiTimeText = new List<TextMeshProUGUI>();
@@ -172,7 +172,7 @@ public class UIController : MonoBehaviour
                 //uiTimeText[i].text = timeString;
             }
         }
-        if (follow != null && !mainMenu)
+        if (follow != null)
         {
             transform.position = follow.position + transform.forward * 4;
             transform.rotation = follow.rotation;
