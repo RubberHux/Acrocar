@@ -1,16 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader instance;
-    public SceneAsset mainMenu, hubWorld;
+    private int mainMenu = 0, hubWorld = 1;
 
     // Singleton 
     private void Awake()
@@ -32,22 +27,16 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
-    public void LoadSceneByAsset(SceneAsset scene)
-    {
-        Time.timeScale = 1.0f;
-        SceneManager.LoadScene(scene.name);
-    }
-
     public void LoadMainMenu() 
     {
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene(mainMenu.name);
+        SceneManager.LoadScene(mainMenu);
         GameMaster.hubWorldReturnPoint = null;
     }
 
     public void LoadHubWorld() { 
         Time.timeScale = 1.0f; 
-        SceneManager.LoadScene(hubWorld.name); 
+        SceneManager.LoadScene(hubWorld); 
     }
 
     public void Reload()

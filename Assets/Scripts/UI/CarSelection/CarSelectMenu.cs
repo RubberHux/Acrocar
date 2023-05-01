@@ -3,21 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 public class CarSelectMenu : MonoBehaviour
 {
     [SerializeField] GameObject buttonPrefab, carKeeperPrefab;
-    List<GameObject> carButtons;
-    [SerializeField] int playerIndex;
-    [SerializeField] CustomiseCar car;
+    GameObject[] carButtons;
 
-    void Start()
+    [SerializeField] CustomiseCar car;
+    [SerializeField] MultiplayerEventSystem eventSystem;
+
+    void Awake()
     {
         if (carButtons != null) return;
-        carButtons = new List<GameObject>();
+        Car[] cars = carKeeperPrefab.GetComponent<CarKeeper>().cars;
+        carButtons = new GameObject[cars.Length];
         int index = 0;
-        foreach (Car car in carKeeperPrefab.GetComponent<CarKeeper>().cars)
+        foreach (Car car in cars)
         {
             GameObject button = Instantiate(buttonPrefab, transform);
             Texture2D texture = car.thumbnail;
@@ -26,14 +30,20 @@ public class CarSelectMenu : MonoBehaviour
             buttonScript.menu = this;
             buttonScript.index = index;
             button.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            carButtons.Append(button);
+            carButtons[index] = button;
+            if (index == 0) eventSystem.SetSelectedGameObject(button);
             index++;
         }
     }
 
+    private void OnEnable()
+    {
+        if (carButtons != null) eventSystem.SetSelectedGameObject(carButtons[0]);
+    }
+
     public void SetCar(int index)
     {
-        GameMaster.SetPlayerCar(playerIndex, index);
+        GameMaster.SetPlayerCar(GetComponentInParent<Customizer9001>().playerIndex, index);
         car.InstantiateCar(index);
     }
 }

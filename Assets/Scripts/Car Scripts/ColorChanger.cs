@@ -24,7 +24,6 @@ public class ColorChanger : MonoBehaviour
     {
         MeshRenderer mr = GetComponent<MeshRenderer>();
         foreach (colorKeeper color in colors) {
-            
             if (color.type == colorKeeper.ColorType.main) mr.materials[color.index].color = GameMaster.playerCarMainColours[playerIndex];
         }
     }
