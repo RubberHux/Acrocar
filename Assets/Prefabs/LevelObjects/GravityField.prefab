@@ -110,6 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506591346392102498856fb5cd73cdc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {fileID: 0}
+  direction: {fileID: 6228951401039902127}
   power: 1
   scaleByWorldGravity: 1

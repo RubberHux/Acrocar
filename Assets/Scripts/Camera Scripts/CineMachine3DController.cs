@@ -114,7 +114,6 @@ public class CineMachine3DController : MonoBehaviour
     }
     public void Zoom(float val)
     {
-        Debug.Log("hello???");
         var offset = sideCam2D.GetCinemachineComponent<CinemachineTransposer>();
         float x = offset.m_FollowOffset.x - val * zoomSpeed;
         offset.m_FollowOffset.x = (x > maxZoom ? maxZoom : (x < minZoom ? minZoom : x));

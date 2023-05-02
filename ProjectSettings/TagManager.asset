@@ -15,6 +15,9 @@ TagManager:
   - XRCam
   - EditorVisual
   - TimeText
+  - Block
+  - GrappleSurface
+  - Lava
   layers:
   - Default
   - TransparentFX

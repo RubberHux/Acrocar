@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class LevelEditor : MonoBehaviour
@@ -16,16 +17,20 @@ public class LevelEditor : MonoBehaviour
     public Material breakableMaterial; // material for breakable stuff
     public TMP_Text addText; // text showing which object to add
     public TMP_Dropdown editorModes; // modes for the editor
+    public GameObject propertiesWindow; // window for object properties
+    public TMP_Text playButton; // button for toggling play/edit mode
 
     private GameObject currObject; // current object selected
     private GameObject copiedObject; // object currently copied
     private GameObject spawnedCarLoader; // actual car loader spawned when playtesting
     private bool interacting; // is current object being interacted with?
     private Vector3 clickPoint; // point on object where it was clicked
+    private Vector3 mousePos; // current mouse position in the world
     private Vector3 prevMousePos; // previous mouse pos (used for delta calcs)
     private Vector3 moveOffset; // offset between click point and object pos
     private int objectIndex; // current index of objectList
     private bool playing; // playtesting the level?
+    private float lastClickTime;
 
     private enum EditorMode { Move, Scale, Rotate };
     private EditorMode currentMode;
@@ -38,56 +43,88 @@ public class LevelEditor : MonoBehaviour
         editorModes.onValueChanged.AddListener(delegate { ChangeMode(); });
         currentMode = EditorMode.Move;
         carLoader.GetComponent<CarLoader>().is2D = true;
+        propertiesWindow.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.x));
+        Vector3 mouseDelta = mousePos - prevMousePos;
+
         if (!playing)
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.x));
-            //Debug.Log(mousePos);
-            if (!interacting && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)))
+            if (!interacting && Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
+                // try raycasting to see if mouse is clicked over a level object
                 if (Physics.Raycast(ray, out hit, 100))
                 {
-                    Debug.Log(hit.transform.name);
-                    currObject = hit.transform.gameObject;
-                    HighlightObject(true);
+                    currObject = FindRootParent(hit.transform.gameObject);
+                    //HighlightObject(true);
 
                     clickPoint = new Vector3(0, mousePos.y, mousePos.z);
                     moveOffset = clickPoint - currObject.transform.position;
                     interacting = true;
-                }
-                else
-                {
-                    if (currObject) HighlightObject(false);
-                    currObject = null;
 
-                    if (Input.GetMouseButtonDown(1)) CreateObject(objectList[objectIndex], mousePos);
+                    propertiesWindow.SetActive(true);
+                    propertiesWindow.GetComponent<PropertiesWindow>().SetObject(currObject);
+                }
+                // no level object or UI element is clicked on
+                else if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    // set current object to null and hide the property window
+                    //if (currObject) HighlightObject(false);
+                    currObject = null;
+                    propertiesWindow.SetActive(false);
+
+                    // if double click into the void, create new object
+                    if (Time.time - lastClickTime < 0.2f) CreateObject(objectList[objectIndex], mousePos);
+                    lastClickTime = Time.time;
                 }
             }
-            else interacting = false;
 
-            if (currObject)
+            if (Input.GetMouseButtonUp(0) && currObject && interacting) interacting = false;
+
+            // if clicking and holding on object: move, scale or rotate based on current mode
+            if (currObject && interacting)
             {
                 if (Input.GetMouseButton(0))
                 {
-                    Vector3 mouseDelta = mousePos - prevMousePos;
-
                     switch (currentMode)
                     {
+                        // move object
                         case EditorMode.Move:
                             currObject.transform.SetPositionAndRotation(mousePos - moveOffset, currObject.transform.rotation);
                             break;
 
+                        // scale object
                         case EditorMode.Scale:
-                            currObject.transform.localScale += mouseDelta;
+                            // set scale changed based on click position
+                            Vector3 scaleRot = currObject.transform.rotation.eulerAngles;
+                            scaleRot.x *= -1;
+                            Vector3 scaleChange = Quaternion.Euler(scaleRot) * mouseDelta;
+                            Vector3 rotatedOffset = Quaternion.Euler(scaleRot) * moveOffset;
+                            if (rotatedOffset.y < 0) scaleChange.y *= -1;
+                            if (rotatedOffset.z < 0) scaleChange.z *= -1;
+
+                            // make sure scale cannot be too small
+                            Vector3 oldScale = currObject.transform.localScale;
+                            if (oldScale.y + scaleChange.y <= 1) scaleChange.y = 0;
+                            if (oldScale.z + scaleChange.z <= 1) scaleChange.z = 0;
+
+                            // set the new scale
+                            currObject.transform.localScale += scaleChange;
+
+                            // move object based on new scale
+                            Vector3 posChange = currObject.transform.rotation * new Vector3(0, rotatedOffset.y < 0 ? -scaleChange.y / 2 : scaleChange.y / 2, rotatedOffset.z < 0 ? -scaleChange.z / 2 : scaleChange.z / 2);
+                            currObject.transform.SetPositionAndRotation(currObject.transform.position + posChange, currObject.transform.rotation);
+
                             break;
 
+                        // rotate object around its center point
                         case EditorMode.Rotate:
                             Quaternion rot = currObject.transform.rotation;
                             rot.x += mouseDelta.z / 10;
@@ -96,17 +133,28 @@ public class LevelEditor : MonoBehaviour
                     }
 
                 }
-
-                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C)) copiedObject = currObject;
-                if (Input.GetKeyDown(KeyCode.Backspace) && currObject != spawnPoint) Destroy(currObject);
             }
 
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V)) CreateObject(copiedObject, mousePos);
+            // destroy current object with backspace
+            if (Input.GetKeyDown(KeyCode.Backspace) && currObject != spawnPoint)
+            {
+                Destroy(currObject);
+                propertiesWindow.SetActive(false);
+            }
 
-            prevMousePos = mousePos;
+            // copy/paste current object
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C)) copiedObject = currObject;
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V))
+            {
+                GameObject pasted = CreateObject(copiedObject, mousePos);
+                pasted.transform.rotation = copiedObject.transform.rotation;
+            }
 
+            // change to-be-added object via scrolling (will change later)
             objectIndex = (int)Mathf.Clamp(objectIndex + Input.mouseScrollDelta.y, 0, objectList.Count - 1);
             addText.text = "Add object: " + objectList[objectIndex].name;
+
+            prevMousePos = mousePos;
         }
     }
 
@@ -115,12 +163,14 @@ public class LevelEditor : MonoBehaviour
         currentMode = (EditorMode)editorModes.value;
     }
 
-    private void CreateObject(GameObject origObject, Vector3 spawnPos)
+    private GameObject CreateObject(GameObject origObject, Vector3 spawnPos)
     {
         Debug.Log("Creating " + objectList[objectIndex].name);
         GameObject newObject = Instantiate(origObject, spawnPos, Quaternion.identity);
         newObject.name = origObject.name;
         newObject.transform.parent = level.transform;
+
+        return newObject;
     }
 
     private void HighlightObject(bool highlight)
@@ -133,6 +183,7 @@ public class LevelEditor : MonoBehaviour
 
     public void Play()
     {
+        // if not playing, hide all editor UI and spawn a car loader
         if (!playing)
         {
             spawnedCarLoader = Instantiate(carLoader, spawnPoint.transform.position, Quaternion.identity);
@@ -142,9 +193,12 @@ public class LevelEditor : MonoBehaviour
             editorCamera.SetActive(false);
             editorModes.gameObject.SetActive(false);
             addText.gameObject.SetActive(false);
+            propertiesWindow.SetActive(false);
 
+            playButton.text = "Back";
             playing = true;
         }
+        // if playing, destroy car loader with player and camera, then bring back all UI
         else
         {
             Destroy(spawnedCarLoader);
@@ -153,8 +207,21 @@ public class LevelEditor : MonoBehaviour
             editorCamera.SetActive(true);
             editorModes.gameObject.SetActive(true);
             addText.gameObject.SetActive(true);
-
+            
+            currObject = null;
+            playButton.text = "Play";
             playing = false;
         }
+    }
+
+    // find root parent of object (useful when clicking on child object accidentaly)
+    private GameObject FindRootParent(GameObject objToCheck)
+    {
+        while (objToCheck.transform.parent.name != "Level")
+        {
+            objToCheck = objToCheck.transform.parent.gameObject;
+        }
+
+        return objToCheck;
     }
 }

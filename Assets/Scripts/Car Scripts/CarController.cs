@@ -89,7 +89,7 @@ public class CarController : MonoBehaviour
         stationaryTolerance = 0.001f;
         playerInput = GetComponent<PlayerInput>();
         rigidBody = GetComponent<Rigidbody>();
-        startpoint = transform.localPosition;
+        startpoint = transform.position;
         SetConstraints();
         dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
         dimensionSwitch.Enable();
