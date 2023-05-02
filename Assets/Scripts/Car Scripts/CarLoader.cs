@@ -41,7 +41,7 @@ public class CarLoader : MonoBehaviour
                 if (lmd != null && lmd.stageType == LevelMetaData.StageType.HubWorld && GameMaster.hubWorldReturnPoint != null)
                 {
                     carInstance.transform.SetPositionAndRotation((Vector3)GameMaster.hubWorldReturnPoint, GameMaster.hubWorldReturnRotation);
-                    carController.startpoint = (Vector3)GameMaster.hubWorldReturnPoint;
+                    carController.startPoint = (Vector3)GameMaster.hubWorldReturnPoint;
                     carController.startRot = GameMaster.hubWorldReturnRotation;
                 }
                 else carInstance.transform.SetPositionAndRotation(transform.position, transform.rotation);
