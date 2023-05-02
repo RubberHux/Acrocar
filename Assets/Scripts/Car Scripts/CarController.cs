@@ -57,7 +57,7 @@ public class CarController : MonoBehaviour
     public int swingForce; // the force with which to swing when grappled
     public int grappleBoostForce;
     public int jumpForce;
-    [NonSerialized] public Vector3 startpoint;
+    [NonSerialized] public Vector3 startPoint;
     [NonSerialized] public Quaternion startRot;
     internal GrapplingGun grapplingGun;
     internal float stationaryTolerance;
@@ -95,8 +95,6 @@ public class CarController : MonoBehaviour
         stationaryTolerance = 0.001f;
         playerInput = GetComponent<PlayerInput>();
         
-        startpoint = transform.localPosition;
-        startRot = transform.localRotation;
         SetConstraints();
         dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
         dimensionSwitch.Enable();
@@ -107,6 +105,12 @@ public class CarController : MonoBehaviour
             axle.leftOrigin = axle.leftTransform.localPosition;
             axle.rightOrigin = axle.rightTransform.localPosition;
         }
+    }
+
+    private void Start()
+    {
+        startPoint = transform.localPosition;
+        startRot = transform.localRotation;
     }
 
     private void SetConstraints()
@@ -401,7 +405,7 @@ public class CarController : MonoBehaviour
         if (Time.timeScale == 0.0f) return;
         if (lastCheckPoint == null)
         {
-            rigidBody.MovePosition(startpoint);
+            rigidBody.MovePosition(startPoint);
             rigidBody.MoveRotation(startRot);
         }
         else
