@@ -65,8 +65,8 @@ public class SettingsHandler : MonoBehaviour
     {
         if (!CheckSame())
         {
-            backDoubleCheck.SetActive(true);
             setInteractive(false);
+            backDoubleCheck.SetActive(true);
         }
         else
         {
