@@ -16,8 +16,7 @@ TagManager:
   - EditorVisual
   - TimeText
   - Block
-  - GrappleSurface
-  - Lava
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

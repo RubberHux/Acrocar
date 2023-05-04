@@ -10,19 +10,19 @@ public class LevelEditor : MonoBehaviour
     public GameObject spawnPoint; // initial spawner for car
     public GameObject carLoader; // car loader object (prefab)
     public GameObject editorCamera; // camera for level editor (separate from when playing)
-    public List<GameObject> objectList; // list of objects which can be created
+    public ObjectList objectList; // list of objects which can be created
     public Material normalMaterial; // default material to slap on objects
     public Material grappleMaterial; // material for grappleable stuff
     public Material lavaMaterial; // material for lava
     public Material breakableMaterial; // material for breakable stuff
-    public TMP_Text addText; // text showing which object to add
-    public TMP_Dropdown editorModes; // modes for the editor
+    public GameObject editorModes; // modes for the editor
     public GameObject propertiesWindow; // window for object properties
     public TMP_Text playButton; // button for toggling play/edit mode
 
     private GameObject currObject; // current object selected
     private GameObject copiedObject; // object currently copied
     private GameObject spawnedCarLoader; // actual car loader spawned when playtesting
+    private GameObject levelBackup;
     private bool interacting; // is current object being interacted with?
     private Vector3 clickPoint; // point on object where it was clicked
     private Vector3 mousePos; // current mouse position in the world
@@ -40,7 +40,6 @@ public class LevelEditor : MonoBehaviour
         objectIndex = 0;
         interacting = false;
         playing = false;
-        editorModes.onValueChanged.AddListener(delegate { ChangeMode(); });
         currentMode = EditorMode.Move;
         carLoader.GetComponent<CarLoader>().is2D = true;
         propertiesWindow.SetActive(false);
@@ -81,7 +80,7 @@ public class LevelEditor : MonoBehaviour
                     propertiesWindow.SetActive(false);
 
                     // if double click into the void, create new object
-                    if (Time.time - lastClickTime < 0.2f) CreateObject(objectList[objectIndex], mousePos);
+                    if (Time.time - lastClickTime < 0.2f) CreateObject(objectList.GetCurrentObject(), mousePos);
                     lastClickTime = Time.time;
                 }
             }
@@ -102,25 +101,28 @@ public class LevelEditor : MonoBehaviour
 
                         // scale object
                         case EditorMode.Scale:
-                            // set scale changed based on click position
-                            Vector3 scaleRot = currObject.transform.rotation.eulerAngles;
-                            scaleRot.x *= -1;
-                            Vector3 scaleChange = Quaternion.Euler(scaleRot) * mouseDelta;
-                            Vector3 rotatedOffset = Quaternion.Euler(scaleRot) * moveOffset;
-                            if (rotatedOffset.y < 0) scaleChange.y *= -1;
-                            if (rotatedOffset.z < 0) scaleChange.z *= -1;
+                            if (!currObject.CompareTag("SpawnPoint"))
+                            {
+                                // set scale changed based on click position
+                                Vector3 scaleRot = currObject.transform.rotation.eulerAngles;
+                                scaleRot.x *= -1;
+                                Vector3 scaleChange = Quaternion.Euler(scaleRot) * mouseDelta;
+                                Vector3 rotatedOffset = Quaternion.Euler(scaleRot) * moveOffset;
+                                if (rotatedOffset.y < 0) scaleChange.y *= -1;
+                                if (rotatedOffset.z < 0) scaleChange.z *= -1;
 
-                            // make sure scale cannot be too small
-                            Vector3 oldScale = currObject.transform.localScale;
-                            if (oldScale.y + scaleChange.y <= 1) scaleChange.y = 0;
-                            if (oldScale.z + scaleChange.z <= 1) scaleChange.z = 0;
+                                // make sure scale cannot be too small
+                                Vector3 oldScale = currObject.transform.localScale;
+                                if (oldScale.y + scaleChange.y <= 1) scaleChange.y = 0;
+                                if (oldScale.z + scaleChange.z <= 1) scaleChange.z = 0;
 
-                            // set the new scale
-                            currObject.transform.localScale += scaleChange;
+                                // set the new scale
+                                currObject.transform.localScale += scaleChange;
 
-                            // move object based on new scale
-                            Vector3 posChange = currObject.transform.rotation * new Vector3(0, rotatedOffset.y < 0 ? -scaleChange.y / 2 : scaleChange.y / 2, rotatedOffset.z < 0 ? -scaleChange.z / 2 : scaleChange.z / 2);
-                            currObject.transform.SetPositionAndRotation(currObject.transform.position + posChange, currObject.transform.rotation);
+                                // move object based on new scale
+                                Vector3 posChange = currObject.transform.rotation * new Vector3(0, rotatedOffset.y < 0 ? -scaleChange.y / 2 : scaleChange.y / 2, rotatedOffset.z < 0 ? -scaleChange.z / 2 : scaleChange.z / 2);
+                                currObject.transform.SetPositionAndRotation(currObject.transform.position + posChange, currObject.transform.rotation);
+                            }
 
                             break;
 
@@ -135,13 +137,6 @@ public class LevelEditor : MonoBehaviour
                 }
             }
 
-            // destroy current object with backspace
-            if (Input.GetKeyDown(KeyCode.Backspace) && currObject != spawnPoint)
-            {
-                Destroy(currObject);
-                propertiesWindow.SetActive(false);
-            }
-
             // copy/paste current object
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C)) copiedObject = currObject;
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.V))
@@ -151,21 +146,37 @@ public class LevelEditor : MonoBehaviour
             }
 
             // change to-be-added object via scrolling (will change later)
-            objectIndex = (int)Mathf.Clamp(objectIndex + Input.mouseScrollDelta.y, 0, objectList.Count - 1);
-            addText.text = "Add object: " + objectList[objectIndex].name;
+            //objectIndex = (int)Mathf.Clamp(objectIndex + Input.mouseScrollDelta.y, 0, objectList.Count - 1);
+            //addText.text = "Add object: " + objectList[objectIndex].name;
 
             prevMousePos = mousePos;
         }
     }
 
-    private void ChangeMode()
+    public void DeleteObject()
     {
-        currentMode = (EditorMode)editorModes.value;
+        Destroy(currObject);
+        propertiesWindow.SetActive(false);
+    }
+
+    public void SetMoveMode()
+    {
+        currentMode = EditorMode.Move;
+    }
+
+    public void SetScaleMode()
+    {
+        currentMode = EditorMode.Scale;
+    }
+
+    public void SetRotateMode()
+    {
+        currentMode = EditorMode.Rotate;
     }
 
     private GameObject CreateObject(GameObject origObject, Vector3 spawnPos)
     {
-        Debug.Log("Creating " + objectList[objectIndex].name);
+        Debug.Log("Creating " + objectList.GetCurrentObject().name);
         GameObject newObject = Instantiate(origObject, spawnPos, Quaternion.identity);
         newObject.name = origObject.name;
         newObject.transform.parent = level.transform;
@@ -186,14 +197,16 @@ public class LevelEditor : MonoBehaviour
         // if not playing, hide all editor UI and spawn a car loader
         if (!playing)
         {
+            SaveLevel();
+
             spawnedCarLoader = Instantiate(carLoader, spawnPoint.transform.position, Quaternion.identity);
             //Instantiate(carLoader, spawnPoint.transform);
 
             spawnPoint.SetActive(false);
             editorCamera.SetActive(false);
             editorModes.gameObject.SetActive(false);
-            addText.gameObject.SetActive(false);
             propertiesWindow.SetActive(false);
+            objectList.gameObject.SetActive(false);
 
             playButton.text = "Back";
             playing = true;
@@ -201,13 +214,15 @@ public class LevelEditor : MonoBehaviour
         // if playing, destroy car loader with player and camera, then bring back all UI
         else
         {
+            LoadLevel();
+
             Destroy(spawnedCarLoader);
 
             spawnPoint.SetActive(true);
             editorCamera.SetActive(true);
             editorModes.gameObject.SetActive(true);
-            addText.gameObject.SetActive(true);
-            
+            objectList.gameObject.SetActive(true);
+
             currObject = null;
             playButton.text = "Play";
             playing = false;
@@ -223,5 +238,22 @@ public class LevelEditor : MonoBehaviour
         }
 
         return objToCheck;
+    }
+
+    public void SaveLevel()
+    {
+        levelBackup = Instantiate(level);
+        levelBackup.SetActive(false);
+        //string savedLevel = JsonUtility.ToJson(level);
+        //Debug.Log(savedLevel);
+    }
+
+    public void LoadLevel()
+    {
+        levelBackup.SetActive(true);
+        Destroy(level);
+        level = levelBackup;
+        level.name = "Level";
+        spawnPoint = GameObject.Find("Level/SpawnPoint");
     }
 }

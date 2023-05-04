@@ -12,8 +12,8 @@ using static System.Net.Mime.MediaTypeNames;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] bool IsHub, ShowTimer;
-    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu;
+    [SerializeField] bool IsHub, IsEditor, ShowTimer;
+    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, editorWinMenu;
     private GameObject pauseMenuInstance, addPlayerMenuInstance;
     [NonSerialized] public GameObject settingsInstance;
     private List<TextMeshProUGUI> uiTimeText = new List<TextMeshProUGUI>();
@@ -143,7 +143,10 @@ public class UIController : MonoBehaviour
     {
         gameState = GameState.Win;
         Time.timeScale = 0.0f;
-        GameObject winInstance = Instantiate(winMenu, transform);
+
+        GameObject winInstance;
+        if (IsEditor) winInstance = Instantiate(editorWinMenu, transform);
+        else winInstance = Instantiate(winMenu, transform);
         winInstance.GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(x => x.text = x.gameObject.CompareTag("TimeText") ? String.Format("{0:0.00}", time) + "s" : x.text);
     }
 

@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
 public class PropertiesWindow : MonoBehaviour
 {
-    public TMP_Dropdown objectProperty; // properties for an object (normal, grapple, lava, ...)
-    public TMP_InputField rotation; // rotation of object (in euler angle)
-    public TMP_InputField width; // width of object
+    public Toggle moveable, breakable, grappleable, lava;
+    public TMP_InputField rotation, width, height, xPos, yPos; // input fields for position, rotation & dimensions
+    public TMP_Text objectName;
+    public Button deleteButton;
 
     public Material defaultMaterial;
     public Material grappleMaterial;
@@ -16,42 +17,96 @@ public class PropertiesWindow : MonoBehaviour
 
     public UnityEvent propertyEvent;
 
-    private enum Property { Normal, Grapple, Lava };
+    private enum Property { Normal, Grapple, Lava, Moveable };
     private GameObject currObject; // current object to show properties for
-    private bool changingRotation;
-    private bool changingWidth;
+    private bool valueChange; // currently changing value in input field?
 
     // Start is called before the first frame update
     void Start()
     {
-        objectProperty.onValueChanged.AddListener(delegate { SetProperty(); });
-        changingRotation = false;
-        changingWidth = false;
+        valueChange = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!changingRotation) rotation.text = currObject.transform.rotation.eulerAngles.x.ToString();
-        if (!changingWidth) width.text = currObject.transform.localScale.z.ToString();
+        if (!valueChange)
+        {
+            rotation.text = Math.Round(currObject.transform.rotation.eulerAngles.x, 2).ToString();
+            width.text = Math.Round(currObject.transform.localScale.z, 2).ToString();
+            height.text = Math.Round(currObject.transform.localScale.y, 2).ToString();
+            xPos.text = Math.Round(currObject.transform.position.z, 2).ToString();
+            yPos.text = Math.Round(currObject.transform.position.y, 2).ToString();
+        }
     }
 
     public void SetObject(GameObject setObject)
     {
         currObject = setObject;
-
-        Property setProperty;
-        if (currObject.CompareTag("GrappleSurface")) setProperty = Property.Grapple;
-        else if (currObject.CompareTag("Lava")) setProperty = Property.Lava;
-        else setProperty = Property.Normal;
-
-        objectProperty.SetValueWithoutNotify((int)setProperty);
-        rotation.text = currObject.transform.rotation.eulerAngles.x.ToString();
+        objectName.text = currObject.name;
+        SetPropertiesToCurrent();
+        rotation.text = Math.Round(currObject.transform.rotation.eulerAngles.x, 2).ToString();
+        width.text = Math.Round(currObject.transform.localScale.z, 2).ToString();
     }
 
-    public void ToggleRotationSet()
+    private void SetPropertiesToCurrent()
     {
-        changingRotation = !changingRotation;
+        rotation.gameObject.SetActive(true);
+        width.gameObject.SetActive(true);
+        height.gameObject.SetActive(true);
+        deleteButton.gameObject.SetActive(true);
+
+        if (currObject.CompareTag("Block"))
+        {
+            moveable.SetIsOnWithoutNotify(false);
+            breakable.SetIsOnWithoutNotify(false);
+            grappleable.SetIsOnWithoutNotify(false);
+            lava.SetIsOnWithoutNotify(false);
+
+            moveable.gameObject.SetActive(true);
+            breakable.gameObject.SetActive(true);
+            grappleable.gameObject.SetActive(true);
+            lava.gameObject.SetActive(true);
+
+            if (IsLava())
+            {
+                lava.SetIsOnWithoutNotify(true);
+                grappleable.gameObject.SetActive(false);
+                breakable.gameObject.SetActive(false);
+            }
+            else if (IsGrappleable())
+            {
+                grappleable.SetIsOnWithoutNotify(true);
+                lava.gameObject.SetActive(false);
+            }
+
+            if (IsMoveable()) moveable.SetIsOnWithoutNotify(true);
+            if (IsBreakable())
+            {
+                breakable.SetIsOnWithoutNotify(true);
+                lava.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            moveable.gameObject.SetActive(false);
+            breakable.gameObject.SetActive(false);
+            grappleable.gameObject.SetActive(false);
+            lava.gameObject.SetActive(false);
+        }
+
+        if (currObject.CompareTag("SpawnPoint"))
+        {
+            rotation.gameObject.SetActive(false);
+            width.gameObject.SetActive(false);
+            height.gameObject.SetActive(false);
+            deleteButton.gameObject.SetActive(false);
+        }
+    }
+
+    public void ToggleValueChange()
+    {
+        valueChange = !valueChange;
     }
 
     public void SetRotation()
@@ -59,11 +114,6 @@ public class PropertiesWindow : MonoBehaviour
         Vector3 newRotation = currObject.transform.rotation.eulerAngles;
         newRotation.x = int.Parse(rotation.text);
         currObject.transform.SetPositionAndRotation(currObject.transform.position, Quaternion.Euler(newRotation));
-    }
-
-    public void ToggleWidthSet()
-    {
-        changingWidth = !changingWidth;
     }
 
     public void SetWidth()
@@ -78,36 +128,125 @@ public class PropertiesWindow : MonoBehaviour
         currObject.transform.SetPositionAndRotation(currObject.transform.position + posChange, currObject.transform.rotation);
     }
 
-    private void SetProperty()
+    public void SetHeight()
     {
-        switch ((Property)objectProperty.value)
+        Vector3 newScale = currObject.transform.localScale;
+        newScale.y = int.Parse(height.text);
+        Vector3 scaleChange = newScale - currObject.transform.localScale;
+        currObject.transform.localScale = newScale;
+
+        // move object based on new scale
+        Vector3 posChange = currObject.transform.rotation * new Vector3(0, scaleChange.y / 2, scaleChange.z / 2);
+        currObject.transform.SetPositionAndRotation(currObject.transform.position + posChange, currObject.transform.rotation);
+    }
+
+    public void SetXPosition()
+    {
+        Vector3 newPos = currObject.transform.position;
+        newPos.z = int.Parse(xPos.text);
+        currObject.transform.SetPositionAndRotation(newPos, currObject.transform.rotation);
+    }
+
+    public void SetYPosition()
+    {
+        Vector3 newPos = currObject.transform.position;
+        newPos.y = int.Parse(yPos.text);
+        currObject.transform.SetPositionAndRotation(newPos, currObject.transform.rotation);
+
+    }
+
+    public void ToggleGrappleable()
+    {
+        // if not grappleable, make it so
+        if (!IsGrappleable())
         {
-            case Property.Normal:
-                currObject.tag = "Block";
-                currObject.layer = 0;
-                currObject.GetComponent<BoxCollider>().isTrigger = false;
-                currObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+            currObject.layer = 3;
+            //currObject.GetComponent<BoxCollider>().isTrigger = false;
+            currObject.GetComponent<MeshRenderer>().material = grappleMaterial;
 
-                Destroy(currObject.GetComponent<DeathMaterialScript>());
-                break;
-
-            case Property.Grapple:
-                currObject.tag = "GrappleSurface";
-                currObject.layer = 3;
-                currObject.GetComponent<BoxCollider>().isTrigger = false;
-                currObject.GetComponent<MeshRenderer>().material = grappleMaterial;
-
-                Destroy(currObject.GetComponent<DeathMaterialScript>());
-                break;
-
-            case Property.Lava:
-                currObject.tag = "Lava";
-                currObject.layer = 0;
-                currObject.GetComponent<BoxCollider>().isTrigger = true;
-                currObject.GetComponent<MeshRenderer>().material = lavaMaterial;
-
-                currObject.AddComponent<DeathMaterialScript>();
-                break;
+            lava.gameObject.SetActive(false);
         }
+        else
+        {
+            currObject.layer = 0;
+            currObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+
+            if (!IsBreakable()) lava.gameObject.SetActive(true);
+        }
+    }
+
+    public void ToggleLava()
+    {
+        if (!IsLava())
+        {
+            grappleable.gameObject.SetActive(false);
+            breakable.gameObject.SetActive(false);
+
+            currObject.GetComponent<MeshRenderer>().material = lavaMaterial;
+            currObject.GetComponent<BoxCollider>().isTrigger = true;
+            currObject.AddComponent<DeathMaterialScript>();
+        }
+        else
+        {
+            grappleable.gameObject.SetActive(true);
+            breakable.gameObject.SetActive(true);
+
+            currObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+            currObject.GetComponent<BoxCollider>().isTrigger = false;
+            Destroy(currObject.GetComponent<DeathMaterialScript>());
+        }
+    }
+
+    public void ToggleMoveable()
+    {
+        if (!IsMoveable())
+        {
+            currObject.AddComponent<Rigidbody>();
+            currObject.GetComponent<Rigidbody>().mass = 500;
+            currObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            currObject.GetComponent<Rigidbody>().useGravity = true;
+            currObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
+        }
+        else
+        {
+            Destroy(currObject.GetComponent<Rigidbody>());
+        }
+    }
+
+    public void ToggleBreakable()
+    {
+        if (!IsBreakable())
+        {
+            lava.gameObject.SetActive(false);
+
+            currObject.AddComponent<Destructible>();
+            currObject.GetComponent<Destructible>().breakForce = 10000;
+        }
+        else
+        {
+            if (!IsGrappleable()) lava.gameObject.SetActive(true);
+
+            Destroy(currObject.GetComponent<Destructible>());
+        }
+    }
+
+    private bool IsGrappleable()
+    {
+        return currObject.layer == 3;
+    }
+
+    private bool IsLava()
+    {
+        return currObject.TryGetComponent(out DeathMaterialScript deathscript);
+    }
+
+    private bool IsMoveable()
+    {
+        return currObject.TryGetComponent(out Rigidbody rigidbody);
+    }
+
+    private bool IsBreakable()
+    {
+        return currObject.TryGetComponent(out Destructible destructible);
     }
 }
