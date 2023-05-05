@@ -73,6 +73,7 @@ public class PropertiesWindow : MonoBehaviour
                 lava.SetIsOnWithoutNotify(true);
                 grappleable.gameObject.SetActive(false);
                 breakable.gameObject.SetActive(false);
+                moveable.gameObject.SetActive(false);
             }
             else if (IsGrappleable())
             {
@@ -80,7 +81,12 @@ public class PropertiesWindow : MonoBehaviour
                 lava.gameObject.SetActive(false);
             }
 
-            if (IsMoveable()) moveable.SetIsOnWithoutNotify(true);
+            if (IsMoveable())
+            {
+                moveable.SetIsOnWithoutNotify(true);
+                lava.gameObject.SetActive(false);
+            }
+
             if (IsBreakable())
             {
                 breakable.SetIsOnWithoutNotify(true);
@@ -181,6 +187,7 @@ public class PropertiesWindow : MonoBehaviour
         {
             grappleable.gameObject.SetActive(false);
             breakable.gameObject.SetActive(false);
+            moveable.gameObject.SetActive(false);
 
             currObject.GetComponent<MeshRenderer>().material = lavaMaterial;
             currObject.GetComponent<BoxCollider>().isTrigger = true;
@@ -190,6 +197,7 @@ public class PropertiesWindow : MonoBehaviour
         {
             grappleable.gameObject.SetActive(true);
             breakable.gameObject.SetActive(true);
+            moveable.gameObject.SetActive(true);
 
             currObject.GetComponent<MeshRenderer>().material = defaultMaterial;
             currObject.GetComponent<BoxCollider>().isTrigger = false;
@@ -205,11 +213,16 @@ public class PropertiesWindow : MonoBehaviour
             currObject.GetComponent<Rigidbody>().mass = 500;
             currObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             currObject.GetComponent<Rigidbody>().useGravity = true;
+            currObject.GetComponent<Rigidbody>().isKinematic = true;
             currObject.GetComponent<Rigidbody>().interpolation = RigidbodyInterpolation.Interpolate;
+
+            lava.gameObject.SetActive(false);
         }
         else
         {
             Destroy(currObject.GetComponent<Rigidbody>());
+
+            lava.gameObject.SetActive(true);
         }
     }
 

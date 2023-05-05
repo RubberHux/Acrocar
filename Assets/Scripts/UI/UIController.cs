@@ -23,6 +23,7 @@ public class UIController : MonoBehaviour
     private double time;
     private InputAction pause, uiNavigate;
     private GameObject lastObject;
+    public GameObject winInstance;
     public enum GameState
     {
         MainMenu,
@@ -30,6 +31,7 @@ public class UIController : MonoBehaviour
         Paused,
         Settings,
         Win,
+        LevelEditor
     }
     public GameState gameState { get; private set; }
     bool vrCamTryGet = false;
@@ -55,6 +57,7 @@ public class UIController : MonoBehaviour
         //eventSystem = gameObject.GetComponent<EventSystem>();
 
         if (SceneManager.GetActiveScene().buildIndex == 0) gameState = GameState.MainMenu;
+        else if (IsEditor) gameState = GameState.LevelEditor;
         else gameState = GameState.Playing;
 
         if (gameState != GameState.MainMenu)
@@ -144,10 +147,13 @@ public class UIController : MonoBehaviour
         gameState = GameState.Win;
         Time.timeScale = 0.0f;
 
-        GameObject winInstance;
-        if (IsEditor) winInstance = Instantiate(editorWinMenu, transform);
-        else winInstance = Instantiate(winMenu, transform);
+        if (winInstance == null)
+        {
+            if (IsEditor) winInstance = Instantiate(editorWinMenu, transform);
+            else winInstance = Instantiate(winMenu, transform);
+        }
         winInstance.GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(x => x.text = x.gameObject.CompareTag("TimeText") ? String.Format("{0:0.00}", time) + "s" : x.text);
+        time = 0;
     }
 
     private void Update()

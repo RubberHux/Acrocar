@@ -128,9 +128,12 @@ public class LevelEditor : MonoBehaviour
 
                         // rotate object around its center point
                         case EditorMode.Rotate:
-                            Quaternion rot = currObject.transform.rotation;
-                            rot.x += mouseDelta.z / 10;
-                            currObject.transform.SetPositionAndRotation(currObject.transform.position, rot);
+                            if (!currObject.CompareTag("SpawnPoint"))
+                            {
+                                Quaternion rot = currObject.transform.rotation;
+                                rot.x += mouseDelta.z / 10;
+                                currObject.transform.SetPositionAndRotation(currObject.transform.position, rot);
+                            }
                             break;
                     }
 
@@ -144,10 +147,6 @@ public class LevelEditor : MonoBehaviour
                 GameObject pasted = CreateObject(copiedObject, mousePos);
                 pasted.transform.rotation = copiedObject.transform.rotation;
             }
-
-            // change to-be-added object via scrolling (will change later)
-            //objectIndex = (int)Mathf.Clamp(objectIndex + Input.mouseScrollDelta.y, 0, objectList.Count - 1);
-            //addText.text = "Add object: " + objectList[objectIndex].name;
 
             prevMousePos = mousePos;
         }
@@ -194,6 +193,8 @@ public class LevelEditor : MonoBehaviour
 
     public void Play()
     {
+        UIController uiController = GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>();
+
         // if not playing, hide all editor UI and spawn a car loader
         if (!playing)
         {
@@ -210,6 +211,9 @@ public class LevelEditor : MonoBehaviour
 
             playButton.text = "Back";
             playing = true;
+            uiController.SetState(UIController.GameState.Playing);
+
+            ToggleAllMoveable();
         }
         // if playing, destroy car loader with player and camera, then bring back all UI
         else
@@ -217,11 +221,15 @@ public class LevelEditor : MonoBehaviour
             LoadLevel();
 
             Destroy(spawnedCarLoader);
+            Destroy(uiController.winInstance);
 
             spawnPoint.SetActive(true);
             editorCamera.SetActive(true);
             editorModes.gameObject.SetActive(true);
             objectList.gameObject.SetActive(true);
+
+            Time.timeScale = 1;
+            uiController.SetState(UIController.GameState.LevelEditor);
 
             currObject = null;
             playButton.text = "Play";
@@ -238,6 +246,14 @@ public class LevelEditor : MonoBehaviour
         }
 
         return objToCheck;
+    }
+
+    private void ToggleAllMoveable()
+    {
+        foreach (Transform t in level.transform)
+        {
+            if (t.TryGetComponent(out Rigidbody rigidbody)) rigidbody.isKinematic = false;
+        }
     }
 
     public void SaveLevel()
