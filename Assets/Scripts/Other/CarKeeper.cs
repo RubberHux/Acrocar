@@ -13,5 +13,5 @@ public class Loadable
 
 public class CarKeeper : MonoBehaviour
 {
-    public Loadable[] cars, spoilers;
+    public Loadable[] cars, spoilers, roofAccessories, hoodAccessories;
 }

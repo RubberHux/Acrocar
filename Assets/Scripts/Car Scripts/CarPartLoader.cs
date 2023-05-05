@@ -29,6 +29,15 @@ public class CarPartLoader : MonoBehaviour
             case GameMaster.LoadableType.Spoiler:
                 prefab = carKeeper.GetComponent<CarKeeper>().spoilers[GameMaster.playerSpoilers[GetComponentInParent<CarController>().playerIndex]].prefab;
                 break;
+            case GameMaster.LoadableType.RoofAccessory:
+                prefab = carKeeper.GetComponent<CarKeeper>().roofAccessories[GameMaster.playerRoofAccessory[GetComponentInParent<CarController>().playerIndex]].prefab;
+                break;
+            case GameMaster.LoadableType.HoodAccessory:
+                prefab = carKeeper.GetComponent<CarKeeper>().hoodAccessories[GameMaster.playerHoodAccessory[GetComponentInParent<CarController>().playerIndex]].prefab;
+                break;
+            default:
+                Debug.LogError("The LoadableType has not been added to LoadPart in CarPartLoader!!!");
+                return;
         }
 
         objectInstance = Instantiate(prefab, transform);

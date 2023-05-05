@@ -15,7 +15,7 @@ public class GameMaster : MonoBehaviour
     [NonSerialized] public static bool vr = false;
     [NonSerialized] public static Vector3? hubWorldReturnPoint;
     [NonSerialized] public static Quaternion hubWorldReturnRotation;
-    [NonSerialized] public static int[] playerCars, playerSpoilers;
+    [NonSerialized] public static int[] playerCars, playerSpoilers, playerRoofAccessory, playerHoodAccessory;
     [NonSerialized] public static Color[] playerCarMainColours = null;
     [NonSerialized] public const int maxPlayerCount = 4;
     [NonSerialized] public static int vrPlayerIndex = 0;
@@ -23,18 +23,24 @@ public class GameMaster : MonoBehaviour
     public enum LoadableType
     {
         Car,
-        Spoiler
+        Spoiler,
+        RoofAccessory,
+        HoodAccessory,
     }
 
     static GameMaster()
     {
         playerCars = new int[maxPlayerCount];
         playerSpoilers = new int[maxPlayerCount];
+        playerRoofAccessory = new int[maxPlayerCount];
+        playerHoodAccessory = new int[maxPlayerCount];
         playerCarMainColours = new Color[maxPlayerCount];
         for (int i = 0; i < playerCars.Length; i++)
         {
             playerCars[i] = PlayerPrefs.GetInt($"p{i + 1}Car", 0);
             playerSpoilers[i] = PlayerPrefs.GetInt($"p{i + 1}Spoiler", 0);
+            playerRoofAccessory[i] = PlayerPrefs.GetInt($"p{i + 1}RoofAccessory", 0);
+            playerHoodAccessory[i] = PlayerPrefs.GetInt($"p{i + 1}HoodAccessory", 0);
             string color = PlayerPrefs.GetString($"p{i + 1}CarColorMain", "1,0,0,1");
             string[] colorVals = color.Split(",");
 
@@ -75,15 +81,15 @@ public class GameMaster : MonoBehaviour
                     playerSpoilers[playerIndex] = objIndex;
                     PlayerPrefs.SetInt($"p{playerIndex + 1}Spoiler", objIndex);
                     break;
+                case LoadableType.RoofAccessory:
+                    playerRoofAccessory[playerIndex] = objIndex;
+                    PlayerPrefs.SetInt($"p{playerIndex + 1}RoofAccessory", objIndex);
+                    break;
+                case LoadableType.HoodAccessory:
+                    playerHoodAccessory[playerIndex] = objIndex;
+                    PlayerPrefs.SetInt($"p{playerIndex + 1}HoodAccessory", objIndex);
+                    break;
             }
-        }
-    }
-    public static void SetPlayerSpoiler(int playerIndex, int spoilerIndex)
-    {
-        if (playerIndex >= 0 && playerIndex < maxPlayerCount)
-        {
-            playerCars[playerIndex] = spoilerIndex;
-            PlayerPrefs.SetInt($"p{playerIndex + 1}Spoiler", spoilerIndex);
         }
     }
 

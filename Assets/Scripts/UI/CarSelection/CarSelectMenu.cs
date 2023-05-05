@@ -26,6 +26,8 @@ public class CarSelectMenu : MonoBehaviour
 
     public void LoadCar() { LoadObjects(GameMaster.LoadableType.Car); }
     public void LoadSpoiler() { LoadObjects(GameMaster.LoadableType.Spoiler); }
+    public void LoadRoofAccessory() { LoadObjects(GameMaster.LoadableType.RoofAccessory); }
+    public void LoadHoodAccessory() { LoadObjects(GameMaster.LoadableType.HoodAccessory); }
 
     public void LoadObjects(GameMaster.LoadableType type)
     {
@@ -38,6 +40,8 @@ public class CarSelectMenu : MonoBehaviour
         Loadable[] loadables = null;
         if (loadType == GameMaster.LoadableType.Car) loadables = carKeeper.cars;
         else if (loadType == GameMaster.LoadableType.Spoiler) loadables = carKeeper.spoilers;
+        else if (loadType == GameMaster.LoadableType.RoofAccessory) loadables = carKeeper.roofAccessories;
+        else if (loadType == GameMaster.LoadableType.HoodAccessory) loadables = carKeeper.hoodAccessories;
         if (objButtons != null) objButtons.ToList().ForEach(x => Destroy(x));
         objButtons = new GameObject[loadables.Length];
         int index = 0;
