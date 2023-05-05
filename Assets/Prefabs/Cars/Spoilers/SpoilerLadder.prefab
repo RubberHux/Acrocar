@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 6657972125315295728}
   m_Layer: 6
   m_Name: SpoilerLadder
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
