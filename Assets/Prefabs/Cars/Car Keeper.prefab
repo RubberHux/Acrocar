@@ -51,3 +51,13 @@ MonoBehaviour:
   - prefab: {fileID: 7373890725835698445, guid: 4475a9b6ef14c45a9ac003c50b82cbd2, type: 3}
     name: TestCar
     thumbnail: {fileID: 2800000, guid: 829c183f3ebd36847b71c87eca22ac88, type: 3}
+  - prefab: {fileID: 7373890725835698445, guid: 8258c66793f45ef4c88fdb31e1828a3f, type: 3}
+    name: Skateboard
+    thumbnail: {fileID: 2800000, guid: 4e8472923f669d841875567b283bfd16, type: 3}
+  spoilers:
+  - prefab: {fileID: 4531477948358753176, guid: 95aa158882759e14fab8a2054287437e, type: 3}
+    name: None
+    thumbnail: {fileID: 2800000, guid: 1683774e4905d2b4a8d6d48659bc1e28, type: 3}
+  - prefab: {fileID: 3595149122626630553, guid: 1296d95cd6fbb094dbc45ab8d1e9484f, type: 3}
+    name: Spoiler1
+    thumbnail: {fileID: 2800000, guid: e27fc7afbd589bb44a4cc18a0da8e672, type: 3}

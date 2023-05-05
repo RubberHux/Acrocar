@@ -653,7 +653,7 @@ Transform:
   - {fileID: 1964611737}
   - {fileID: 1921892848}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &351375223
 GameObject:
@@ -870,7 +870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9171072689983312602, guid: 655c17cad9a7ddf4ab838fd96013670c, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 9171072689983312602, guid: 655c17cad9a7ddf4ab838fd96013670c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1702,7 +1702,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &708106861
 GameObject:
@@ -2123,7 +2123,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &962523203
 GameObject:
@@ -2832,7 +2832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9171072689983312602, guid: 655c17cad9a7ddf4ab838fd96013670c, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 9171072689983312602, guid: 655c17cad9a7ddf4ab838fd96013670c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4554,6 +4554,10 @@ PrefabInstance:
       propertyPath: camLayers.Array.data[3].m_Bits
       value: 2281701376
       objectReference: {fileID: 0}
+    - target: {fileID: 4259524101806744982, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6389540439510499187, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
       propertyPath: m_Name
       value: CarLoader
@@ -4633,7 +4637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9171072689983312602, guid: 655c17cad9a7ddf4ab838fd96013670c, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 9171072689983312602, guid: 655c17cad9a7ddf4ab838fd96013670c, type: 3}
       propertyPath: m_LocalPosition.x

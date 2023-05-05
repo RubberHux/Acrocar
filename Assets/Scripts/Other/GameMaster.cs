@@ -15,21 +15,27 @@ public class GameMaster : MonoBehaviour
     [NonSerialized] public static bool vr = false;
     [NonSerialized] public static Vector3? hubWorldReturnPoint;
     [NonSerialized] public static Quaternion hubWorldReturnRotation;
-    [NonSerialized] public static int[] playerCars = null;
+    [NonSerialized] public static int[] playerCars, playerSpoilers;
     [NonSerialized] public static Color[] playerCarMainColours = null;
     [NonSerialized] public const int maxPlayerCount = 4;
     [NonSerialized] public static int vrPlayerIndex = 0;
-    
+
+    public enum LoadableType
+    {
+        Car,
+        Spoiler
+    }
 
     static GameMaster()
     {
         playerCars = new int[maxPlayerCount];
+        playerSpoilers = new int[maxPlayerCount];
         playerCarMainColours = new Color[maxPlayerCount];
         for (int i = 0; i < playerCars.Length; i++)
         {
             playerCars[i] = PlayerPrefs.GetInt($"p{i + 1}Car", 0);
+            playerSpoilers[i] = PlayerPrefs.GetInt($"p{i + 1}Spoiler", 0);
             string color = PlayerPrefs.GetString($"p{i + 1}CarColorMain", "1,0,0,1");
-            print(color);
             string[] colorVals = color.Split(",");
 
             if (colorVals.Length == 4 && 
@@ -56,11 +62,28 @@ public class GameMaster : MonoBehaviour
         hubWorldReturnRotation = point.rotation;
     }
 
-    public static void SetPlayerCar(int playerIndex, int carIndex) {
+    public static void SetPlayerPart(LoadableType type, int playerIndex, int objIndex) {
         if (playerIndex >= 0 && playerIndex < maxPlayerCount)
         {
-            playerCars[playerIndex] = carIndex;
-            PlayerPrefs.SetInt($"p{playerIndex + 1}Car", carIndex);
+            switch(type)
+            {
+                case LoadableType.Car:
+                    playerCars[playerIndex] = objIndex;
+                    PlayerPrefs.SetInt($"p{playerIndex + 1}Car", objIndex);
+                    break;
+                case LoadableType.Spoiler:
+                    playerSpoilers[playerIndex] = objIndex;
+                    PlayerPrefs.SetInt($"p{playerIndex + 1}Spoiler", objIndex);
+                    break;
+            }
+        }
+    }
+    public static void SetPlayerSpoiler(int playerIndex, int spoilerIndex)
+    {
+        if (playerIndex >= 0 && playerIndex < maxPlayerCount)
+        {
+            playerCars[playerIndex] = spoilerIndex;
+            PlayerPrefs.SetInt($"p{playerIndex + 1}Spoiler", spoilerIndex);
         }
     }
 
