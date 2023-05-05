@@ -10,27 +10,51 @@ using UnityEngine.UI;
 public class CarSelectMenu : MonoBehaviour
 {
     [SerializeField] GameObject buttonPrefab, carKeeperPrefab;
-    GameObject[] carButtons;
+    GameObject[] objButtons;
 
     [SerializeField] CustomiseCar car;
     [SerializeField] MultiplayerEventSystem eventSystem;
+    CarKeeper carKeeper;
 
-    void Awake()
+
+    public GameMaster.LoadableType? loadType = null;
+
+    public void Awake()
     {
-        if (carButtons != null) return;
-        Car[] cars = carKeeperPrefab.GetComponent<CarKeeper>().cars;
-        carButtons = new GameObject[cars.Length];
+        carKeeper = carKeeperPrefab.GetComponent<CarKeeper>();
+    }
+
+    public void LoadCar() { LoadObjects(GameMaster.LoadableType.Car); }
+    public void LoadSpoiler() { LoadObjects(GameMaster.LoadableType.Spoiler); }
+    public void LoadRoofAccessory() { LoadObjects(GameMaster.LoadableType.RoofAccessory); }
+    public void LoadHoodAccessory() { LoadObjects(GameMaster.LoadableType.HoodAccessory); }
+
+    public void LoadObjects(GameMaster.LoadableType type)
+    {
+        if (type == loadType)
+        {
+            eventSystem.SetSelectedGameObject(objButtons[0]);
+            return;
+        }
+        loadType = type;
+        Loadable[] loadables = null;
+        if (loadType == GameMaster.LoadableType.Car) loadables = carKeeper.cars;
+        else if (loadType == GameMaster.LoadableType.Spoiler) loadables = carKeeper.spoilers;
+        else if (loadType == GameMaster.LoadableType.RoofAccessory) loadables = carKeeper.roofAccessories;
+        else if (loadType == GameMaster.LoadableType.HoodAccessory) loadables = carKeeper.hoodAccessories;
+        if (objButtons != null) objButtons.ToList().ForEach(x => Destroy(x));
+        objButtons = new GameObject[loadables.Length];
         int index = 0;
-        foreach (Car car in cars)
+        foreach (Loadable obj in loadables)
         {
             GameObject button = Instantiate(buttonPrefab, transform);
-            Texture2D texture = car.thumbnail;
+            Texture2D texture = obj.thumbnail;
             print(button);
             CarSelectButton buttonScript = button.gameObject.GetComponent<CarSelectButton>();
             buttonScript.menu = this;
             buttonScript.index = index;
             button.GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            carButtons[index] = button;
+            objButtons[index] = button;
             if (index == 0) eventSystem.SetSelectedGameObject(button);
             index++;
         }
@@ -38,12 +62,15 @@ public class CarSelectMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        if (carButtons != null) eventSystem.SetSelectedGameObject(carButtons[0]);
+        if (objButtons != null) eventSystem.SetSelectedGameObject(objButtons[0]);
     }
 
     public void SetCar(int index)
     {
-        GameMaster.SetPlayerCar(GetComponentInParent<Customizer9001>().playerIndex, index);
-        car.InstantiateCar(index);
+        if (loadType != null)
+        {
+            GameMaster.SetPlayerPart((GameMaster.LoadableType) loadType, GetComponentInParent<Customizer9001>().playerIndex, index);
+            car.LoadPart((GameMaster.LoadableType)loadType, index);
+        }
     }
 }

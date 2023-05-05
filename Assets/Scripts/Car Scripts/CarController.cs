@@ -63,8 +63,7 @@ public class CarController : MonoBehaviour
     internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
     public Vector3? gravity = null;
-    private InputAction rotateAction, moveAction, swingAction;
-    private Vector2 rotateDir, moveDir, swingDir;
+    public Vector2 rotateDir, moveDir, swingDir;
     public LayerMask gravRoadLayer;
     public LayerMask notCarLayers;
     PlayerInput playerInput;
