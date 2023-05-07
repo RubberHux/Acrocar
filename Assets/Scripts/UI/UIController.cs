@@ -12,18 +12,25 @@ using static System.Net.Mime.MediaTypeNames;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] bool IsHub, IsEditor, ShowTimer;
-    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, editorWinMenu;
+    [SerializeField] SceneType sceneType;
+    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, mainMenu, editorWinMenu;
     private GameObject pauseMenuInstance, addPlayerMenuInstance;
     [NonSerialized] public GameObject settingsInstance;
     private List<TextMeshProUGUI> uiTimeText = new List<TextMeshProUGUI>();
-    [SerializeField] bool dontFollow;
     Transform follow = null;
     private EventSystem eventSystem;
     private double time;
     private InputAction pause, uiNavigate;
     private GameObject lastObject;
     public GameObject winInstance;
+    public enum SceneType
+    {
+        MainMenu,
+        HubWorld,
+        Level,
+        CarCustomization,
+        LevelEditor
+    }
     public enum GameState
     {
         MainMenu,
@@ -31,6 +38,7 @@ public class UIController : MonoBehaviour
         Paused,
         Settings,
         Win,
+        CarCustomization,
         LevelEditor
     }
     public GameState gameState { get; private set; }
@@ -38,9 +46,13 @@ public class UIController : MonoBehaviour
 
     public void SetState(GameState newState)
     {
-        if (gameState == GameState.MainMenu)
+        if (gameState == GameState.MainMenu && newState != GameState.MainMenu)
         {
-            foreach (Button button in GetComponentInChildren<MainMenu>().gameObject.GetComponentsInChildren<Button>()) button.interactable = false;
+            foreach (Button button in GetComponentInChildren<MainMenu>().gameObject.GetComponentsInChildren<Button>())
+            {
+                print(button);
+                button.interactable = false;
+            }
         }
         gameState = newState;
     }
@@ -57,15 +69,16 @@ public class UIController : MonoBehaviour
         //eventSystem = gameObject.GetComponent<EventSystem>();
 
         if (SceneManager.GetActiveScene().buildIndex == 0) gameState = GameState.MainMenu;
-        else if (IsEditor) gameState = GameState.LevelEditor;
+        else if (sceneType == SceneType.LevelEditor) gameState = GameState.LevelEditor;
         else gameState = GameState.Playing;
 
-        if (gameState != GameState.MainMenu)
+        if (sceneType == SceneType.HubWorld || sceneType == SceneType.Level)
         {
             pauseMenuInstance = Instantiate(pauseMenu, transform);
-            if (IsHub) pauseMenuInstance.GetComponentInChildren<HubWorldButton>().gameObject.SetActive(false);
+            if (sceneType == SceneType.HubWorld) pauseMenuInstance.GetComponentInChildren<HubWorldButton>().gameObject.SetActive(false);
             Instantiate(gameUI, transform).GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(text => { if (text.gameObject.CompareTag("TimeText")) uiTimeText.Append(text); });
         }
+        else if (sceneType == SceneType.MainMenu) Instantiate(mainMenu, transform);
         settingsInstance = Instantiate(settingsMenu, transform);
 
         if (GameMaster.vr && Camera.main != null)
@@ -149,7 +162,7 @@ public class UIController : MonoBehaviour
 
         if (winInstance == null)
         {
-            if (IsEditor) winInstance = Instantiate(editorWinMenu, transform);
+            if (sceneType == SceneType.LevelEditor) winInstance = Instantiate(editorWinMenu, transform);
             else winInstance = Instantiate(winMenu, transform);
         }
         winInstance.GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(x => x.text = x.gameObject.CompareTag("TimeText") ? String.Format("{0:0.00}", time) + "s" : x.text);
@@ -169,7 +182,7 @@ public class UIController : MonoBehaviour
                 //uiTimeText[i].text = timeString;
             }
         }
-        if (follow != null && !dontFollow)
+        if (follow != null)
         {
             transform.position = follow.position + transform.forward * 4;
             transform.rotation = follow.rotation;

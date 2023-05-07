@@ -6146,7 +6146,7 @@ MonoBehaviour:
     m_ActionName: XRSpecific/XRReset[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
+  m_DefaultActionMap: Player2D
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &1278691072
@@ -9259,6 +9259,14 @@ PrefabInstance:
       propertyPath: IsEditor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1838006970368257334, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+      propertyPath: sceneType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838006970368257334, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+      propertyPath: editorWinMenu
+      value: 
+      objectReference: {fileID: 1775312302018230728, guid: 987234cf6cb28e249bbc657494d77325, type: 3}
     - target: {fileID: 1838006970368257340, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
       propertyPath: m_Pivot.x
       value: 0

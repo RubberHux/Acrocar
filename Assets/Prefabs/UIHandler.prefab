@@ -160,13 +160,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d66c04534949145958df6e1fe33fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsHub: 0
-  IsEditor: 0
-  ShowTimer: 1
+  sceneType: 2
   pauseMenu: {fileID: 2048747574854668999, guid: 39e354e0fcfddeb4f9956b5935d92f89, type: 3}
   winMenu: {fileID: 1775312302018230728, guid: 1bd3dc84fac734444b7e36220d42bccb, type: 3}
-  settingsMenu: {fileID: 7042202190641107000, guid: 968cf1d96e5eef04c8fa2a530686c0df, type: 3}
+  settingsMenu: {fileID: 9190882288309361437, guid: 7d445c6e9f65cf44abd0883432e3f1c6, type: 3}
   gameUI: {fileID: 8851900980719707364, guid: 9de0fd75acdc3bf4389846e3c1e1338d, type: 3}
   addPlayerMenu: {fileID: 5950107126838367268, guid: a44a2050be979ff4aba513c001cdabb3, type: 3}
-  editorWinMenu: {fileID: 1775312302018230728, guid: 987234cf6cb28e249bbc657494d77325, type: 3}
-  dontFollow: 0
+  mainMenu: {fileID: 6257411232624783394, guid: 67548d45d76e7af4a97fccbe12c9dbc9, type: 3}

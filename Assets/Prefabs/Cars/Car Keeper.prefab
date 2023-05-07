@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3461644506459499686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1769703904709468981}
+  - component: {fileID: -1621755566118083756}
+  m_Layer: 0
+  m_Name: Car Keeper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1769703904709468981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3461644506459499686}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1621755566118083756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3461644506459499686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea33eb1dc4cc96148ac77ede08d84d82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cars:
+  - prefab: {fileID: 6713901327427850014, guid: 12f9b6498afab439cb4524aa5743e8c6, type: 3}
+    name: StartCar
+    thumbnail: {fileID: 2800000, guid: 4cda2339effaf7b49a70d342c97e9314, type: 3}
+  - prefab: {fileID: 7373890725835698445, guid: 8258c66793f45ef4c88fdb31e1828a3f, type: 3}
+    name: Skateboard
+    thumbnail: {fileID: 2800000, guid: 4e8472923f669d841875567b283bfd16, type: 3}
+  spoilers:
+  - prefab: {fileID: 4531477948358753176, guid: 95aa158882759e14fab8a2054287437e, type: 3}
+    name: None
+    thumbnail: {fileID: 2800000, guid: 1683774e4905d2b4a8d6d48659bc1e28, type: 3}
+  - prefab: {fileID: 3595149122626630553, guid: 1296d95cd6fbb094dbc45ab8d1e9484f, type: 3}
+    name: Spoiler1
+    thumbnail: {fileID: 2800000, guid: e27fc7afbd589bb44a4cc18a0da8e672, type: 3}
+  - prefab: {fileID: 4583018902791284936, guid: 8359a316b0544b44f9be7d3efd9d5d40, type: 3}
+    name: SpoilerLadder
+    thumbnail: {fileID: 2800000, guid: f439c811e33b38143a48cb671da41d8a, type: 3}
+  roofAccessories:
+  - prefab: {fileID: 4531477948358753176, guid: 95aa158882759e14fab8a2054287437e, type: 3}
+    name: None
+    thumbnail: {fileID: 2800000, guid: 1683774e4905d2b4a8d6d48659bc1e28, type: 3}
+  - prefab: {fileID: 3595149122626630553, guid: 1296d95cd6fbb094dbc45ab8d1e9484f, type: 3}
+    name: Spoiler1
+    thumbnail: {fileID: 2800000, guid: e27fc7afbd589bb44a4cc18a0da8e672, type: 3}
+  - prefab: {fileID: 8048538631529638750, guid: a39b1682a6af57c4584081cf31a3407d, type: 3}
+    name: Skateboard
+    thumbnail: {fileID: 2800000, guid: 4e8472923f669d841875567b283bfd16, type: 3}
+  - prefab: {fileID: 5989113361829728857, guid: 57c2a4ddff6b6214d826c7b7ed72038f, type: 3}
+    name: Devil
+    thumbnail: {fileID: 2800000, guid: 497b90f323ced784d99bbd53a28f6914, type: 3}
+  hoodAccessories:
+  - prefab: {fileID: 4531477948358753176, guid: 95aa158882759e14fab8a2054287437e, type: 3}
+    name: None
+    thumbnail: {fileID: 2800000, guid: 1683774e4905d2b4a8d6d48659bc1e28, type: 3}
+  - prefab: {fileID: 3595149122626630553, guid: 1296d95cd6fbb094dbc45ab8d1e9484f, type: 3}
+    name: Spoiler1
+    thumbnail: {fileID: 2800000, guid: e27fc7afbd589bb44a4cc18a0da8e672, type: 3}
+  - prefab: {fileID: 8048538631529638750, guid: a39b1682a6af57c4584081cf31a3407d, type: 3}
+    name: Skateboard
+    thumbnail: {fileID: 2800000, guid: 4e8472923f669d841875567b283bfd16, type: 3}
+  - prefab: {fileID: 5989113361829728857, guid: 57c2a4ddff6b6214d826c7b7ed72038f, type: 3}
+    name: Devil
+    thumbnail: {fileID: 2800000, guid: 497b90f323ced784d99bbd53a28f6914, type: 3}

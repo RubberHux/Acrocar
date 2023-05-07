@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader instance;
+    private int mainMenu = 0, hubWorld = 1;
 
     // Singleton 
     private void Awake()
@@ -27,6 +25,18 @@ public class SceneLoader : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(index);
+    }
+
+    public void LoadMainMenu() 
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene(mainMenu);
+        GameMaster.hubWorldReturnPoint = null;
+    }
+
+    public void LoadHubWorld() { 
+        Time.timeScale = 1.0f; 
+        SceneManager.LoadScene(hubWorld); 
     }
 
     public void Reload()
