@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Other/CarCustomisation.unity
     guid: 2272173351f8b6b44bbb55fe79440083
+  - enabled: 1
+    path: Assets/Scenes/LevelEditor.unity
+    guid: 7ea3213c794fdfe4496adb02b3a2b8ad
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 57bb631b575ebcf40b667892164ad0e8, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: cd95ef827d95def409e6667bf504f0dd, type: 2}

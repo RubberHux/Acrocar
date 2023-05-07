@@ -108,7 +108,7 @@ public class CarController : MonoBehaviour
 
     private void Start()
     {
-        startPoint = transform.localPosition;
+        startPoint = transform.position;
         startRot = transform.localRotation;
     }
 
