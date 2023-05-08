@@ -2507,7 +2507,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &2310734947481614832
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2679,6 +2679,9 @@ MonoBehaviour:
   notCarLayers:
     serializedVersion: 2
     m_Bits: 137
+  movingPlatformLayer:
+    serializedVersion: 2
+    m_Bits: 256
   motorForce: 16000
   breakForce: 8000000
   maxSteeringAngle: 20
