@@ -56,8 +56,10 @@ public class MovingPlatform : MonoBehaviour
    
    private void Reset()
    {
-      ClearAllWayPoints();
-      InitializeWayPoints();
+#if UNITY_EDITOR
+        ClearAllWayPoints();
+#endif
+        InitializeWayPoints();
    }
 
    private void OnDrawGizmos()
@@ -77,8 +79,9 @@ public class MovingPlatform : MonoBehaviour
          Gizmos.DrawLine(curPoint, nextPoint);
       }
    }
-   
-   public void ClearAllWayPoints()
+
+#if UNITY_EDITOR
+    public void ClearAllWayPoints()
    {
       if (UnityEditor.PrefabUtility.IsPartOfPrefabInstance(transform))
          UnityEditor.PrefabUtility.UnpackPrefabInstance(gameObject,
@@ -105,8 +108,9 @@ public class MovingPlatform : MonoBehaviour
 #endif
       }
    }
-   
-   public void InitializeWayPoints()
+#endif
+
+    public void InitializeWayPoints()
    {
       // Create two default start and end point
       var position = transform.position;
@@ -124,11 +128,12 @@ public class MovingPlatform : MonoBehaviour
             parent = transform
          }
       };
-      
-      // Add icon to way point in editor
-      GUIContent iconContent = EditorGUIUtility.IconContent( $"sv_label_{(int)color}");
+#if UNITY_EDITOR
+        // Add icon to way point in editor
+        GUIContent iconContent = EditorGUIUtility.IconContent( $"sv_label_{(int)color}");
       EditorGUIUtility.SetIconForObject(newWayPoint, (Texture2D) iconContent.image);
-      return newWayPoint;
+#endif
+        return newWayPoint;
    }
 
    private void Start()
@@ -235,6 +240,7 @@ public class MovingPlatform : MonoBehaviour
    }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(MovingPlatform))]
 public class MovingPlatformEditor : Editor
 {
@@ -307,3 +313,4 @@ public class MovingPlatformEditor : Editor
       base.OnInspectorGUI();
    }
 }
+#endif
