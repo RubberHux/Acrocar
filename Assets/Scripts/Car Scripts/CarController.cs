@@ -58,7 +58,7 @@ public class CarController : MonoBehaviour
     public int grappleBoostForce;
     public int jumpForce;
     [NonSerialized] public Vector3 startPoint;
-    [NonSerialized] public Quaternion startRot;
+    [NonSerialized] public Quaternion? startRot = null;
     internal GrapplingGun grapplingGun;
     internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
@@ -111,7 +111,7 @@ public class CarController : MonoBehaviour
     private void Start()
     {
         startPoint = transform.position;
-        startRot = transform.localRotation;
+        startRot = transform.rotation;
     }
 
     private void SetConstraints()
@@ -432,8 +432,8 @@ public class CarController : MonoBehaviour
         if (Time.timeScale == 0.0f) return;
         if (lastCheckPoint == null)
         {
-            rigidBody.MovePosition(startPoint);
-            rigidBody.MoveRotation(startRot);
+            rigidBody.MovePosition(startPoint); 
+            if (startRot != null) rigidBody.MoveRotation((Quaternion)startRot);
         }
         else
         {

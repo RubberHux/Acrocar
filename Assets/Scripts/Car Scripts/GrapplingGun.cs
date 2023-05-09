@@ -9,6 +9,7 @@ public class GrapplingGun : MonoBehaviour
     private Rigidbody grappledRigidBody; // rigidbody which hook is attached to
     public LayerMask whatIsGrappleable;
     public LayerMask notCarLayers;
+    GameObject grapplePointObj, grappledObj;
     public Transform gunTip, player;
     public float maxGrappleDistance;
     public List<GameObject> hookParts;
@@ -46,6 +47,7 @@ public class GrapplingGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (joint && !joint.autoConfigureConnectedAnchor) joint.connectedAnchor = grapplePointObj.transform.position;
         if (cam == null) return;
         if (carController.respawned)
         {
@@ -94,15 +96,20 @@ public class GrapplingGun : MonoBehaviour
             carController.grappling = true;
             joint = player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
+
+            if (grapplePointObj != null) Destroy(grapplePointObj);
+            grapplePointObj = Instantiate(new GameObject(), grappledObj.transform);
+            grapplePointObj.transform.position = grapplePoint;
+
+            joint.connectedAnchor = grapplePointObj.transform.position;
             joint.connectedBody = grappledRigidBody;
             hookParts.ForEach(part => part.SetActive(false));
             joint.anchor = gunTip.localPosition;
 
             joint.maxDistance = distanceFromPoint * maxJointDist;
             joint.minDistance = distanceFromPoint * minJointDist;
-            
-            if (grappledRigidBody != null)
+
+            if (grappledObj.gameObject.CompareTag("MovableGrappleBlock"))
             {
                 joint.spring = 1000f;
                 joint.damper = 10000f;
@@ -177,6 +184,7 @@ public class GrapplingGun : MonoBehaviour
             lr.positionCount = 2;
             aimPostTimer = aimLeniencyPostTime;
 
+            grappledObj = hit.transform.gameObject;
             grappledRigidBody = hit.rigidbody;
         }
         else
@@ -192,6 +200,8 @@ public class GrapplingGun : MonoBehaviour
 
         lr.SetPosition(0, gunTip.position);
         lr.SetPosition(1, grapplePoint);
+        if (joint && !joint.autoConfigureConnectedAnchor) 
+            lr.SetPosition(1, grapplePointObj.transform.position);
     }
 
     public void StopGrapple()
