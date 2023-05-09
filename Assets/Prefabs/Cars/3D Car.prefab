@@ -1436,17 +1436,23 @@ MonoBehaviour:
   - {fileID: 3495362187277647123}
   - {fileID: 5138948733047826425}
   - {fileID: 1826248031713813397}
-  playerNumber: 0
+  playerIndex: 0
   isAlone: 1
   swingForce: 100
   grappleBoostForce: 1800000
   jumpForce: 700000
+  rotateDir: {x: 0, y: 0}
+  moveDir: {x: 0, y: 0}
+  swingDir: {x: 0, y: 0}
   gravRoadLayer:
     serializedVersion: 2
     m_Bits: 128
   notCarLayers:
     serializedVersion: 2
     m_Bits: 137
+  movingPlatformLayer:
+    serializedVersion: 2
+    m_Bits: 0
   motorForce: 16000
   breakForce: 8000000
   maxSteeringAngle: 20
@@ -1468,6 +1474,7 @@ MonoBehaviour:
   whatIsGrappleable:
     serializedVersion: 2
     m_Bits: 8
+  grapplePointPref: {fileID: 3686897528909062234, guid: 7c069a6a708d06941af30e69b32e50e4, type: 3}
   notCarLayers:
     serializedVersion: 2
     m_Bits: 191
