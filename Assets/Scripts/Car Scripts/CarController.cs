@@ -58,15 +58,16 @@ public class CarController : MonoBehaviour
     public int grappleBoostForce;
     public int jumpForce;
     [NonSerialized] public Vector3 startPoint;
-    [NonSerialized] public Quaternion startRot;
+    [NonSerialized] public Quaternion? startRot = null;
     internal GrapplingGun grapplingGun;
     internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
+    private MovingPlatform movingPtfm; // the current attached moving platform 
     public Vector3? gravity = null;
-    private InputAction rotateAction, moveAction, swingAction;
-    private Vector2 rotateDir, moveDir, swingDir;
+    public Vector2 rotateDir, moveDir, swingDir;
     public LayerMask gravRoadLayer;
     public LayerMask notCarLayers;
+    public LayerMask movingPlatformLayer;
     PlayerInput playerInput;
     [NonSerialized] public float gravRoadPercent;
     [NonSerialized] public bool is2D;
@@ -109,8 +110,8 @@ public class CarController : MonoBehaviour
 
     private void Start()
     {
-        startPoint = transform.localPosition;
-        startRot = transform.localRotation;
+        startPoint = transform.position;
+        startRot = transform.rotation;
     }
 
     private void SetConstraints()
@@ -152,6 +153,7 @@ public class CarController : MonoBehaviour
         AirRotate();
         if (grappling) Swing();
         CustomGravity();
+        MoveWithPlatform();
         FlipCar();
         UpdateTimers();
         ConstraintsFix();
@@ -190,6 +192,31 @@ public class CarController : MonoBehaviour
         }
     }
 
+    void CheckMovingPlatform()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out var hit, 1.0f, movingPlatformLayer))
+        {
+            movingPtfm = hit.transform.GetComponent<MovingPlatform>();
+        }
+        else
+        {
+            movingPtfm = null;
+        }
+    }
+    
+    void MoveWithPlatform()
+    {
+        CheckMovingPlatform();
+        if (movingPtfm == null)
+        {
+            return;
+        }
+
+        // Debug
+        Vector3 relativeVelocity = movingPtfm.GetVelocity() - rigidBody.velocity;
+        Debug.DrawRay(transform.position, relativeVelocity, Color.yellow);
+    }
+    
     void FlipCar()
     {
         //Flips the car over if it has landed on its back/side.
@@ -405,8 +432,8 @@ public class CarController : MonoBehaviour
         if (Time.timeScale == 0.0f) return;
         if (lastCheckPoint == null)
         {
-            rigidBody.MovePosition(startPoint);
-            rigidBody.MoveRotation(startRot);
+            rigidBody.MovePosition(startPoint); 
+            if (startRot != null) rigidBody.MoveRotation((Quaternion)startRot);
         }
         else
         {

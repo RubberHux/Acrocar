@@ -13,7 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 public class UIController : MonoBehaviour
 {
     [SerializeField] SceneType sceneType;
-    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, mainMenu;
+    [SerializeField] private GameObject pauseMenu, winMenu, settingsMenu, gameUI, addPlayerMenu, mainMenu, editorWinMenu;
     private GameObject pauseMenuInstance, addPlayerMenuInstance;
     [NonSerialized] public GameObject settingsInstance;
     private List<TextMeshProUGUI> uiTimeText = new List<TextMeshProUGUI>();
@@ -22,12 +22,14 @@ public class UIController : MonoBehaviour
     private double time;
     private InputAction pause, uiNavigate;
     private GameObject lastObject;
+    public GameObject winInstance;
     public enum SceneType
     {
         MainMenu,
         HubWorld,
         Level,
-        CarCustomization
+        CarCustomization,
+        LevelEditor
     }
     public enum GameState
     {
@@ -36,7 +38,8 @@ public class UIController : MonoBehaviour
         Paused,
         Settings,
         Win,
-        CarCustomization
+        CarCustomization,
+        LevelEditor
     }
     public GameState gameState { get; private set; }
     bool vrCamTryGet = false;
@@ -66,6 +69,7 @@ public class UIController : MonoBehaviour
         //eventSystem = gameObject.GetComponent<EventSystem>();
 
         if (SceneManager.GetActiveScene().buildIndex == 0) gameState = GameState.MainMenu;
+        else if (sceneType == SceneType.LevelEditor) gameState = GameState.LevelEditor;
         else gameState = GameState.Playing;
 
         if (sceneType == SceneType.HubWorld || sceneType == SceneType.Level)
@@ -155,8 +159,14 @@ public class UIController : MonoBehaviour
     {
         gameState = GameState.Win;
         Time.timeScale = 0.0f;
-        GameObject winInstance = Instantiate(winMenu, transform);
+
+        if (winInstance == null)
+        {
+            if (sceneType == SceneType.LevelEditor) winInstance = Instantiate(editorWinMenu, transform);
+            else winInstance = Instantiate(winMenu, transform);
+        }
         winInstance.GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(x => x.text = x.gameObject.CompareTag("TimeText") ? String.Format("{0:0.00}", time) + "s" : x.text);
+        time = 0;
     }
 
     private void Update()

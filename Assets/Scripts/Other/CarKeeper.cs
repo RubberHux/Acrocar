@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class Car
+ [System.Serializable]
+public class Loadable
 {
     public GameObject prefab;
     public string name;
@@ -13,5 +13,5 @@ public class Car
 
 public class CarKeeper : MonoBehaviour
 {
-    public Car[] cars;
+    public Loadable[] cars, spoilers, roofAccessories, hoodAccessories;
 }

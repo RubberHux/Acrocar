@@ -28,23 +28,27 @@ public class ColorChangeMenu : MonoBehaviour
     }
 
     public void SetRed(float value) 
-    { 
+    {
+        if (GameMaster.playerCarMainColours == null) return;
         color.r = value;
         car.ChangeMainColor(color);
     }
     public void SetGreen(float value) 
-    { 
+    {
+        if (GameMaster.playerCarMainColours == null) return;
         color.g = value;
         car.ChangeMainColor(color);
     }
     public void SetBlue(float value) 
-    { 
+    {
+        if (GameMaster.playerCarMainColours == null) return;
         color.b = value;
         car.ChangeMainColor(color);
     }
     public void SetAlpha(float value) 
     {
         //Just in case we want it later
+        if (GameMaster.playerCarMainColours == null) return;
         color.a = value;
         car.ChangeMainColor(color);
     } 
