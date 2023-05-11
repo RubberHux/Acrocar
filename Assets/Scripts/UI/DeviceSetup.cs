@@ -43,4 +43,10 @@ public class DeviceSetup : MonoBehaviour
             sceneLoader.Reload();
         }
     }
+
+    public void Back()
+    {
+        this.gameObject.SetActive(false);
+   
+    }
 }
