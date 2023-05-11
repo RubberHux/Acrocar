@@ -12,4 +12,6 @@ public class LevelMetaData : MonoBehaviour
     public string ID;
     public StageType stageType;
     public double bronzeTime, silverTime, goldTime;
+    public bool UseCustomGravity;
+    public Vector3 customGravity;
 }

@@ -13,7 +13,7 @@ public class GravityField : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<CarController>().SetCustomGravity(direction.transform.up * power * (scaleByWorldGravity ? Physics.gravity.magnitude : 1));
+            other.GetComponent<CarController>().SetLocalCustomGravity(direction.transform.up * power * (scaleByWorldGravity ? Physics.gravity.magnitude : 1));
         }
     }
 
@@ -21,7 +21,7 @@ public class GravityField : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<CarController>().SetCustomGravity(null);
+            other.GetComponent<CarController>().SetLocalCustomGravity(null);
         }
     }
 }

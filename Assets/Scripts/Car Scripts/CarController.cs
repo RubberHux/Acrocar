@@ -63,11 +63,12 @@ public class CarController : MonoBehaviour
     internal float stationaryTolerance;
     internal Rigidbody rigidBody; // rigid body of the car
     private MovingPlatform movingPtfm; // the current attached moving platform 
-    public Vector3? gravity = null;
+    public Vector3? localCustomGravity = null;
     public Vector2 rotateDir, moveDir, swingDir;
     public LayerMask gravRoadLayer;
     public LayerMask notCarLayers;
     public LayerMask movingPlatformLayer;
+    private LevelMetaData lmd;
     PlayerInput playerInput;
     [NonSerialized] public float gravRoadPercent;
     [NonSerialized] public bool is2D;
@@ -76,6 +77,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float maxSteeringAngle;
     [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
     float xPos;
+    Vector3? customGravity = null;
 
     private Camera mainCamera;
     [NonSerialized] public bool firstPerson = false;
@@ -96,6 +98,13 @@ public class CarController : MonoBehaviour
         stationaryTolerance = 0.001f;
         playerInput = GetComponent<PlayerInput>();
         
+        lmd = FindObjectOfType<LevelMetaData>();
+        if (lmd != null)
+        {
+            if (lmd.UseCustomGravity) customGravity = lmd.customGravity;
+            rigidBody.useGravity = false;
+        }
+
         SetConstraints();
         dimensionSwitch = InputHandler.playerInput.Debug.DimensionSwitch;
         dimensionSwitch.Enable();
@@ -365,9 +374,9 @@ public class CarController : MonoBehaviour
         }
     }
 
-    public void SetCustomGravity(Vector3? gravityDirection)
+    public void SetLocalCustomGravity(Vector3? gravityDirection)
     {
-        gravity = gravityDirection;
+        localCustomGravity = gravityDirection;
     }
 
     internal void CustomGravity()
@@ -379,10 +388,15 @@ public class CarController : MonoBehaviour
             rigidBody.AddForce(Physics.gravity.magnitude * rigidBody.mass * -transform.up);
             noGravChanges = false;
         }
-        else if (gravity != null)
+        else if (localCustomGravity != null)
         {
             noGravChanges = false;
-            rigidBody.AddForce((Vector3)gravity * rigidBody.mass);
+            rigidBody.AddForce((Vector3)localCustomGravity * rigidBody.mass);
+        }
+        else if (customGravity != null)
+        {
+            noGravChanges = false;
+            rigidBody.AddForce((Vector3)customGravity * rigidBody.mass);
         }
         if (noGravChanges) rigidBody.useGravity = true;
         else rigidBody.useGravity = false;
