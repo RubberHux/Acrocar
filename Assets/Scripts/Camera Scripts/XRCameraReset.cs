@@ -9,6 +9,7 @@ public class XRCameraReset : MonoBehaviour
     [SerializeField] GameObject rotationOffset, offset;
     bool moved = false;
     InputAction resetAction;
+    
 
     // Start is called before the first frame update
     void OnEnable()

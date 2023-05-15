@@ -15,6 +15,10 @@ TagManager:
   - XRCam
   - EditorVisual
   - TimeText
+  - Block
+  - SpawnPoint
+  - MovableGrappleBlock
+  - CustomCams
   layers:
   - Default
   - TransparentFX
@@ -24,7 +28,7 @@ TagManager:
   - UI
   - Car
   - GravRoad
-  - 
+  - MovingPlafroms
   - 
   - 
   - 

@@ -16,25 +16,34 @@ public class CustomiseCar : MonoBehaviour
     void Start()
     {
         carKeeper = carKeeperPrefab.GetComponent<CarKeeper>();
-        InstantiateCar(GameMaster.playerCars[GetComponentInParent<Customizer9001>().playerIndex]);
+        LoadPart(GameMaster.LoadableType.Car, GameMaster.playerCars[GetComponentInParent<Customizer9001>().playerIndex]);
     }
 
-    public void InstantiateCar(int carIndex)
+    public void LoadPart(GameMaster.LoadableType type, int carIndex)
     {
-        if (carInstance != null) Destroy(carInstance);
-        carInstance = Instantiate(carKeeper.cars[carIndex].prefab);
-        colorChangers = carInstance.GetComponentsInChildren<ColorChanger>().ToList();
-        carInstance.GetComponent<CarController>().enabled = false;
-        carInstance.GetComponent<GrapplingGun>().enabled = false;
-        carInstance.GetComponent<PlayerInput>().enabled = false;
-        colorChangers.ForEach(x => x.UpdateColours(GetComponentInParent<Customizer9001>().playerIndex));
-        carInstance.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        if (type == GameMaster.LoadableType.Car)
+        {
+            if (carInstance != null) Destroy(carInstance);
+            carInstance = Instantiate(carKeeper.cars[carIndex].prefab);
+            colorChangers = carInstance.GetComponentsInChildren<ColorChanger>().ToList();
+            carInstance.GetComponent<CarController>().enabled = false;
+            carInstance.GetComponent<GrapplingGun>().enabled = false;
+            carInstance.GetComponent<PlayerInput>().enabled = false;
+            colorChangers.ForEach(x => x.UpdateColours(GetComponentInParent<Customizer9001>().playerIndex));
+            carInstance.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        }
+        else
+        {
+            carInstance.GetComponentsInChildren<CarPartLoader>().ToList().ForEach(x=> { if (x.type == type) x.LoadPart(); });
+            colorChangers = carInstance.GetComponentsInChildren<ColorChanger>().ToList();
+        }
     }
 
     public void ChangeMainColor(Color color)
     {
+        if (GetComponentInParent<Customizer9001>().playerIndex == -1) return;
         GameMaster.playerCarMainColours[GetComponentInParent<Customizer9001>().playerIndex] = color;
-        colorChangers.ForEach(x => x.UpdateColours(GetComponentInParent<Customizer9001>().playerIndex));
+        carInstance.GetComponentsInChildren<ColorChanger>().ToList().ForEach(x => x.UpdateColours(GetComponentInParent<Customizer9001>().playerIndex));
     }
 
     private void Update()
