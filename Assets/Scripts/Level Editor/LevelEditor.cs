@@ -256,6 +256,11 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
+    public void SetMaterial(Material mat)
+    {
+        currObject.GetComponent<MeshRenderer>().material = mat;
+    }
+
     public void SaveLevel()
     {
         levelBackup = Instantiate(level);
