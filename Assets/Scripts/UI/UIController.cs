@@ -38,6 +38,8 @@ public class UIController : MonoBehaviour
     }
     public GameState gameState { get; private set; }
     bool vrCamTryGet = false;
+    public AudioSource winsound;
+
 
     public void SetState(GameState newState)
     {
@@ -155,6 +157,7 @@ public class UIController : MonoBehaviour
         Time.timeScale = 0.0f;
         GameObject winInstance = Instantiate(winMenu, transform);
         winInstance.GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(x => x.text = x.gameObject.CompareTag("TimeText") ? String.Format("{0:0.00}", time) + "s" : x.text);
+        winsound.Play();
     }
 
     private void Update()
