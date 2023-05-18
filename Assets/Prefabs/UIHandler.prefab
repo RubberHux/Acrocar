@@ -168,6 +168,8 @@ MonoBehaviour:
   gameUI: {fileID: 8851900980719707364, guid: 9de0fd75acdc3bf4389846e3c1e1338d, type: 3}
   addPlayerMenu: {fileID: 5950107126838367268, guid: a44a2050be979ff4aba513c001cdabb3, type: 3}
   mainMenu: {fileID: 6257411232624783394, guid: 67548d45d76e7af4a97fccbe12c9dbc9, type: 3}
+  editorWinMenu: {fileID: 0}
+  winInstance: {fileID: 0}
   winsound: {fileID: 1988266682538348825}
 --- !u!82 &1988266682538348825
 AudioSource:
