@@ -20,6 +20,7 @@ public class LevelEditor : MonoBehaviour
     public TMP_Text playButton; // button for toggling play/edit mode
 
     private GameObject currObject; // current object selected
+    private GameObject objectToAdd; // the type of object added when double clicking
     private GameObject copiedObject; // object currently copied
     private GameObject spawnedCarLoader; // actual car loader spawned when playtesting
     private GameObject levelBackup;
@@ -28,7 +29,6 @@ public class LevelEditor : MonoBehaviour
     private Vector3 mousePos; // current mouse position in the world
     private Vector3 prevMousePos; // previous mouse pos (used for delta calcs)
     private Vector3 moveOffset; // offset between click point and object pos
-    private int objectIndex; // current index of objectList
     private bool playing; // playtesting the level?
     private float lastClickTime;
 
@@ -37,12 +37,13 @@ public class LevelEditor : MonoBehaviour
 
     private void Start()
     {
-        objectIndex = 0;
         interacting = false;
         playing = false;
+        propertiesWindow.SetActive(false);
+
         currentMode = EditorMode.Move;
         carLoader.GetComponent<CarLoader>().is2D = true;
-        propertiesWindow.SetActive(false);
+        objectToAdd = null;
     }
 
     // Update is called once per frame
@@ -80,7 +81,7 @@ public class LevelEditor : MonoBehaviour
                     propertiesWindow.SetActive(false);
 
                     // if double click into the void, create new object
-                    if (Time.time - lastClickTime < 0.2f) CreateObject(objectList.GetCurrentObject(), mousePos);
+                    if (Time.time - lastClickTime < 0.2f) CreateObject(objectToAdd, mousePos);
                     lastClickTime = Time.time;
                 }
             }
@@ -158,19 +159,15 @@ public class LevelEditor : MonoBehaviour
         propertiesWindow.SetActive(false);
     }
 
-    public void SetMoveMode()
+    public void SetMode(int mode)
     {
-        currentMode = EditorMode.Move;
+        currentMode = (EditorMode)mode;
     }
 
-    public void SetScaleMode()
+    public void SetObjectToAdd(GameObject obj)
     {
-        currentMode = EditorMode.Scale;
-    }
 
-    public void SetRotateMode()
-    {
-        currentMode = EditorMode.Rotate;
+        objectToAdd = obj;
     }
 
     private GameObject CreateObject(GameObject origObject, Vector3 spawnPos)

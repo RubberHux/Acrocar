@@ -1049,13 +1049,13 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2021835406}
-        m_TargetAssemblyTypeName: ObjectList, Assembly-CSharp
-        m_MethodName: SetCurrentObject
-        m_Mode: 1
+      - m_Target: {fileID: 1254373731}
+        m_TargetAssemblyTypeName: LevelEditor, Assembly-CSharp
+        m_MethodName: SetObjectToAdd
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 3102151472974551980, guid: 6dc6bbdd8ce72254e99f04f0302d5bfd, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1596,7 +1596,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -133.65002, y: -161.93015}
+  m_AnchoredPosition: {x: -133.65002, y: -211}
   m_SizeDelta: {x: 215.30005, y: 177.42047}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &283682285
@@ -3038,7 +3038,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: 20}
+  m_AnchoredPosition: {x: 80, y: 20}
   m_SizeDelta: {x: 100, y: 430}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &452760968
@@ -4059,13 +4059,13 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2021835406}
-        m_TargetAssemblyTypeName: ObjectList, Assembly-CSharp
-        m_MethodName: SetCurrentObject
-        m_Mode: 1
+      - m_Target: {fileID: 1254373731}
+        m_TargetAssemblyTypeName: LevelEditor, Assembly-CSharp
+        m_MethodName: SetObjectToAdd
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 375536795643232509, guid: c7e8716118ddc4e4ea963b2fda1e8c23, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6503,7 +6503,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!224 &1041027054
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7459,7 +7459,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 312930676}
   carLoader: {fileID: 6389540439510499187, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
   editorCamera: {fileID: 943261221}
-  objectList: {fileID: 2021835406}
+  objectList: {fileID: 0}
   normalMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   grappleMaterial: {fileID: 2100000, guid: 45cdc3bca0d273244aac5b55b379f499, type: 2}
   lavaMaterial: {fileID: 2100000, guid: 1300fe53a8f73714c9513a9bb0965690, type: 2}
@@ -8275,13 +8275,13 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2021835406}
-        m_TargetAssemblyTypeName: ObjectList, Assembly-CSharp
-        m_MethodName: SetCurrentObject
-        m_Mode: 1
+      - m_Target: {fileID: 1254373731}
+        m_TargetAssemblyTypeName: LevelEditor, Assembly-CSharp
+        m_MethodName: SetObjectToAdd
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 753111517017091493, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8376,8 +8376,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1254373731}
         m_TargetAssemblyTypeName: LevelEditor, Assembly-CSharp
-        m_MethodName: SetMoveMode
-        m_Mode: 1
+        m_MethodName: SetMode
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8840,12 +8840,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1254373731}
         m_TargetAssemblyTypeName: LevelEditor, Assembly-CSharp
-        m_MethodName: SetRotateMode
-        m_Mode: 1
+        m_MethodName: SetMode
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9276,7 +9276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowSwitchOff: 0
+  m_AllowSwitchOff: 1
 --- !u!1 &1631911577
 GameObject:
   m_ObjectHideFlags: 0
@@ -9821,7 +9821,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 75, y: -207.89314}
+  m_AnchoredPosition: {x: 201, y: -203.6}
   m_SizeDelta: {x: 95.991, y: 31.4337}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1664586297
@@ -10199,13 +10199,13 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2021835406}
-        m_TargetAssemblyTypeName: ObjectList, Assembly-CSharp
-        m_MethodName: SetCurrentObject
-        m_Mode: 1
+      - m_Target: {fileID: 1254373731}
+        m_TargetAssemblyTypeName: LevelEditor, Assembly-CSharp
+        m_MethodName: SetObjectToAdd
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 6864388217270592271, guid: 115a49aee45e61f498e2ddbc26ec68e8, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11641,13 +11641,13 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2021835406}
-        m_TargetAssemblyTypeName: ObjectList, Assembly-CSharp
-        m_MethodName: SetCurrentObject
-        m_Mode: 1
+      - m_Target: {fileID: 1254373731}
+        m_TargetAssemblyTypeName: LevelEditor, Assembly-CSharp
+        m_MethodName: SetObjectToAdd
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 8108910642004790403, guid: ba87fee851fdc6442b1d12b3a55638bc, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11903,7 +11903,6 @@ GameObject:
   - component: {fileID: 2021835403}
   - component: {fileID: 2021835405}
   - component: {fileID: 2021835404}
-  - component: {fileID: 2021835406}
   m_Layer: 5
   m_Name: ObjectList
   m_TagString: Untagged
@@ -11970,30 +11969,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2021835402}
   m_CullTransparentMesh: 1
---- !u!114 &2021835406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2021835402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0412923ced9e9e14991960e51aadfb63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 6864388217270592271, guid: 115a49aee45e61f498e2ddbc26ec68e8, type: 3}
-  - {fileID: 753111517017091493, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
-  - {fileID: 3102151472974551980, guid: 6dc6bbdd8ce72254e99f04f0302d5bfd, type: 3}
-  - {fileID: 375536795643232509, guid: c7e8716118ddc4e4ea963b2fda1e8c23, type: 3}
-  - {fileID: 8108910642004790403, guid: ba87fee851fdc6442b1d12b3a55638bc, type: 3}
-  toggles:
-  - {fileID: 1755125107}
-  - {fileID: 1306894022}
-  - {fileID: 182131368}
-  - {fileID: 538258612}
-  - {fileID: 1962323376}
 --- !u!1 &2027211006
 GameObject:
   m_ObjectHideFlags: 0
@@ -12082,12 +12057,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1254373731}
         m_TargetAssemblyTypeName: LevelEditor, Assembly-CSharp
-        m_MethodName: SetScaleMode
-        m_Mode: 1
+        m_MethodName: SetMode
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
