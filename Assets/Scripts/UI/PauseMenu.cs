@@ -17,4 +17,9 @@ public class PauseMenu : MonoBehaviour
         gameObject.GetComponentInParent<UIController>().OpenAddPlayers();
         gameObject.SetActive(false);
     }
+
+    public void Back()
+    {
+        this.gameObject.SetActive(false);
+    }
 }
