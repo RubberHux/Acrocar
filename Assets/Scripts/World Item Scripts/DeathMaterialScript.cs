@@ -6,6 +6,7 @@ public class DeathMaterialScript : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<CarController>().Kill();

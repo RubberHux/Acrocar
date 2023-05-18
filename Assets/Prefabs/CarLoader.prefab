@@ -729,8 +729,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc65b84fb26ad546b9a5f45f38b8f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 7373890725835698445, guid: 6eb4331424b4b134884989f71e29b114, type: 3}
   cameras: {fileID: 4347467498851725030, guid: 7879255828f254442aa5d061e0ff0d77, type: 3}
+  carKeeperPrefab: {fileID: 3461644506459499686, guid: 6bddd860baf63f541a2b3291f33b7731, type: 3}
   is2D: 0
   camLayers:
   - serializedVersion: 2
