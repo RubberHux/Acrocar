@@ -12,6 +12,10 @@ public class DeviceSetup : MonoBehaviour
     private static InputAction DeviceAdd;
     [SerializeField] private TextMeshProUGUI[] playerTexts;
     [SerializeField] private SceneLoader sceneLoader;
+
+    public AudioSource playeradd;
+    public AudioClip playeraddsound;
+
     private void OnEnable()
     {
         devices.Clear();
@@ -34,6 +38,7 @@ public class DeviceSetup : MonoBehaviour
             devices.Add(device);
             Debug.Log(devices.Count);
             playerTexts[devices.Count - 1].text = $"Player {devices.Count}\nJoined";
+            playeradd.PlayOneShot(playeraddsound);
         }
         else
         {
@@ -42,5 +47,11 @@ public class DeviceSetup : MonoBehaviour
             GameMaster.playerCount = devices.Count;
             sceneLoader.Reload();
         }
+    }
+
+    public void Back()
+    {
+        this.gameObject.SetActive(false);
+   
     }
 }

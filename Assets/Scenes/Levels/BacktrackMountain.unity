@@ -681,6 +681,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1838006970368257334, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+      propertyPath: winsound
+      value: 
+      objectReference: {fileID: 219695411}
     - target: {fileID: 1838006970368257340, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -879,6 +883,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+--- !u!82 &219695411 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1988266682538348825, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+  m_PrefabInstance: {fileID: 219695410}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &283615953
 GameObject:
   m_ObjectHideFlags: 0

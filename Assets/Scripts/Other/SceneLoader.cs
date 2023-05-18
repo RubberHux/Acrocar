@@ -19,12 +19,14 @@ public class SceneLoader : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
+        Invoke("LoadScene",2.0f);
     }
 
     public void LoadScene(int index)
     {
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene(index);
+        //SceneManager.LoadScene(index);
+        SceneManager.LoadSceneAsync(index);
     }
 
     public void LoadMainMenu() 
