@@ -33,6 +33,7 @@ public class CarLoader : MonoBehaviour
                 carInstance.name = $"Player {i+1}";
                 CarController carController = carInstance.GetComponent<CarController>();
                 carController.is2D = is2D;
+                carController.respawn2D = is2D;
                 carController.transform.parent = transform;
                 carController.isAlone = playerCount >= 1;
                 carController.playerIndex = i;
