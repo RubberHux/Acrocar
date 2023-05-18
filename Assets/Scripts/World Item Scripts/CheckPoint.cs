@@ -1,31 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
+using System.Linq;
 using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    private Renderer renderMaker;
-
-    void Start()
-    {
-        renderMaker = GetComponent<Renderer>();
-        renderMaker.material.color = Color.cyan;
-    }
+    bool activated;
+    List<int> activePlayers = new();
+    [SerializeField] GameObject flag;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             CarController carController = other.GetComponent<CarController>();
-            if (carController.lastCheckPoint != null) carController.lastCheckPoint.UnColour();
+            if (activePlayers.Contains(carController.playerIndex)) return;
+
+            activePlayers.Append(carController.playerIndex);
+            if (carController.lastCheckPoint != null) carController.lastCheckPoint.UnCheck(carController.playerIndex);
             carController.lastCheckPoint = this;
-            renderMaker.material.color = Color.blue;
+            carController.respawn2D = carController.is2D;
+            if (!activated)
+            {
+                activated = true;
+                flag.SetActive(true);
+                flag.GetComponent<ColorChanger>().UpdateColours(carController.playerIndex);
+            }
         }
     }
 
-    public void UnColour()
+    public void UnCheck(int carIndex)
     {
-        renderMaker.material.color = Color.cyan;
+        activePlayers.Remove(carIndex);
+        if (activePlayers.Count == 0)
+        {
+            activated = false;
+            flag.SetActive(false);
+        }
     }
 }

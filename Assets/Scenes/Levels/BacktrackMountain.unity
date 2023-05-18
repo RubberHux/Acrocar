@@ -3114,9 +3114,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 732638675620688938, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.17
+      objectReference: {fileID: 0}
     - target: {fileID: 753111517017091493, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
       propertyPath: m_Name
       value: Checkpoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883249820660004979, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5232353994011914113, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
       propertyPath: m_RootOrder
@@ -3161,6 +3169,22 @@ PrefabInstance:
     - target: {fileID: 5232353994011914113, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6517077914686461836, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4621835
+      objectReference: {fileID: 0}
+    - target: {fileID: 6517077914686461836, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3185
+      objectReference: {fileID: 0}
+    - target: {fileID: 7694862064507110183, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8166712863612993063, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.94
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
