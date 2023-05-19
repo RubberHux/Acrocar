@@ -25,6 +25,10 @@ public class GrapplingGun : MonoBehaviour
     bool fireHook = false;
     Vector2 aim;
 
+    public AudioSource carSound;
+    public AudioClip grapSoundClip;
+    public AudioClip grapstopClip;
+
     enum GrappleType
     {
         Swing,
@@ -141,11 +145,13 @@ public class GrapplingGun : MonoBehaviour
         {
             aimPreTimer = aimLeniencyPreTime;
             fireHook = true;
+            carSound.PlayOneShot(grapSoundClip,0.5f);
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             fireHook = false;
             StopGrapple();
+            carSound.PlayOneShot(grapstopClip, 0.5f);
         }
     }
 

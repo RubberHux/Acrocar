@@ -168,6 +168,8 @@ public class UIController : MonoBehaviour
         winInstance.GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(x => x.text = x.gameObject.CompareTag("TimeText") ? String.Format("{0:0.00}", time) + "s" : x.text);
         time = 0;
         winsound.Play();
+ 
+
     }
 
     private void Update()
