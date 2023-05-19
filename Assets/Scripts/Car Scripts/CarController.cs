@@ -1,14 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.UIElements;
-using UnityEngine.Windows;
 
 [System.Serializable]
 // Class from Unity documentation, with slight modification (due to no need for steering):
@@ -44,7 +37,7 @@ public class CarController : MonoBehaviour
     public float gravCheckDistance;
     [SerializeField] Transform centerOfMass;
     [NonSerialized] public float respawnTimer = 0;
-    [NonSerialized] public bool respawned = false;
+    [NonSerialized] public bool respawned = false, respawn2D;
     [NonSerialized] public CheckPoint lastCheckPoint = null;
     [SerializeField] internal Transform[] roadCheckers;
     CineMachine3DController camController;
@@ -485,6 +478,7 @@ public class CarController : MonoBehaviour
         respawnTimer = 0.1f;
         respawned = true;
         grappling = false;
+        if (respawn2D != is2D) DimensionSwitch(respawn2D);
     }
 
     private void AirRotate()
