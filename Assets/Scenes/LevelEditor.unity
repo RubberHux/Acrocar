@@ -3065,6 +3065,7 @@ MonoBehaviour:
   - {fileID: 1282066014}
   - {fileID: 947878606}
   - {fileID: 2065782162}
+  currentObject: {fileID: 0}
 --- !u!114 &452760969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7459,7 +7460,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 312930676}
   carLoader: {fileID: 6389540439510499187, guid: 32ee150f2df6a294fadfb5ae35265977, type: 3}
   editorCamera: {fileID: 943261221}
-  objectList: {fileID: 0}
+  objectList: {fileID: 2021835402}
   normalMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   grappleMaterial: {fileID: 2100000, guid: 45cdc3bca0d273244aac5b55b379f499, type: 2}
   lavaMaterial: {fileID: 2100000, guid: 1300fe53a8f73714c9513a9bb0965690, type: 2}
