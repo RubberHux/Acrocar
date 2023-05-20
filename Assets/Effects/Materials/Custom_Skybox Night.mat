@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Custom_Skybox Night
-  m_Shader: {fileID: 4800000, guid: cd3226761372249398554908ac0bcf40, type: 3}
+  m_Shader: {fileID: 4800000, guid: d8a15f0e9ee6d4fe3bb9cdeccbf9a2f6, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -34,6 +34,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _HorizonFalloff: 2
     - _SunBloomFalloff: 20
     m_Colors:
     - _HorizonColor: {r: 0, g: 0.12047779, b: 0.1509434, a: 1}
