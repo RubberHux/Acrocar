@@ -1,14 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.UIElements;
-using UnityEngine.Windows;
 
 [System.Serializable]
 // Class from Unity documentation, with slight modification (due to no need for steering):
@@ -44,7 +37,7 @@ public class CarController : MonoBehaviour
     public float gravCheckDistance;
     [SerializeField] Transform centerOfMass;
     [NonSerialized] public float respawnTimer = 0;
-    [NonSerialized] public bool respawned = false;
+    [NonSerialized] public bool respawned = false, respawn2D;
     [NonSerialized] public CheckPoint lastCheckPoint = null;
     [SerializeField] internal Transform[] roadCheckers;
     CineMachine3DController camController;
@@ -76,6 +69,9 @@ public class CarController : MonoBehaviour
     [SerializeField] private float breakForce;
     [SerializeField] private float maxSteeringAngle;
     [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
+    public ParticleSystem groundParticle;
+    private float particleTimer = 0f;
+    public float particleInterval = 0.1f;
     float xPos;
     Vector3? customGravity = null;
 
@@ -166,6 +162,20 @@ public class CarController : MonoBehaviour
         FlipCar();
         UpdateTimers();
         ConstraintsFix();
+    }
+
+    private void Update()
+    {
+        if (groundedWheels == 4 && rigidBody.velocity.magnitude > 10.0f)
+        {
+            if (particleTimer > particleInterval)
+            {
+                groundParticle.Play();
+                particleTimer = 0;
+            }
+
+            particleTimer += Time.deltaTime;
+        }
     }
 
     void ConstraintsFix()
@@ -468,6 +478,7 @@ public class CarController : MonoBehaviour
         respawnTimer = 0.1f;
         respawned = true;
         grappling = false;
+        if (respawn2D != is2D) DimensionSwitch(respawn2D);
     }
 
     private void AirRotate()
