@@ -10,7 +10,7 @@ public class LevelEditor : MonoBehaviour
     public GameObject spawnPoint; // initial spawner for car
     public GameObject carLoader; // car loader object (prefab)
     public GameObject editorCamera; // camera for level editor (separate from when playing)
-    public ObjectList objectList; // list of objects which can be created
+    public GameObject objectList; // list of objects which can be created
     public Material normalMaterial; // default material to slap on objects
     public Material grappleMaterial; // material for grappleable stuff
     public Material lavaMaterial; // material for lava
@@ -20,6 +20,7 @@ public class LevelEditor : MonoBehaviour
     public TMP_Text playButton; // button for toggling play/edit mode
 
     private GameObject currObject; // current object selected
+    private GameObject objectToAdd; // the type of object added when double clicking
     private GameObject copiedObject; // object currently copied
     private GameObject spawnedCarLoader; // actual car loader spawned when playtesting
     private GameObject levelBackup;
@@ -28,7 +29,6 @@ public class LevelEditor : MonoBehaviour
     private Vector3 mousePos; // current mouse position in the world
     private Vector3 prevMousePos; // previous mouse pos (used for delta calcs)
     private Vector3 moveOffset; // offset between click point and object pos
-    private int objectIndex; // current index of objectList
     private bool playing; // playtesting the level?
     private float lastClickTime;
 
@@ -37,12 +37,13 @@ public class LevelEditor : MonoBehaviour
 
     private void Start()
     {
-        objectIndex = 0;
         interacting = false;
         playing = false;
+        propertiesWindow.SetActive(false);
+
         currentMode = EditorMode.Move;
         carLoader.GetComponent<CarLoader>().is2D = true;
-        propertiesWindow.SetActive(false);
+        objectToAdd = null;
     }
 
     // Update is called once per frame
@@ -59,7 +60,7 @@ public class LevelEditor : MonoBehaviour
                 RaycastHit hit;
 
                 // try raycasting to see if mouse is clicked over a level object
-                if (Physics.Raycast(ray, out hit, 100))
+                if (Physics.Raycast(ray, out hit, 100) && !MouseOverUIElement())
                 {
                     currObject = FindRootParent(hit.transform.gameObject);
                     //HighlightObject(true);
@@ -72,7 +73,7 @@ public class LevelEditor : MonoBehaviour
                     propertiesWindow.GetComponent<PropertiesWindow>().SetObject(currObject);
                 }
                 // no level object or UI element is clicked on
-                else if (!EventSystem.current.IsPointerOverGameObject())
+                else if (!MouseOverUIElement())
                 {
                     // set current object to null and hide the property window
                     //if (currObject) HighlightObject(false);
@@ -80,7 +81,7 @@ public class LevelEditor : MonoBehaviour
                     propertiesWindow.SetActive(false);
 
                     // if double click into the void, create new object
-                    if (Time.time - lastClickTime < 0.2f) CreateObject(objectList.GetCurrentObject(), mousePos);
+                    if (Time.time - lastClickTime < 0.2f) CreateObject(objectToAdd, mousePos);
                     lastClickTime = Time.time;
                 }
             }
@@ -152,33 +153,40 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
+    private bool MouseOverUIElement()
+    {
+        PointerEventData currMousePos = new PointerEventData(EventSystem.current);
+        currMousePos.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(currMousePos, results);
+        return results.Count > 0;
+    }
+
     public void DeleteObject()
     {
         Destroy(currObject);
         propertiesWindow.SetActive(false);
     }
 
-    public void SetMoveMode()
+    public void SetMode(int mode)
     {
-        currentMode = EditorMode.Move;
+        currentMode = (EditorMode)mode;
     }
 
-    public void SetScaleMode()
+    public void SetObjectToAdd(GameObject obj)
     {
-        currentMode = EditorMode.Scale;
-    }
-
-    public void SetRotateMode()
-    {
-        currentMode = EditorMode.Rotate;
+        objectToAdd = obj;
     }
 
     private GameObject CreateObject(GameObject origObject, Vector3 spawnPos)
     {
-        Debug.Log("Creating " + objectList.GetCurrentObject().name);
-        GameObject newObject = Instantiate(origObject, spawnPos, Quaternion.identity);
-        newObject.name = origObject.name;
-        newObject.transform.parent = level.transform;
+        GameObject newObject = null;
+        if (origObject != null)
+        {
+            newObject = Instantiate(origObject, spawnPos, Quaternion.identity);
+            newObject.name = origObject.name;
+            newObject.transform.parent = level.transform;
+        } 
 
         return newObject;
     }
@@ -207,7 +215,7 @@ public class LevelEditor : MonoBehaviour
             editorCamera.SetActive(false);
             editorModes.gameObject.SetActive(false);
             propertiesWindow.SetActive(false);
-            objectList.gameObject.SetActive(false);
+            objectList.SetActive(false);
 
             playButton.text = "Back";
             playing = true;
@@ -226,7 +234,7 @@ public class LevelEditor : MonoBehaviour
             spawnPoint.SetActive(true);
             editorCamera.SetActive(true);
             editorModes.gameObject.SetActive(true);
-            objectList.gameObject.SetActive(true);
+            objectList.SetActive(true);
 
             Time.timeScale = 1;
             uiController.SetState(UIController.GameState.LevelEditor);
@@ -254,6 +262,11 @@ public class LevelEditor : MonoBehaviour
         {
             if (t.TryGetComponent(out Rigidbody rigidbody)) rigidbody.isKinematic = false;
         }
+    }
+
+    public void SetMaterial(Material mat)
+    {
+        if (currObject.CompareTag("Block")) currObject.GetComponent<MeshRenderer>().material = mat;
     }
 
     public void SaveLevel()
