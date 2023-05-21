@@ -122,12 +122,14 @@ public class UIController : MonoBehaviour
     {
         if (gameState == GameState.Playing)
         {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<CarController>().moveSound.Pause();
             gameState = GameState.Paused;
             Time.timeScale = 0.0f;
             pauseMenuInstance.SetActive(true);
         }
         else if (gameState == GameState.Paused)
         {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<CarController>().moveSound.Play();
             gameState = GameState.Playing;
             Time.timeScale = 1.0f;
             pauseMenuInstance.SetActive(false);
@@ -157,9 +159,9 @@ public class UIController : MonoBehaviour
 
     public void SetWin()
     {
+      
         gameState = GameState.Win;
         Time.timeScale = 0.0f;
-
         if (winInstance == null)
         {
             if (sceneType == SceneType.LevelEditor) winInstance = Instantiate(editorWinMenu, transform);
@@ -167,7 +169,10 @@ public class UIController : MonoBehaviour
         }
         winInstance.GetComponentsInChildren<TextMeshProUGUI>().ToList().ForEach(x => x.text = x.gameObject.CompareTag("TimeText") ? String.Format("{0:0.00}", time) + "s" : x.text);
         time = 0;
+      
         winsound.Play();
+        
+
     }
 
     private void Update()

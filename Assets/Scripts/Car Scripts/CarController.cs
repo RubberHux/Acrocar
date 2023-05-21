@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 [System.Serializable]
 // Class from Unity documentation, with slight modification (due to no need for steering):
 // https://docs.unity3d.com/Manual/WheelColliderTutorial.html
@@ -80,6 +81,12 @@ public class CarController : MonoBehaviour
     float jumpTimer = 0;
     float jumpTime = 0.1f;
 
+    public AudioSource carSound, moveSound;
+    public AudioClip jumpSoundclip;
+    public AudioClip deadSoundclip;
+    private float enginePitch;
+
+
     private void Awake()
     {
         grapplingGun = GetComponent<GrapplingGun>();
@@ -117,7 +124,10 @@ public class CarController : MonoBehaviour
     {
         startPoint = transform.position;
         startRot = transform.rotation;
+        moveSound.pitch = 1;
     }
+
+
 
     private void SetConstraints()
     {
@@ -162,7 +172,11 @@ public class CarController : MonoBehaviour
         FlipCar();
         UpdateTimers();
         ConstraintsFix();
-    }
+        engineSound();
+
+            }
+
+   
 
     private void Update()
     {
@@ -244,6 +258,7 @@ public class CarController : MonoBehaviour
         {
             rigidBody.AddForce(rigidBody.transform.up * 200000 * Time.deltaTime * 180);
             rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
+          
         }
     }
 
@@ -264,6 +279,8 @@ public class CarController : MonoBehaviour
         val = playerInput.actions["Swing"].ReadValue<Vector2>();
         if (is2D) swingDir = new Vector2(0, firstPerson ? val.y : val.x);
         else swingDir = val;
+       
+      
     }
 
     public void SetBreak(InputAction.CallbackContext context)
@@ -290,6 +307,7 @@ public class CarController : MonoBehaviour
     {
         //Allows PlayerInput to zoom
         if (is2D && camController != null) camController.Zoom(context.ReadValue<Vector2>().y);
+
     }
 
     void SetActionMap()
@@ -314,6 +332,7 @@ public class CarController : MonoBehaviour
         {
             UpdateSingleWheel(axle.leftWheel, axle.leftTransform, axle.leftOrigin);
             UpdateSingleWheel(axle.rightWheel, axle.rightTransform, axle.rightOrigin);
+           
         }
     }
 
@@ -325,6 +344,8 @@ public class CarController : MonoBehaviour
         if (wheelCollider.isGrounded) wheelTransform.position = pos;
         else wheelTransform.localPosition = Vector3.Lerp(wheelTransform.localPosition, origin, 0.999f);
         wheelTransform.rotation = rot;
+
+      
     }
 
     private void HandleMotor()
@@ -332,6 +353,7 @@ public class CarController : MonoBehaviour
         float driveDir = moveDir.y;
         float rpm = 0;
         int motorAmount = 0;
+
         foreach (AxleInfo axle in axleInfos)
         {
             if (axle.motorType == AxleInfo.MotorType.Both || (is2D && axle.motorType == AxleInfo.MotorType.Only2D) || (!is2D && axle.motorType == AxleInfo.MotorType.Only3D))
@@ -340,11 +362,16 @@ public class CarController : MonoBehaviour
                 axle.rightWheel.motorTorque = driveDir * motorForce;
                 rpm += axle.leftWheel.rpm + axle.rightWheel.rpm;
                 motorAmount++;
+            
             }
+
+
         }
         rpm /= motorAmount;
         currentBreakForce = (breaking || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10 : 0);
         ApplyBreaking();
+
+
     }
 
     private void HandleSteering()
@@ -381,7 +408,9 @@ public class CarController : MonoBehaviour
         {
             rigidBody.AddForce(rigidBody.transform.up * 700000);
             jumpTimer = jumpTime;
-        }
+            carSound.PlayOneShot(jumpSoundclip,0.5f);
+
+         }
     }
 
     public void SetLocalCustomGravity(Vector3? gravityDirection)
@@ -433,6 +462,7 @@ public class CarController : MonoBehaviour
         {
             if (axle.leftWheel.isGrounded) groundedWheels++;
             if (axle.rightWheel.isGrounded) groundedWheels++;
+
         }
     }
 
@@ -448,6 +478,9 @@ public class CarController : MonoBehaviour
 
     public void Kill()
     {
+        moveSound.mute = true;
+        moveSound.pitch = 0;
+        carSound.PlayOneShot(deadSoundclip,0.5f);
         Respawn();
     }
     
@@ -500,6 +533,7 @@ public class CarController : MonoBehaviour
     {
         rigidBody.AddForce((firstPerson ? -mainCamera.transform.up : mainCamera.transform.forward) * swingDir.y * swingForce * Time.deltaTime);
         rigidBody.AddForce(mainCamera.transform.right * swingDir.x * swingForce * Time.deltaTime);
+  
     }
 
     private void DoDimensionSwitch(InputAction.CallbackContext context)
@@ -519,4 +553,33 @@ public class CarController : MonoBehaviour
         }
         camController.DimensionSwitch();
     }
+
+
+    private void engineSound()
+    {
+ 
+        if (moveDir.y != 0)
+        {
+            moveSound.mute = false;
+            if (moveSound.pitch <= 1.5f)
+            { moveSound.pitch = moveSound.pitch + 0.01f; }
+            else
+            { moveSound.pitch = 1.6f; }
+
+
+        }
+        else
+        {
+            if (moveSound.pitch > 0)
+            {
+                moveSound.pitch = moveSound.pitch - 0.01f;
+            }
+            else
+                moveSound.mute = true;
+        }
+
+        
+    }
+
+
 }

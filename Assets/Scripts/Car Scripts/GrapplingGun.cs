@@ -25,6 +25,10 @@ public class GrapplingGun : MonoBehaviour
     bool fireHook = false;
     Vector2 aim;
 
+    public AudioSource carSound;
+    public AudioClip grapSoundClip;
+    public AudioClip grapstopClip;
+
     enum GrappleType
     {
         Swing,
@@ -126,7 +130,7 @@ public class GrapplingGun : MonoBehaviour
                 joint.massScale = 1000f;
             }
         }
-
+        carSound.PlayOneShot(grapSoundClip, 0.5f);
         lr.startColor = lr.endColor = Color.black;
         lr.positionCount = 2;
         aiming = false;
@@ -140,7 +144,7 @@ public class GrapplingGun : MonoBehaviour
         if (context.phase == InputActionPhase.Started)
         {
             aimPreTimer = aimLeniencyPreTime;
-            fireHook = true;
+            fireHook = true;          
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
@@ -214,6 +218,7 @@ public class GrapplingGun : MonoBehaviour
         Destroy(joint);
         grappledRigidBody = null;
         hookParts.ForEach(part => part.SetActive(true));
+        carSound.PlayOneShot(grapstopClip, 0.5f);
     }
 
     public void ChangeLength(float direction)

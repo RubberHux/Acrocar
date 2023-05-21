@@ -20,6 +20,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Back()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<CarController>().moveSound.Play();
         this.gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 }
