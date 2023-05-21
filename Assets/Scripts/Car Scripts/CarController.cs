@@ -70,6 +70,9 @@ public class CarController : MonoBehaviour
     [SerializeField] private float breakForce;
     [SerializeField] private float maxSteeringAngle;
     [SerializeField] private float frontSpinForce, sideSpinForce, shiftSpinForce;
+    public ParticleSystem groundParticle;
+    private float particleTimer = 0f;
+    public float particleInterval = 0.1f;
     float xPos;
     Vector3? customGravity = null;
 
@@ -174,6 +177,20 @@ public class CarController : MonoBehaviour
             }
 
    
+
+    private void Update()
+    {
+        if (groundedWheels == 4 && rigidBody.velocity.magnitude > 10.0f)
+        {
+            if (particleTimer > particleInterval)
+            {
+                groundParticle.Play();
+                particleTimer = 0;
+            }
+
+            particleTimer += Time.deltaTime;
+        }
+    }
 
     void ConstraintsFix()
     {
