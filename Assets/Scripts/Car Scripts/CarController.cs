@@ -121,6 +121,7 @@ public class CarController : MonoBehaviour
     {
         startPoint = transform.position;
         startRot = transform.rotation;
+        moveSound.pitch = 1;
     }
 
 
@@ -352,8 +353,6 @@ public class CarController : MonoBehaviour
         rpm /= motorAmount;
         currentBreakForce = (breaking || (driveDir > 0 && rpm < -1) || (driveDir < 0 && rpm > 1)) ? breakForce : (driveDir == 0 ? breakForce / 10 : 0);
         ApplyBreaking();
-
-        enginePitch = rpm;
 
 
     }
