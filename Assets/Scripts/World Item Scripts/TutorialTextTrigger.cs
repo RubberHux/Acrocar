@@ -15,14 +15,18 @@ public class TutorialMessage
 [RequireComponent(typeof(BoxCollider))]
 public class TutorialTextTrigger : MonoBehaviour
 {
+    public bool followsPlayer;
+    public bool displayOnlyOnce;
     
     public TutorialMessage[] messages;
 
     public float ySpacing = 2.0f;
+    public float xOffset = 0.0f;
 
     private List<PopupText> _activatedPT = new List<PopupText>();
 
     private bool _triggered;
+    private Transform _playerTransform;
     
     private void OnTriggerEnter(Collider other)
     {
@@ -33,8 +37,9 @@ public class TutorialTextTrigger : MonoBehaviour
         
         if (other.gameObject.layer == LayerMask.NameToLayer("Car"))
         {
-            DisplayTutorialMessages();
             _triggered = true;
+            _playerTransform = other.transform;
+            DisplayTutorialMessages();
         }
     }
 
@@ -49,16 +54,23 @@ public class TutorialTextTrigger : MonoBehaviour
         {
             HideTutorialMessage();
             _triggered = false;
+            if (displayOnlyOnce)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 
     private void DisplayTutorialMessages()
     {
         Vector3 position = transform.position;
+        position.x += xOffset;
         foreach (var m in messages)
         {
             position.y += m.extraYSpacing;  // allow more flexible control
-            _activatedPT.Add(PopupTextGenerator.Instance.Generate(m.message, m.color, position, m.scale));
+            _activatedPT.Add(followsPlayer
+                ? PopupTextGenerator.Instance.Generate(m.message, m.color, position, m.scale, _playerTransform)
+                : PopupTextGenerator.Instance.Generate(m.message, m.color, position, m.scale));
             position.y += ySpacing; // vertical offset
         }
     }

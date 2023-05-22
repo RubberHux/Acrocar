@@ -62,7 +62,19 @@ public class PopupTextPool
         PopupText newPopupText = Object.Instantiate(_prefab);
         return newPopupText;
     }
-
+    
+    public PopupText GetPopupText(String message, Color color, Vector3 position, float scale, Transform playerTransform)
+    {
+        PopupText pt = Pool.Get();
+        pt.SetText(message);
+        pt.SetColor(color);
+        pt.SetPosition(position + Vector3.up * heightOffset);
+        pt.SetScale(scale);
+        pt.transform.SetParent(_parent.transform);
+        pt.SetFollowTarget(playerTransform);
+        return pt;
+    }
+    
     public PopupText GetPopupText(String message, Color color, Vector3 position, float scale)
     {
         PopupText pt = Pool.Get();
@@ -107,6 +119,11 @@ public class PopupTextGenerator : MonoBehaviour
     public PopupText Generate(String message, Color color, Vector3 position, float scale)
     {
         return _popupTextPool.GetPopupText(message, color, position, scale);
+    }
+    
+    public PopupText Generate(String message, Color color, Vector3 position, float scale, Transform playerTransform)
+    {
+        return _popupTextPool.GetPopupText(message, color, position, scale, playerTransform);
     }
 
     public void HidePopupText(PopupText pt)
