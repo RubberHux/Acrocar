@@ -43,6 +43,7 @@ public class UIController : MonoBehaviour
     bool vrCamTryGet = false;
 
     public AudioSource winsound;
+    public AudioSource bgm;
 
     public void SetState(GameState newState)
     {

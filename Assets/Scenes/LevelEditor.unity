@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 73324b55f67f54c7bbf43204788b8bbe, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -3053,19 +3053,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0412923ced9e9e14991960e51aadfb63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 6864388217270592271, guid: 115a49aee45e61f498e2ddbc26ec68e8, type: 3}
-  - {fileID: 753111517017091493, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
-  - {fileID: 3102151472974551980, guid: 6dc6bbdd8ce72254e99f04f0302d5bfd, type: 3}
-  - {fileID: 375536795643232509, guid: c7e8716118ddc4e4ea963b2fda1e8c23, type: 3}
-  - {fileID: 8108910642004790403, guid: ba87fee851fdc6442b1d12b3a55638bc, type: 3}
-  toggles:
-  - {fileID: 1041027053}
-  - {fileID: 226700852}
-  - {fileID: 1282066014}
-  - {fileID: 947878606}
-  - {fileID: 2065782162}
-  currentObject: {fileID: 0}
 --- !u!114 &452760969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11414,6 +11401,10 @@ PrefabInstance:
     - target: {fileID: 2203301683447680006, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7601006525182517269, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9004651911810394593, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
       propertyPath: m_AnchorMax.y
