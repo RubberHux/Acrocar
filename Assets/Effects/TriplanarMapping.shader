@@ -120,7 +120,7 @@ Shader "Custom/TriplanarMapping"{
 					   emission_color =lerp(0.0, emission_color, sin(_Time.y * _FlickerSpeed) * 0.5 + 0.5);
 				#endif
 				
-				o.Albedo = col_blended;
+				o.Albedo = col_blended * _Color.rgb;
 				o.Normal = WorldToTangentNormalVector(i, normal_blended);	// surface input requires tangent space normal
 				o.Metallic = 0.0;
 				o.Alpha = 1.0;
