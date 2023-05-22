@@ -26,9 +26,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _IntersectionThresholdMax: 0.09
+    - _IgnoreDepth: 0
+    - _IntersectionThresholdMax: 0.07
     m_Colors:
-    - _Color: {r: 0.7233001, g: 0.7709685, b: 0.8113208, a: 0.5}
+    - _Color: {r: 0.7233001, g: 0.7709685, b: 0.8113207, a: 0.57254905}
     - _IntersectionColor: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 0.5882353}
     - _NoiseTiling: {r: 0.79, g: 0, b: 0, a: 0}
     - _NoiseTilingAndSpeed: {r: 0.5, g: 0, b: 0, a: -0.2}
