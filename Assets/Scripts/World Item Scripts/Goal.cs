@@ -14,8 +14,10 @@ public class Goal : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+
         if (other.gameObject.CompareTag("Player"))
         {
+            other.gameObject.GetComponent<CarController>().moveSound.Stop();
             uiController.SetWin();
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMesh))]
@@ -12,6 +13,9 @@ public class PopupText : MonoBehaviour
     private float _minDistance = 2.0f;
     private float _maxDistance = 15.0f;
 
+    private bool _shouldFollowPlayer;
+    private Transform _playerTransform;
+    
     private bool PopupAnimPlayed
     {
         get
@@ -27,12 +31,11 @@ public class PopupText : MonoBehaviour
         _textMesh = gameObject.GetComponent<TextMesh>();
         _animator = gameObject.GetComponent<Animator>();
         _animator.SetBool(Hide, false);
-        _lookingCamera = Camera.current;
     }
 
     private void Start()
     {
-        transform.forward = _lookingCamera.transform.forward;
+        transform.forward = new Vector3(1, 0, 0);
     }
 
     public void SetText(String textInput)
@@ -55,6 +58,12 @@ public class PopupText : MonoBehaviour
         this.gameObject.transform.position = position;
     }
 
+    public void SetFollowTarget(Transform trans)
+    {
+        _shouldFollowPlayer = true;
+        _playerTransform = trans;
+    }
+
     public async Task HideText()
     {
         _animator.SetBool(Hide, true);
@@ -72,12 +81,13 @@ public class PopupText : MonoBehaviour
     private void LateUpdate()
     {
         // text always face camera
+        _lookingCamera = Camera.main;
         transform.forward = _lookingCamera.transform.forward;
-        
-        // Trying to adjust size by distance in 3D mode, Not working great currently
-        //if (PopupAnimPlayed)
-        //{
-        //    AdjustSizeByDistance();
-        //}
+
+        if (_shouldFollowPlayer)
+        {
+            Vector3 curPosition = transform.position;
+            transform.position = new Vector3(curPosition.x, curPosition.y, _playerTransform.position.z);
+        }
     }
 }
