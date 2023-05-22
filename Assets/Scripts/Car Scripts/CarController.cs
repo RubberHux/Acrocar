@@ -166,7 +166,7 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
-        if (groundedWheels == 4 && rigidBody.velocity.magnitude > 10.0f)
+        if (groundParticle != null && groundedWheels == 4 && rigidBody.velocity.magnitude > 10.0f)
         {
             if (particleTimer > particleInterval)
             {
