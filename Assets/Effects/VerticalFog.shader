@@ -6,7 +6,8 @@ Shader "Custom/VerticalFogIntersection"
         _IntersectionColor("IntersectionColor", Color) = (0.5,0.5,0.5,0.5)
         _Noise("Noise Texture", 2D) = "black"{}
         _NoiseTilingAndSpeed("Noise Tiling", Vector) = (0,0,0,0)
-       _IntersectionThresholdMax("Intersection Threshold Max", float) = 1
+        _IntersectionThresholdMax("Intersection Threshold Max", float) = 1
+        [Toggle(_IgnoreDepth)]_IgnoreDepth("Ignore Depth (For cloud effect)", float) = 0
     }
     SubShader
     {
@@ -21,6 +22,7 @@ Shader "Custom/VerticalFogIntersection"
            #pragma vertex vert
            #pragma fragment frag
            #pragma multi_compile_fog
+           #pragma shader_feature _IgnoreDepth
            #include "UnityCG.cginc"
   
            struct appdata
@@ -59,13 +61,21 @@ Shader "Custom/VerticalFogIntersection"
                float noise2x = 0.15 * tex2D(_Noise, i.worldPos.xz * 0.05);
                float thresholdOffset = tex2D(_Noise, i.worldPos.xz * 0.02 + _NoiseTilingAndSpeed.xy + _NoiseTilingAndSpeed.zw * _Time.y + noise2x).r;
                float threshold = max(_IntersectionThresholdMax - 0.1 * thresholdOffset,0.01);
+#ifdef _IgnoreDepth
+               thresholdOffset = tex2D(_Noise, i.worldPos.xz * _NoiseTilingAndSpeed.xy + _NoiseTilingAndSpeed.zw * _Time.y).r;
+               float diff = saturate(thresholdOffset);
+               float realDiff = 1;
+               fixed4 col = lerp(fixed4(_Color.rgb, 0.0), _Color, thresholdOffset);
+               return col;
+#else
                float diff = saturate(threshold * (depth - i.scrPos.w));
                float realDiff = saturate(0.05 * (depth - i.scrPos.w));
-                 
-               fixed4 col = lerp(fixed4(_Color.rgb, 0.0), _Color, diff * diff * diff * (diff * (6 * diff - 15) + 10));
-               col.rgb *= _IntersectionColor.rgb;
+               fixed4 baseCol = fixed4(_Color.rgb, 0.1);
+               fixed4 col = lerp(fixed4(_Color.rgb, 0.1), _Color, diff * diff * diff * (diff * (6 * diff - 15) + 10));
+               col.rgb *= _IntersectionColor.rgb * realDiff;
                UNITY_APPLY_FOG(i.fogCoord, col);
-               return col * realDiff;
+               return col;
+#endif
             }
   
             ENDCG
