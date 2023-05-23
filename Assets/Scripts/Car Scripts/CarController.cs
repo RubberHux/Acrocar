@@ -169,14 +169,12 @@ public class CarController : MonoBehaviour
         if (grappling) Swing();
         CustomGravity();
         MoveWithPlatform();
-        FlipCar();
+        //FlipCar();
         UpdateTimers();
         ConstraintsFix();
         engineSound();
 
-            }
-
-   
+    }
 
     private void Update()
     {
@@ -256,8 +254,8 @@ public class CarController : MonoBehaviour
         if (respawnTimer < -1 && rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
             && groundedWheels != 4 && !grappling)
         {
-            rigidBody.AddForce(rigidBody.transform.up * 200000 * Time.deltaTime * 180);
-            rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
+            rigidBody.AddForce(Vector3.up * 100000 * Time.deltaTime * 180);
+            rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 10);
           
         }
     }
@@ -408,9 +406,10 @@ public class CarController : MonoBehaviour
         {
             rigidBody.AddForce(rigidBody.transform.up * 700000);
             jumpTimer = jumpTime;
-            carSound.PlayOneShot(jumpSoundclip,0.5f);
+            carSound.PlayOneShot(jumpSoundclip, 0.5f);
 
-         }
+        }
+        else FlipCar();
     }
 
     public void SetLocalCustomGravity(Vector3? gravityDirection)
