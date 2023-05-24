@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1909218529}
-  m_IndirectSpecularColor: {r: 0.26878986, g: 0.35327196, b: 0.6008501, a: 1}
+  m_IndirectSpecularColor: {r: 0.2687899, g: 0.35327196, b: 0.6008501, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5828,6 +5828,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -575.90283
       objectReference: {fileID: 0}
+    - target: {fileID: 8360870327034080731, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c01c2395c422e784883bd857fcc1db43, type: 3}
     - target: {fileID: 9004651911810394593, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

@@ -3464,7 +3464,7 @@ MonoBehaviour:
     m_Bits: 191
   gunTip: {fileID: 4590032966840559032}
   player: {fileID: 4837367201278374422}
-  maxGrappleDistance: 30
+  maxGrappleDistance: 50
   hookParts:
   - {fileID: 8126403678636011623}
   aimLeniencyPreTime: 0.2
