@@ -14,6 +14,8 @@ public class CineMachine3DController : MonoBehaviour
     public CinemachineVirtualCamera sideCam2D;
     private CarController carController;
     private InputAction cameraSwitch;
+    [SerializeField] GameObject customWorldUp;
+    CinemachineBrain brain;
     int customCamIndex;
     bool frameSinceSwitch = false;
     [SerializeField] private float maxZoom, minZoom, zoomSpeed;
@@ -24,6 +26,11 @@ public class CineMachine3DController : MonoBehaviour
     }
     private CamState camState = CamState.follow;
     bool carFound;
+
+    private void Start()
+    {
+        brain = GetComponent<CinemachineBrain>();
+    }
 
     public void SetCar(CarController car, int camLayer, LayerMask cullingMask, bool p1, PlayerInput playerInput)
     {
@@ -72,6 +79,7 @@ public class CineMachine3DController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (carController.customGravity != Vector3.zero && carController.localCustomGravity != Vector3.zero) customWorldUp.transform.up = Vector3.up;
         if (!carFound) return;
         if (camState == CamState.follow)
         {
@@ -83,7 +91,11 @@ public class CineMachine3DController : MonoBehaviour
             if (carController.groundedWheels == 4)
             {
                 if (carController.gravRoadPercent < 0.7f) groundCam.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetWithWorldUp;
-                else groundCam.m_BindingMode = CinemachineTransposer.BindingMode.LockToTarget;
+                else
+                {
+                    groundCam.m_BindingMode = CinemachineTransposer.BindingMode.LockToTarget;
+                    if (carController.customGravity == Vector3.zero || carController.localCustomGravity == Vector3.zero) customWorldUp.transform.up = carController.transform.up;
+                }
                 groundTimer += Time.deltaTime;
                 groundCam.enabled = true;
                 airCam.enabled = false;
@@ -105,7 +117,7 @@ public class CineMachine3DController : MonoBehaviour
         }
         else
         {
-            groundCam.m_YAxisRecentering.m_enabled = true;
+            //groundCam.m_YAxisRecentering.m_enabled = true;
             groundCam.m_RecenterToTargetHeading.m_enabled = true;
         }
     }

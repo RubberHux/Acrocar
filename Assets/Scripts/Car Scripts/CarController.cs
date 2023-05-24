@@ -59,12 +59,12 @@ public class CarController : MonoBehaviour
     private MovingPlatform movingPtfm; // the current attached moving platform 
     public Vector3? localCustomGravity = null;
     public Vector2 rotateDir, moveDir, swingDir;
-    public LayerMask gravRoadLayer;
+    public LayerMask gravRoadLayer, CustomWorldUpLayer;
     public LayerMask notCarLayers;
     public LayerMask movingPlatformLayer;
     private LevelMetaData lmd;
     PlayerInput playerInput;
-    [NonSerialized] public float gravRoadPercent;
+    [NonSerialized] public float gravRoadPercent, customWorldUpPercent;
     [NonSerialized] public bool is2D;
     [SerializeField] private float motorForce;
     [SerializeField] private float breakForce;
@@ -74,7 +74,7 @@ public class CarController : MonoBehaviour
     private float particleTimer = 0f;
     public float particleInterval = 0.1f;
     float xPos;
-    Vector3? customGravity = null;
+    public Vector3? customGravity = null;
 
     private Camera mainCamera;
     [NonSerialized] public bool firstPerson = false;
@@ -447,8 +447,13 @@ public class CarController : MonoBehaviour
         int notGravRoadAmount = 0;
         RaycastHit hit;
         foreach (Transform roadChecker in roadCheckers) {
-            if (Physics.Raycast(roadChecker.position, -roadChecker.transform.up, out hit, gravCheckDistance, notCarLayers) && (gravRoadLayer == (gravRoadLayer | (1 << hit.transform.gameObject.layer)))) {
+            if (Physics.Raycast(roadChecker.position, -roadChecker.transform.up, out hit, gravCheckDistance, notCarLayers) && (gravRoadLayer == (gravRoadLayer | (1 << hit.transform.gameObject.layer))))
+            {
                 gravRoadPercent++;
+            }
+            else if (Physics.Raycast(roadChecker.position, -roadChecker.transform.up, out hit, gravCheckDistance, notCarLayers) && (gravRoadLayer == (gravRoadLayer | (1 << hit.transform.gameObject.layer))))
+            {
+
             }
             else notGravRoadAmount++;
         }

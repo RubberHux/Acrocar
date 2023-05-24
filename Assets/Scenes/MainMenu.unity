@@ -3492,6 +3492,9 @@ MonoBehaviour:
   minJointDist: 0
   grapplingChange: 0
   grapplingChangeSpeed: 0
+  carSound: {fileID: 0}
+  grapSoundClip: {fileID: 0}
+  grapstopClip: {fileID: 0}
 --- !u!65 &1731821159
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4571,6 +4574,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -349.69208
       objectReference: {fileID: 0}
+    - target: {fileID: 8360870327034080731, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b6a9bf5458107fc42819eff4cf073df8, type: 3}
     - target: {fileID: 9004651911810394593, guid: 71ca27e9bbd5b764389895b49dde74e8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
