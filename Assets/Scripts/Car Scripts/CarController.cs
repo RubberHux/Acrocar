@@ -59,12 +59,12 @@ public class CarController : MonoBehaviour
     private MovingPlatform movingPtfm; // the current attached moving platform 
     public Vector3? localCustomGravity = null;
     public Vector2 rotateDir, moveDir, swingDir;
-    public LayerMask gravRoadLayer;
+    public LayerMask gravRoadLayer, CustomWorldUpLayer;
     public LayerMask notCarLayers;
     public LayerMask movingPlatformLayer;
     private LevelMetaData lmd;
     PlayerInput playerInput;
-    [NonSerialized] public float gravRoadPercent;
+    [NonSerialized] public float gravRoadPercent, customWorldUpPercent;
     [NonSerialized] public bool is2D;
     [SerializeField] private float motorForce;
     [SerializeField] private float breakForce;
@@ -74,7 +74,7 @@ public class CarController : MonoBehaviour
     private float particleTimer = 0f;
     public float particleInterval = 0.1f;
     float xPos;
-    Vector3? customGravity = null;
+    public Vector3? customGravity = null;
 
     private Camera mainCamera;
     [NonSerialized] public bool firstPerson = false;
@@ -169,18 +169,16 @@ public class CarController : MonoBehaviour
         if (grappling) Swing();
         CustomGravity();
         MoveWithPlatform();
-        FlipCar();
+        //FlipCar();
         UpdateTimers();
         ConstraintsFix();
         engineSound();
 
-            }
-
-   
+    }
 
     private void Update()
     {
-        if (groundedWheels == 4 && rigidBody.velocity.magnitude > 10.0f)
+        if (groundParticle != null && groundedWheels == 4 && rigidBody.velocity.magnitude > 10.0f)
         {
             if (particleTimer > particleInterval)
             {
@@ -256,8 +254,8 @@ public class CarController : MonoBehaviour
         if (respawnTimer < -1 && rigidBody.velocity.sqrMagnitude < stationaryTolerance * stationaryTolerance
             && groundedWheels != 4 && !grappling)
         {
-            rigidBody.AddForce(rigidBody.transform.up * 200000 * Time.deltaTime * 180);
-            rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 100);
+            rigidBody.AddForce(Vector3.up * 100000 * Time.deltaTime * 180);
+            rigidBody.AddTorque(rigidBody.transform.right * frontSpinForce * 10);
           
         }
     }
@@ -408,9 +406,10 @@ public class CarController : MonoBehaviour
         {
             rigidBody.AddForce(rigidBody.transform.up * 700000);
             jumpTimer = jumpTime;
-            carSound.PlayOneShot(jumpSoundclip,0.5f);
+            carSound.PlayOneShot(jumpSoundclip, 0.5f);
 
-         }
+        }
+        else FlipCar();
     }
 
     public void SetLocalCustomGravity(Vector3? gravityDirection)
@@ -447,8 +446,13 @@ public class CarController : MonoBehaviour
         int notGravRoadAmount = 0;
         RaycastHit hit;
         foreach (Transform roadChecker in roadCheckers) {
-            if (Physics.Raycast(roadChecker.position, -roadChecker.transform.up, out hit, gravCheckDistance, notCarLayers) && (gravRoadLayer == (gravRoadLayer | (1 << hit.transform.gameObject.layer)))) {
+            if (Physics.Raycast(roadChecker.position, -roadChecker.transform.up, out hit, gravCheckDistance, notCarLayers) && (gravRoadLayer == (gravRoadLayer | (1 << hit.transform.gameObject.layer))))
+            {
                 gravRoadPercent++;
+            }
+            else if (Physics.Raycast(roadChecker.position, -roadChecker.transform.up, out hit, gravCheckDistance, notCarLayers) && (gravRoadLayer == (gravRoadLayer | (1 << hit.transform.gameObject.layer))))
+            {
+
             }
             else notGravRoadAmount++;
         }

@@ -26,6 +26,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelEditor.unity
     guid: 7ea3213c794fdfe4496adb02b3a2b8ad
+  - enabled: 1
+    path: Assets/Scenes/LevelAlex.unity
+    guid: 47cb9c5ddbdf99d47a1a7ea883e8fe60
+  - enabled: 1
+    path: Assets/Scenes/FinalPartLvlAlex.unity
+    guid: 872561c4bc2049047996d5ad629a3dcf
+  - enabled: 1
+    path: Assets/Scenes/Levels/SpaceLevel1.unity
+    guid: 6f597c56b9ac91c4f920e0ce2fbcfff9
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 57bb631b575ebcf40b667892164ad0e8, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: cd95ef827d95def409e6667bf504f0dd, type: 2}

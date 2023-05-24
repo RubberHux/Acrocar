@@ -1474,7 +1474,7 @@ MonoBehaviour:
   m_ShowDebugText: 0
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
+  m_WorldUpOverride: {fileID: 4479043221666169472}
   m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
@@ -1509,6 +1509,7 @@ MonoBehaviour:
   groundTimer: 0
   airCam: {fileID: 1607646528635662951}
   sideCam2D: {fileID: 1607646528699174825}
+  customWorldUp: {fileID: 8956121257129859267}
   maxZoom: 150
   minZoom: 30
   zoomSpeed: 3
@@ -1956,6 +1957,7 @@ Transform:
   - {fileID: 1607646528699174826}
   - {fileID: 5982279690374679534}
   - {fileID: 3628137383196767988}
+  - {fileID: 4479043221666169472}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2003,6 +2005,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8956121257129859267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4479043221666169472}
+  m_Layer: 0
+  m_Name: CustomWorldUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4479043221666169472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956121257129859267}
+  m_LocalRotation: {x: 0.07146525, y: 0.4862653, z: -0.03994525, w: 0.8699674}
+  m_LocalPosition: {x: -15.642795, y: 2.2130728, z: 10.365614}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9173364895721554421}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &9151401920416953919
 PrefabInstance:
   m_ObjectHideFlags: 0
