@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.02495846, g: 0.02274444, b: 0.07047759, a: 1}
+  m_IndirectSpecularColor: {r: 0.024901927, g: 0.022690432, b: 0.07040433, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 03b5dfcf0772be746b1faa905fcc4b98, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: f5dea23a16b15e34bab940b64da9c400, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2927,8 +2927,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7373ec6ae6dfa774d91bb581a9735bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: HubWorld
-  stageType: 1
+  ID: SpaceLevel
+  stageType: 0
   bronzeTime: 0
   silverTime: 0
   goldTime: 0
