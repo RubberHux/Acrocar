@@ -28,7 +28,7 @@ public class TutorialObjectSpawner : MonoBehaviour
     private async void DespawnObj(GameObject obj, TimeSpan timeSpan)
     {
         await Task.Delay(timeSpan);
-        obj.SetActive(false);
+        if (obj != null) obj.SetActive(false);
     }
     
     private async void OnTriggerEnter(Collider other)

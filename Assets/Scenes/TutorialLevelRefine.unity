@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1909218529}
-  m_IndirectSpecularColor: {r: 0.2687899, g: 0.35327196, b: 0.6008501, a: 1}
+  m_IndirectSpecularColor: {r: 0.26878986, g: 0.35327196, b: 0.6008501, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: d5988e52b8382574b969a054201dc3b4, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: f5dea23a16b15e34bab940b64da9c400, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -4081,7 +4081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5232353994011914113, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.1
+      value: -1.3
       objectReference: {fileID: 0}
     - target: {fileID: 5232353994011914113, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4118,6 +4118,14 @@ PrefabInstance:
     - target: {fileID: 5232353994011914113, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8227117478189535626, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
+      propertyPath: m_Size.x
+      value: 8.736357
+      objectReference: {fileID: 0}
+    - target: {fileID: 8227117478189535626, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
+      propertyPath: m_Center.x
+      value: -1.0755789
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d08eb5bb2e52e7341949a507373d6611, type: 3}
@@ -5574,7 +5582,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006832069}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
